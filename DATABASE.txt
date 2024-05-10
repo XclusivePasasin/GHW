@@ -72,3 +72,5 @@ _Date datetime,
 Content varchar(255),
 ID_Ticket int
 ); 
+
+//Hay que insertar los datos de las tablas que no cuentan con llaves foraneas en ellas antes de rellenar las principales.
