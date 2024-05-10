@@ -71,4 +71,4 @@ ID_Comment int,
 _Date datetime,
 Content varchar(255),
 ID_Ticket int
-);
+); 
