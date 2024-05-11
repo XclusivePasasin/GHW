@@ -68,12 +68,11 @@ CREATE TABLE Rol
 CREATE TABLE Comment
 (
     ID_Comment int,
-    _Date datetime,
+    Date datetime,
     Content varchar(255),
     ID_Ticket int
 ); 
 
-//Hay que insertar los datos de las tablas que no cuentan con llaves foraneas en ellas antes de rellenar las principales.
 -- Modificar la clave foranea en la tabla Ticekt para usar ON UPDATE CASCADE //Status
     ALTER TABLE Ticket ADD CONSTRAINT fk_Ticket_ID_Status 
     FOREIGN KEY (ID_Status) REFERENCES Status(ID_Status) 
@@ -114,8 +113,6 @@ CREATE TABLE Comment
     FOREIGN KEY (ID_Category) REFERENCES Category(ID_Category) 
     ON DELETE CASCADE;
 
-
-
 -- Modificar la clave foranea en la tabla User para usar ON UPDATE CASCADE //Employee
     ALTER TABLE User ADD CONSTRAINT fk_User_ID_Employee 
     FOREIGN KEY (ID_Employee) REFERENCES Employee(ID_Employee) 
@@ -125,8 +122,6 @@ CREATE TABLE Comment
     ALTER TABLE User ADD CONSTRAINT fk_User_ID_Employee 
     FOREIGN KEY (ID_Employee) REFERENCES Employee(ID_Employee) 
     ON DELETE CASCADE;
-
-
 
 -- Modificar la clave foranea en la tabla Employee para usar ON UPDATE CASCADE //Rol
     ALTER TABLE Employee ADD CONSTRAINT fk_Employee_ID_Rol 
@@ -147,8 +142,6 @@ CREATE TABLE Comment
     ALTER TABLE Employee ADD CONSTRAINT fk_Employee_ID_Department
     FOREIGN KEY (ID_Department) REFERENCES Department(ID_Department) 
     ON DELETE CASCADE;
-
-
 
 -- Modificar la clave foranea en la tabla Comment para usar ON UPDATE CASCADE //Ticket
     ALTER TABLE Comment ADD CONSTRAINT fk_Comment_ID_Ticket
