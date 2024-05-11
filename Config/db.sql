@@ -4,7 +4,7 @@ USE TicketSystem;
 
 CREATE TABLE Ticket
 (
-    ID_Ticket int,
+    ID_Ticket int AUTO_INCREMENT PRIMARY KEY,
     Title varchar(255),
     Description varchar(255),
     CreateDate datetime,
@@ -17,25 +17,25 @@ CREATE TABLE Ticket
 
 CREATE TABLE Status
 (
-    ID_Status int,
+    ID_Status int AUTO_INCREMENT PRIMARY KEY,
     TicketStatus varchar(255)
 );
 
 CREATE TABLE Priority
 (
-    ID_Priority int,
+    ID_Priority int AUTO_INCREMENT PRIMARY KEY,
     TicketPriority varchar(255)
 );
 
 CREATE TABLE Category
 (
-    ID_Category int,
+    ID_Category int AUTO_INCREMENT PRIMARY KEY,
     TicketCategory varchar(255)
 );
 
 CREATE TABLE User
 (
-    ID_User int,
+    ID_User int AUTO_INCREMENT PRIMARY KEY,
     email varchar(255),
     UserPassword varchar(255),
     ID_Employee int
@@ -43,13 +43,13 @@ CREATE TABLE User
 
 CREATE TABLE Department
 (
-    ID_Department int,
+    ID_Department int AUTO_INCREMENT PRIMARY KEY,
     Department varchar(255)
 );
 
 CREATE TABLE Employee
 (
-    ID_Employee INT,
+    ID_Employee INT AUTO_INCREMENT PRIMARY KEY,
     Name varchar(255),
     Lastname varchar(255),
     Phone int,
@@ -61,13 +61,13 @@ CREATE TABLE Employee
 
 CREATE TABLE Rol
 (
-    ID_Rol int,
+    ID_Rol int AUTO_INCREMENT PRIMARY KEY,
     Rol varchar(255)
 );
 
 CREATE TABLE Comment
 (
-    ID_Comment int,
+    ID_Comment int AUTO_INCREMENT PRIMARY KEY,
     Date datetime,
     Content varchar(255),
     ID_Ticket int
