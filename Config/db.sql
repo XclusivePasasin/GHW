@@ -12,7 +12,8 @@ CREATE TABLE Ticket
     ID_Status int,
     ID_User int,
     ID_Priority int,
-    ID_Category int
+    ID_Category int,
+    ID_Difficulty int
 );
 
 CREATE TABLE Status
@@ -71,7 +72,13 @@ CREATE TABLE Comment
     Date datetime,
     Content varchar(255),
     ID_Ticket int
-); 
+);
+
+CREATE TABLE Difficulty
+(
+    ID_Difficulty int PRIMARY KEY,
+    Level int
+);
 
 -- Table Ticket
 ALTER TABLE Ticket
@@ -79,6 +86,7 @@ ADD CONSTRAINT fk_Ticket_ID_Status FOREIGN KEY (ID_Status) REFERENCES Status(ID_
 ADD CONSTRAINT fk_Ticket_ID_User FOREIGN KEY (ID_User) REFERENCES User(ID_User) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT fk_Ticket_ID_Priority FOREIGN KEY (ID_Priority) REFERENCES Priority(ID_Priority) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT fk_Ticket_ID_Category FOREIGN KEY (ID_Category) REFERENCES Category(ID_Category) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT fk_Ticket_ID_Difficulty FOREIGN KEY (ID_Difficulty) REFERENCES Difficulty(ID_Difficulty) ON DELETE CASCADE ON UPDATE CASCADE;
 -- Table User
 ALTER TABLE User
 ADD CONSTRAINT fk_User_ID_Employee FOREIGN KEY (ID_Employee) REFERENCES Employee(ID_Employee) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -91,3 +99,28 @@ ALTER TABLE Comment
 ADD CONSTRAINT fk_Comment_ID_Ticket FOREIGN KEY (ID_Ticket) REFERENCES Ticket(ID_Ticket) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --Insert Data
+
+--Insert Data on Table Rol
+INSERT INTO Rol (Rol)
+VALUES ('Employee'), ('Administrador'), ('Técnico Lvl.1'), ('Técnico Lvl.2'), ('Técnico Lvl.3');
+
+--Insert Data on Table Department
+INSERT INTO Department (Department)
+VALUES ('Human Resources'), ('Administration'), ('IT'), ('Customer Service'), ('Finance'), ('Operations'), ('Marketing');
+
+--Insert Data on Table Category
+INSERT INTO Category (TicketCategory)
+VALUES ('Hardware'), ('Software');
+
+--Insert Data on Table Priority
+INSERT INTO Priority (TicketPriority)
+VALUES ('Low'), ('Medium'), ('High'),('Critical');
+
+--Insert Data on Table Status
+INSERT INTO Status (TicketStatus)
+VALUES ('Open'), ('In Progress'), ('Closed');
+
+
+--Insert Data on Table Difficulty
+INSERT INTO Difficulty (Level)
+VALUES (1), (2), (3);
