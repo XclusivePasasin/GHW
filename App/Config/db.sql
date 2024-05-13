@@ -4,7 +4,7 @@ USE TicketSystem;
 
 CREATE TABLE Ticket
 (
-    ID_Ticket int AUTO_INCREMENT PRIMARY KEY,
+    ID_Ticket int,
     Title varchar(100),
     Description varchar(255),
     CreateDate datetime,
@@ -18,25 +18,26 @@ CREATE TABLE Ticket
 
 CREATE TABLE Status
 (
-    ID_Status int AUTO_INCREMENT PRIMARY KEY,
+    ID_Status int,
     TicketStatus varchar(100)
 );
 
 CREATE TABLE Priority
 (
-    ID_Priority int AUTO_INCREMENT PRIMARY KEY,
-    TicketPriority varchar(100)
+    ID_Priority int,
+    TicketPriority varchar(100),
+    ID_Problem int
 );
 
 CREATE TABLE Category
 (
-    ID_Category int AUTO_INCREMENT PRIMARY KEY,
+    ID_Category int,
     TicketCategory varchar(100)
 );
 
 CREATE TABLE User
 (
-    ID_User int AUTO_INCREMENT PRIMARY KEY,
+    ID_User int,
     Email varchar(150),
     UserPassword varchar(255),
     ID_Employee int
@@ -44,13 +45,13 @@ CREATE TABLE User
 
 CREATE TABLE Department
 (
-    ID_Department int AUTO_INCREMENT PRIMARY KEY,
+    ID_Department int,
     Department varchar(100)
 );
 
 CREATE TABLE Employee
 (
-    ID_Employee INT AUTO_INCREMENT PRIMARY KEY,
+    ID_Employee int,
     Name varchar(100),
     Lastname varchar(100),
     Phone int,
@@ -62,13 +63,13 @@ CREATE TABLE Employee
 
 CREATE TABLE Rol
 (
-    ID_Rol int AUTO_INCREMENT PRIMARY KEY,
+    ID_Rol int,
     Rol varchar(100)
 );
 
 CREATE TABLE Comment
 (
-    ID_Comment int AUTO_INCREMENT PRIMARY KEY,
+    ID_Comment int,
     Date datetime,
     Content varchar(255),
     ID_Ticket int
@@ -76,9 +77,68 @@ CREATE TABLE Comment
 
 CREATE TABLE Difficulty
 (
-    ID_Difficulty int PRIMARY KEY,
+    ID_Difficulty int,
     Level int
 );
+
+CREATE TABLE Problems
+(
+    ID_Problem int,
+    Name varchar(255)
+);
+
+--Primary Keys
+
+ALTER TABLE Ticket
+ADD PRIMARY KEY (ID_Ticket),
+MODIFY ID_Ticket INT AUTO_INCREMENT;
+
+ALTER TABLE Status
+ADD PRIMARY KEY (ID_Status),
+MODIFY ID_Status INT AUTO_INCREMENT;
+
+ALTER TABLE Priority
+ADD PRIMARY KEY (ID_Priority),
+MODIFY ID_Priority INT AUTO_INCREMENT;
+
+ALTER TABLE Category
+ADD PRIMARY KEY (ID_Category),
+MODIFY ID_Category INT AUTO_INCREMENT;
+
+ALTER TABLE User
+ADD PRIMARY KEY (ID_User),
+MODIFY ID_User INT AUTO_INCREMENT;
+
+ALTER TABLE Department
+ADD PRIMARY KEY (ID_Department),
+MODIFY ID_Department INT AUTO_INCREMENT;
+
+ALTER TABLE Employee
+ADD PRIMARY KEY (ID_Employee),
+MODIFY ID_Employee INT AUTO_INCREMENT;
+
+ALTER TABLE Rol
+ADD PRIMARY KEY (ID_Rol),
+MODIFY ID_Rol INT AUTO_INCREMENT;
+
+ALTER TABLE Comment
+ADD PRIMARY KEY (ID_Comment),
+MODIFY ID_Comment INT AUTO_INCREMENT;
+
+ALTER TABLE Difficulty
+ADD PRIMARY KEY (ID_Difficulty),
+MODIFY ID_Difficulty INT AUTO_INCREMENT;
+
+ALTER TABLE Problems
+ADD PRIMARY KEY (ID_Problem),
+MODIFY ID_Problem INT AUTO_INCREMENT;
+
+-- Foreign Keys
+
+--Table Priority
+
+ALTER TABLE Priority
+ADD CONSTRAINT fk_Priority_ID_Problems FOREIGN KEY (ID_Problem) REFERENCES Problems(ID_Problem) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- Table Ticket
 ALTER TABLE Ticket
