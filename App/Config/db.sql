@@ -12,7 +12,6 @@ CREATE TABLE Ticket
     ID_Status int,
     ID_User int,
     ID_Priority int,
-    ID_Category int,
     ID_Difficulty int
 );
 
@@ -25,8 +24,7 @@ CREATE TABLE Status
 CREATE TABLE Priority
 (
     ID_Priority int,
-    TicketPriority varchar(100),
-    ID_Problem int
+    TicketPriority varchar(100)
 );
 
 CREATE TABLE Category
@@ -84,7 +82,9 @@ CREATE TABLE Difficulty
 CREATE TABLE Problems
 (
     ID_Problem int,
-    Name varchar(255)
+    Name varchar(255),
+    ID_Priority int,
+    ID_Category int
 );
 
 -- Primary Keys
@@ -135,17 +135,17 @@ MODIFY ID_Problem INT AUTO_INCREMENT;
 
 -- Foreign Keys
 
--- Table Priority
+-- Table Problems
 
-ALTER TABLE Priority
-ADD CONSTRAINT fk_Priority_ID_Problems FOREIGN KEY (ID_Problem) REFERENCES Problems(ID_Problem) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE Problems
+ADD CONSTRAINT fk_Problems_ID_Priority FOREIGN KEY (ID_Priority) REFERENCES Priority(ID_Priority) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT fk_Problems_ID_Category FOREIGN KEY (ID_Category) REFERENCES Category(ID_Category) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- Table Ticket
 ALTER TABLE Ticket
 ADD CONSTRAINT fk_Ticket_ID_Status FOREIGN KEY (ID_Status) REFERENCES Status(ID_Status) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT fk_Ticket_ID_User FOREIGN KEY (ID_User) REFERENCES User(ID_User) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT fk_Ticket_ID_Priority FOREIGN KEY (ID_Priority) REFERENCES Priority(ID_Priority) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT fk_Ticket_ID_Category FOREIGN KEY (ID_Category) REFERENCES Category(ID_Category) ON DELETE CASCADE ON UPDATE CASCADE,
 ADD CONSTRAINT fk_Ticket_ID_Difficulty FOREIGN KEY (ID_Difficulty) REFERENCES Difficulty(ID_Difficulty) ON DELETE CASCADE ON UPDATE CASCADE;
 -- Table User
 ALTER TABLE User
@@ -184,3 +184,10 @@ VALUES ('Open'), ('In Progress'), ('Closed');
 -- Insert Data on Table Difficulty
 INSERT INTO Difficulty (Level)
 VALUES (1), (2), (3);
+
+-- Insert Data on Table Problems
+
+INSERT INTO Problems (Name,ID_Priority,ID_Category)
+VALUES ('Keyboard',1,1),('Mouse',1,1),('Monitor',2,1),('PC',3,1),('Phone',3,1),('Printer',1,1),('Internet',3,1),
+('Outdated software',3,2),('Lack of space',1,2),('The program does not respond',2,2),('Server not found',3,2),('Software licenses',1,2),('Problems accessing the account',1,2),
+('Response time issues',2,2),('Virus',4,2),('Operating system problems',4,2),('Backup and recovery',4,2);
