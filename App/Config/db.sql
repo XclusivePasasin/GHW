@@ -87,7 +87,7 @@ CREATE TABLE Problems
     Name varchar(255)
 );
 
---Primary Keys
+-- Primary Keys
 
 ALTER TABLE Ticket
 ADD PRIMARY KEY (ID_Ticket),
@@ -135,7 +135,7 @@ MODIFY ID_Problem INT AUTO_INCREMENT;
 
 -- Foreign Keys
 
---Table Priority
+-- Table Priority
 
 ALTER TABLE Priority
 ADD CONSTRAINT fk_Priority_ID_Problems FOREIGN KEY (ID_Problem) REFERENCES Problems(ID_Problem) ON DELETE CASCADE ON UPDATE CASCADE;
@@ -158,29 +158,29 @@ ADD CONSTRAINT fk_Employee_ID_Department FOREIGN KEY (ID_Department) REFERENCES 
 ALTER TABLE Comment
 ADD CONSTRAINT fk_Comment_ID_Ticket FOREIGN KEY (ID_Ticket) REFERENCES Ticket(ID_Ticket) ON DELETE CASCADE ON UPDATE CASCADE;
 
---Insert Data
+-- Insert Data
 
---Insert Data on Table Rol
+-- Insert Data on Table Rol
 INSERT INTO Rol (Rol)
 VALUES ('Employee'), ('Administrador'), ('Técnico Lvl.1'), ('Técnico Lvl.2'), ('Técnico Lvl.3');
 
---Insert Data on Table Department
+-- Insert Data on Table Department
 INSERT INTO Department (Department)
 VALUES ('Human Resources'), ('Administration'), ('IT'), ('Customer Service'), ('Finance'), ('Operations'), ('Marketing');
 
---Insert Data on Table Category
+-- Insert Data on Table Category
 INSERT INTO Category (TicketCategory)
 VALUES ('Hardware'), ('Software');
 
---Insert Data on Table Priority
+-- Insert Data on Table Priority
 INSERT INTO Priority (TicketPriority)
 VALUES ('Low'), ('Medium'), ('High'),('Critical');
 
---Insert Data on Table Status
+-- Insert Data on Table Status
 INSERT INTO Status (TicketStatus)
 VALUES ('Open'), ('In Progress'), ('Closed');
 
 
---Insert Data on Table Difficulty
+-- Insert Data on Table Difficulty
 INSERT INTO Difficulty (Level)
 VALUES (1), (2), (3);
