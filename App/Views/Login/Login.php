@@ -31,43 +31,56 @@
             font-weight: 200;
             font-style: normal;
             color: white;
+            height: 100vh;
         }
 
         .bg-dark {
             background-color: var(--PurpleGrape) !important;
         }
 
-        .bg-dark-x{
+        .bg-dark-x {
             background-color: var(--white) !important;
             border-color: var(--PurpleDark) !important;
             border: 0;
         }
 
-        .btn-dark-x{
+        .btn-dark-x {
             background-color: var(--PurpleDark) !important;
         }
 
         .row {
-            margin-right: 0; 
-            margin-left: 0; 
+            margin-right: 0;
+            margin-left: 0;
         }
 
-        .form-control, .btn{
+        .form-control,
+        .btn {
             min-height: 3.125rem;
             line-height: initial;
         }
+
+        .test {
+            height: 100%; /* Para asegurar que cada elemento del carrusel ocupe todo el espacio */
+        }
+
+        .test img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+
     </style>
     <!--Login-->
-    <section>
-        <div class="row p-0">
-            <div class="col-lg-7">
-
+    <section >
+        <div class="row no-gutters full-height" style="height:100vh;">
+            <div class="col-lg-7 test d-none d-lg-block no-padding">
+                <img src="./src/Login-picture.svg" alt="Img" class="w-100 h-100">
             </div>
-            <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100">
-                <div class="px-lg-5 pt-lg-4 pb-lg-1 p-4 w-100 ">
-                    <img src="./src/Logo-5-Login.svg" alt="Logo-5" class="img-fluid" style="width: 350px;">
+            <div class="col-lg-5 d-flex flex-column align-items-end min-vh-100" style="height: 100vh;">
+                <div class="px-lg-5 pt-lg-4 pb-lg-1 p-4 w-100">
+                    <img src="./src/Logo-5-Login.svg" alt="Logo-5" class="img-fluid" style="width: 340px;">
                 </div>
-                <div class=" px-lg-5 py-lg-4 p-4 w-100 align-selft-center">
+                <div class="px-lg-5 py-lg-4 p-4 w-100 align-selft-center justify-content-around align-items-center">
                     <h1>Welcome to CodeLabs</h1>
                     <form>
                         <div class="mb-4">
@@ -78,16 +91,20 @@
                             <label for="Passwd" class="form-label font-weight-bold">Password</label>
                             <input type="password" class="form-control bg-dark-x font-weight-bold mb-2" id="Passwd" name="Passwd" placeholder="Enter your password">
                         </div>
-                        <a href="#" class="form-text text-decoration-none mb-3 text-white">have you forgotten your password?</a>
-                        
-                        <button type="submit" class="btn text-white w-100 btn-dark-x font-weight-bold"><i class="fa-solid fa-right-to-bracket lead mr-3" style="color: #ffffff;"></i>Log in</button>
+                        <a href="#" class="form-text text-decoration-none mb-3 text-white">Have you forgotten your password?</a>
+                        <button type="submit" class="btn text-white w-100 btn-dark-x font-weight-bold">
+                            <i class="fa-solid fa-right-to-bracket lead mr-3" style="color: #ffffff;"></i>Log in
+                        </button>
                     </form>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <script src="https://kit.fontawesome.com/15cf58a385.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT6T9g6a4H6oYnxoB1p+Lr9s8on4ylFEYNr6D5K4h4eVOmYdX" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js" integrity="sha384-qGtX+DxFxRk8ZAYq8FyWZ/HtQyWVvVV2wKbvxdRLxwCCV1+8Y7XcZUc8IH2wZXmF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-oSWTY3wyyjtk2MMndmJbG2BB/qqoK9fUjMAeJ5saI1NYYon8PKi2Upf4lxrA+jTq" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/15cf58a385.js" crossorigin="anonymous"></script>
 </body>
+
 </html>
