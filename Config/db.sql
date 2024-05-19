@@ -191,3 +191,10 @@ INSERT INTO Problems (Name,ID_Priority,ID_Category)
 VALUES ('Keyboard',1,1),('Mouse',1,1),('Monitor',2,1),('PC',3,1),('Phone',3,1),('Printer',1,1),('Internet',3,1),
 ('Outdated software',3,2),('Lack of space',1,2),('The program does not respond',2,2),('Server not found',3,2),('Software licenses',1,2),('Problems accessing the account',1,2),
 ('Response time issues',2,2),('Virus',4,2),('Operating system problems',4,2),('Backup and recovery',4,2);
+
+INSERT INTO Employee (Name,Lastname,Phone,DUI,Adress,ID_Rol,ID_Department) 
+VALUES ('Luis','Majano',70588297,'06250035-9','Santa Tecla',1,1),('Gerardo','Franco',85476438,'09653730-4','Soyapango',2,2),
+('Eliezar','Passasin',87594000,'65362547-1','San Salvador',3,3);
+
+INSERT INTO User (Email,UserPassword,ID_Employee)
+VALUES ('luismajano@gmail.com','Luis12345',1),('gerardofranco@gmail.com','Gerardo12345',2),('eliezarpassasin@gmail.com','Eliezar12345',3);
