@@ -25,6 +25,7 @@
 					</span>
 					<ul>
 						<li><a href="<?php echo $Connection->Route().'Views/Moduls/Users/UsersView.php'; ?>"><span class="lbl">Users</span></a></li>
+						<li><a href="<?php echo $Connection->Route().'Views/Moduls/Users/UsersView.php'; ?>"><span class="lbl"></span></a></li>
 					</ul>
 					
 			</li>

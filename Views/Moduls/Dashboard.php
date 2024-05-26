@@ -1,9 +1,7 @@
 <?php 
 	require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
 	$Connection = new Connection();
-	if (isset($_POST['Id_User'])) {
-		# code...
-	
+	if (isset($_SESSION['Email'])) {
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,5 +35,6 @@
 <?php
 	}else{
 		header("location:".$Connection->Route().'index.php');
+		exit();
 	}
 ?>
