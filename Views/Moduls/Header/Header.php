@@ -1,3 +1,9 @@
+<?php 
+require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
+$Connection = new Connection();
+session_start();
+
+?>
 <header class="site-header">
 	    <div class="container-fluid">
 	
@@ -103,29 +109,7 @@
 	                        </div>
 	                    </div>
 	
-	                    <div class="dropdown dropdown-lang">
-	                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                            <span class="flag-icon flag-icon-us"></span>
-	                        </button>
-	                        <div class="dropdown-menu dropdown-menu-right">
-	                            <div class="dropdown-menu-col">
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-ru"></span>Русский</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-de"></span>Deutsch</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-it"></span>Italiano</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-es"></span>Español</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-pl"></span>Polski</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-li"></span>Lietuviu</a>
-	                            </div>
-	                            <div class="dropdown-menu-col">
-	                                <a class="dropdown-item current" href="#"><span class="flag-icon flag-icon-us"></span>English</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-fr"></span>Français</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-by"></span>Беларускi</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-ua"></span>Українська</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-cz"></span>Česky</a>
-	                                <a class="dropdown-item" href="#"><span class="flag-icon flag-icon-ch"></span>中國</a>
-	                            </div>
-	                        </div>
-	                    </div>
+	                   
 	
 	                    <div class="dropdown user-menu">
 	                        <button class="dropdown-toggle" id="dd-user-menu" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -133,10 +117,7 @@
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dd-user-menu">
 	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-cog"></span>Settings</a>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-question-sign"></span>Help</a>
-	                            <div class="dropdown-divider"></div>
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
+	                            <a class="dropdown-item" href="<?php echo $Connection->Route().'Views/Moduls/Users/Logout.php'; ?>"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>
 	                    </div>
 	

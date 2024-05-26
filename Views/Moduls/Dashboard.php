@@ -1,3 +1,10 @@
+<?php 
+	require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
+	$Connection = new Connection();
+	if (isset($_POST['Id_User'])) {
+		# code...
+	
+?>
 <!DOCTYPE html>
 <html>
 <head lang="es">
@@ -19,7 +26,7 @@
 
 	<div class="page-content">
 		<div class="container-fluid">
-			Blank page.
+			Blank
 		</div><!--.container-fluid-->
 	</div><!--.page-content-->
 
@@ -27,3 +34,8 @@
 <?php require_once './Head/MainJS.php'; ?>
 </body>
 </html>
+<?php
+	}else{
+		header("location:".$Connection->Route().'index.php');
+	}
+?>

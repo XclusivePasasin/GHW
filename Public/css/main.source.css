@@ -2177,13 +2177,13 @@ input[type="radio"] {
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
           box-sizing: border-box;
-  /* 1 */
-  padding: 0;
-  /* 2 */
-  *height: 13px;
-  /* 3 */
-  *width: 13px;
-  /* 3 */
+    /* 1 */
+    padding: 0;
+    /* 2 */
+    *height: 13px;
+    /* 3 */
+    *width: 13px;
+    /* 3 */
 }
 /**
  * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
@@ -2301,7 +2301,7 @@ video {
   background-color: transparent;
   border: 0;
   overflow: hidden;
-  *text-indent: -9999px;
+  text-indent: -9999px;
 }
 .ir:before {
   content: "";
