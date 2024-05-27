@@ -24,8 +24,8 @@
 						<span class="lbl">Administration</span>
 					</span>
 					<ul>
-						<li><a href="<?php echo $Connection->Route().'Views/Moduls/Users/UsersView.php'; ?>"><span class="lbl">Users</span></a></li>
-						<li><a href="<?php echo $Connection->Route().'Views/Moduls/Users/UsersView.php'; ?>"><span class="lbl"></span></a></li>
+						<li><a href="<?php echo $Connection->Route().'Views/Moduls/Users/UsersView.php'; ?>" target="pages"><span class="lbl">Users</span></a></li>
+						<li><a href="<?php echo $Connection->Route().'Views/Forms/NewTicket.php'; ?>" target="pages"><span class="lbl">New Ticket</span></a></li>
 					</ul>
 					
 			</li>
