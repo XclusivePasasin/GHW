@@ -193,8 +193,11 @@ VALUES ('Keyboard',1,1),('Mouse',1,1),('Monitor',2,1),('PC',3,1),('Phone',3,1),(
 ('Response time issues',2,2),('Virus',4,2),('Operating system problems',4,2),('Backup and recovery',4,2);
 
 INSERT INTO Employee (Name,Lastname,Phone,DUI,Adress,ID_Rol,ID_Department) 
-VALUES ('Luis','Majano',70588297,'06250035-9','Santa Tecla',1,1),('Gerardo','Franco',85476438,'09653730-4','Soyapango',1,2),
-('Eliezar','Passasin',87594000,'65362547-1','San Salvador',1,3);
+VALUES 
+('Luis','Majano',70588297,'06250035-9','Santa Tecla',1,3),
+('Gerardo','Franco',85476438,'09653730-4','Soyapango',1,3),
+('Eliazar','Pasasin',87594000,'65362547-1','San Salvador',1,3),
+('Alondra','Luna',87594001,'65364547-3','San Salvador',1,3);
 
 INSERT INTO User (Email,UserPassword,ID_Employee)
-VALUES ('luismajano@codelab.sv','demo',1),('gerardofranco@codelab.sv','demo',2),('eliazarpasasin@codelab.sv','demo',3);
+VALUES ('Luis@codelab.sv','demo',1),('Gerardo@codelab.sv','demo',2),('Pasasin@codelab.sv','demo',3),('Luna@codelab.sv','demo',4);
