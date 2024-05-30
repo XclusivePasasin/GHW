@@ -10,20 +10,20 @@ if (isset($_SESSION['Email'])) {
 		<!--Import MainHead-->
 		<?php require_once './Head/MainHead.php'; ?>
 		<title>Codelab - Dashboard</title>
-				<style>
-        .mainDashboard {
-            width: 100%;
-            height: 100vh; /* Altura completa de la ventana */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .mainDashboard iframe {
-            width: 100%;
-            height: 100%; /* Altura completa del contenedor */
-			background-color: RED;
-        }
-    </style>
+		<style>
+			.mainDashboard {
+				width: 100%;
+				height: 100vh; 
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			.mainDashboard iframe {
+				width: 100%;
+				height: 100%; 
+				background-color: white;
+			}
+    	</style>
 	</head>
 
 	<body class="with-side-menu">
@@ -42,8 +42,8 @@ if (isset($_SESSION['Email'])) {
 				<div class="mainDashboard">
 					<iframe src="<?php include 'Moduls/menu/nav.php'; ?>" name="pages" frameborder="0"></iframe>	
 				</div>
-			</div><!--.container-fluid-->
-		</div><!--.page-content-->
+			</div>
+		</div>
 
 		<!--Import MainJS-->
 		<?php require_once './Head/MainJS.php'; ?>

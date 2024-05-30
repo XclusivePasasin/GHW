@@ -9,7 +9,7 @@
             if (isset($_POST["Send"])) {
                 $Email = $_POST['Email'];
                 $Passwd = $_POST['Passwd'];
-                if (empty($Email) and empty($Passwd)) {
+                if (empty($Email) or empty($Passwd)) {
                     header("location:". Connection::Route()."index.php?m=2"); // Campos Vacios
                     exit();
                 }else{
