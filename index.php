@@ -129,11 +129,11 @@
                     <form action="" method="POST" id="Login" >
                         <div class="mb-4">
                             <label for="Email" class="form-label font-weight-bold">Email</label>
-                            <input type="email" class="form-control bg-dark-x font-weight-bold" id="Email" name="Email" placeholder="Enter your email" required>
+                            <input type="email" class="form-control bg-dark-x font-weight-bold" id="Email" name="Email" placeholder="Enter your email">
                         </div>
                         <div class="mb-4">
                             <label for="Passwd" class="form-label font-weight-bold">Password</label>
-                            <input type="password" class="form-control bg-dark-x font-weight-bold mb-2" id="Passwd" name="Passwd" placeholder="Enter your password" required>
+                            <input type="password" class="form-control bg-dark-x font-weight-bold mb-2" id="Passwd" name="Passwd" placeholder="Enter your password">
                         </div>
                         <a href="#" class="form-text text-decoration-none mb-3 text-white">Have you forgotten your password?</a>
                         <input type="hidden" name="Send" value="Yes">

@@ -26,6 +26,7 @@
 					<ul>
 						<li><a href="<?php echo $Connection->Route().'Views/Forms/Users.php'; ?>" target="pages"><span class="lbl">Users</span></a></li>
 						<li><a href="<?php echo $Connection->Route().'Views/Forms/NewTicket.php'; ?>" target="pages"><span class="lbl">New Ticket</span></a></li>
+						<li><a href="<?php echo $Connection->Route().'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl">View Tickets</span></a></li>
 					</ul>
 					
 			</li>
