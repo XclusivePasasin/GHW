@@ -16,7 +16,7 @@ $Connection = new Connection();
         <div class="tbl">
             <div class="tbl-row">
                 <div class="tbl-cell">
-                    <h3>INFOMATION TICKET</h3>
+                    <h3>INFORMATION TICKET</h3>
                     <ol class="breadcrumb breadcrumb-simple">
                         <li><a href="#">CodeLab</a></li>
                         <li><a href="#">Tickets</a></li>
@@ -90,10 +90,16 @@ $Connection = new Connection();
                     <center>
                         <div class="form-group">
                             <button type="submit" class="btn">Edit Ticeket</button>
+                            <button type="button" class="btn" >
+                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
+                                        View All Tickets
+                                    </span>
+                                </a>
+                            </button>
                         </div>
                     </center>
                 </div>
-            </form>
+                </form>
             </div>
         </div><!--.row-->
     </section>

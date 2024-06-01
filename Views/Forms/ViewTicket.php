@@ -117,7 +117,7 @@ $Connection = new Connection();
                                                 sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                             </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -142,7 +142,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -166,7 +166,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -190,7 +190,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -214,7 +214,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -238,7 +238,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -262,7 +262,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -286,7 +286,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -310,7 +310,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
@@ -334,7 +334,7 @@ $Connection = new Connection();
                                             </td>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a class="like" href="javascript:void(0)" title=view">
+                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view"><a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a class="like" href="javascript:void(0)" title="coment">
