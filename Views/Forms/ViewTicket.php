@@ -1,7 +1,3 @@
-
-
-
-
 <?php
 require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
 $Connection = new Connection();
@@ -16,117 +12,371 @@ $Connection = new Connection();
 </head>
 
 <body>
-<header class="section-header">
-            <div class="tbl">
-                <div class="tbl-row">
-                    <div class="tbl-cell">
-                        <h3>VIEW TICKET</h3>
-                        <ol class="breadcrumb breadcrumb-simple">
-                            <li><a href="#">CodeLab</a></li>
-                            <li><a href="#">Tickets</a></li>
-                            <li class="active">View Ticket</li>
-                        </ol>
-                    </div>
+    <header class="section-header">
+        <div class="tbl">
+            <div class="tbl-row">
+                <div class="tbl-cell">
+                    <h3>VIEW TICKET</h3>
+                    <ol class="breadcrumb breadcrumb-simple">
+                        <li><a href="#">CodeLab</a></li>
+                        <li><a href="#">Tickets</a></li>
+                        <li class="active">View Ticket</li>
+                    </ol>
                 </div>
             </div>
-        </header>
-<section class="box-typical box-typical-dashboard panel panel-default scrollable lobipanel lobipanel-sortable" data-inner-id="DLpwlFeFb4" data-index="0">
-    <header class="box-typical-header panel-heading ui-sortable-handle">
-        <h3 class="panel-title" style="max-width: calc(100% - 180px);">Recent tickets</h3>
-        <div class="dropdown">
-            <ul class="dropdown-menu dropdown-menu-right">
-                <li><a data-func="editTitle" data-tooltip="Edit title" data-toggle="tooltip" data-title="Edit title" data-placement="bottom" data-original-title="" title=""><i class="panel-control-icon glyphicon glyphicon-pencil"></i><span class="control-title">Edit title</span></a></li>
-                <li><a data-func="unpin" data-tooltip="Unpin" data-toggle="tooltip" data-title="Unpin" data-placement="bottom" data-original-title="" title=""><i class="panel-control-icon glyphicon glyphicon-move"></i><span class="control-title">Unpin</span></a></li>
-                <li><a data-func="reload" data-tooltip="Reload" data-toggle="tooltip" data-title="Reload" data-placement="bottom" data-original-title="" title=""><i class="panel-control-icon glyphicon glyphicon-refresh"></i><span class="control-title">Reload</span></a></li>
-                <li><a data-func="minimize" data-tooltip="Minimize" data-toggle="tooltip" data-title="Minimize" data-placement="bottom" data-original-title="" title=""><i class="panel-control-icon glyphicon glyphicon-minus"></i><span class="control-title">Minimize</span></a></li>
-                <li><a data-func="expand" data-tooltip="Fullscreen" data-toggle="tooltip" data-title="Fullscreen" data-placement="bottom" data-original-title="" title=""><i class="panel-control-icon glyphicon glyphicon-resize-full"></i><span class="control-title">Fullscreen</span></a></li>
-                <li><a data-func="close" data-tooltip="Close" data-toggle="tooltip" data-title="Close" data-placement="bottom" data-original-title="" title=""><i class="panel-control-icon glyphicon glyphicon-remove"></i><span class="control-title">Close</span></a></li>
-            </ul>
-            <div class="dropdown-toggle" data-toggle="dropdown"><span class="panel-control-icon glyphicon glyphicon-cog"></span></div>
         </div>
     </header>
-    <div class="box-typical-body panel-body jspScrollable" tabindex="0" style="overflow: hidden; padding: 0px; width: 393px;">
+    <div class="container-fluid">
+        <section class="box-typical">
 
-        <div class="jspContainer" style="width: 393px; height: 264px;">
-            <div class="jspPane" style="padding: 0px; top: -50px; left: 0px; width: 393px;">
-                <table class="tbl-typical">
-                    <tbody>
-                        <tr>
-                            <th>
-                                <div>Status</div>
-                            </th>
-                            <th>
-                                <div>Subject</div>
-                            </th>
-                            <th align="center">
-                                <div>Department</div>
-                            </th>
-                            <th align="center">
-                                <div>Date</div>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="label label-success">Open</span>
-                            </td>
-                            <td>Website down for one week</td>
-                            <td align="center">Support</td>
-                            <td nowrap="" align="center"><span class="semibold">Today</span> 8:30</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="label label-success">Open</span>
-                            </td>
-                            <td>Restoring default settings</td>
-                            <td align="center">Support</td>
-                            <td nowrap="" align="center"><span class="semibold">Today</span> 16:30</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="label label-warning">Progress</span>
-                            </td>
-                            <td>Loosing control on server</td>
-                            <td align="center">Support</td>
-                            <td nowrap="" align="center"><span class="semibold">Yesterday</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="label label-danger">Closed</span>
-                            </td>
-                            <td>Authorizations keys</td>
-                            <td align="center">Support</td>
-                            <td nowrap="" align="center">23th May</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="jspVerticalBar">
-                <div class="jspCap jspCapTop"></div>
-                <div class="jspTrack" style="height: 256px;">
-                    <div class="jspDrag" style="height: 184px; top: 35.2381px;">
-                        <div class="jspDragTop"></div>
-                        <div class="jspDragBottom"></div>
+            <div class="table-responsive">
+                <div class="bootstrap-table">
+                    <div class="fixed-table-toolbar">
+                        <div class="bars pull-left">
+                            <div id="toolbar">
+                                <div class="bootstrap-table-header">ALL TICKETS</div>
+                            </div>
+                        </div>
+                        <div class="columns columns-right btn-group pull-right">
+                            <button class="btn btn-default" type="button" name="paginationSwitch" title="Hide/Show pagination">
+                                <i class="font-icon font-icon-arrow-square-down"></i>
+                            </button>
+                            <button class="btn btn-default" type="button" name="refresh" title="Refresh">
+                                <i class="font-icon font-icon-refresh"></i>
+                            </button>
+                            <button class="btn btn-default" type="button" name="toggle" title="Toggle">
+                                <i class="font-icon font-icon-list-square"></i>
+                            </button>
+                            <div class="keep-open btn-group" title="Columns">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <i class="font-icon font-icon-list-rotate"></i>
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <li><span class="checkbox
+                                    "><input id="datatable-columns-checkbox-2" type="checkbox" data-field="name" value="2" checked="checked"> <label for="datatable-columns-checkbox-2">Status</label></span></li>
+                                    <li><span class="checkbox"><input id="datatable-columns-checkbox-3" type="checkbox" data-field="price" value="3" checked="checked"> <label for="datatable-columns-checkbox-3">Item Price</label></span></li>
+                                    <li><span class="checkbox"><input id="datatable-columns-checkbox-4" type="checkbox" data-field="operate" value="4" checked="checked"> <label for="datatable-columns-checkbox-4">Item Operate</label></span></li>
+                                </ul>
+                            </div>
+                            <div class="export btn-group"><button class="btn btn-default dropdown-toggle" data-toggle="dropdown" type="button"><i class="font-icon font-icon-download"></i> <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li data-type="json"><a href="javascript:void(0)">JSON</a></li>
+                                    <li data-type="xml"><a href="javascript:void(0)">XML</a></li>
+                                    <li data-type="csv"><a href="javascript:void(0)">CSV</a></li>
+                                    <li data-type="txt"><a href="javascript:void(0)">TXT</a></li>
+                                    <li data-type="sql"><a href="javascript:void(0)">SQL</a></li>
+                                    <li data-type="excel"><a href="javascript:void(0)">MS-Excel</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pull-right search"><input class="form-control" type="text" placeholder="Search"></div>
+                    </div>
+                    <div class="fixed-table-container" style="padding-bottom: 0px;">
+                        <div class="fixed-table-header" style="display: none;">
+                            <table></table>
+                        </div>
+                        <div class="fixed-table-body">
+                            <div class="fixed-table-loading" style="top: 88px;">Loading, please wait...</div>
+                            <table id="table" class="table table-striped table-hover" data-toolbar="#toolbar" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-show-export="true" data-detail-view="true" data-detail-formatter="detailFormatter" data-minimum-count-columns="2" data-show-pagination-switch="true" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, ALL]" data-show-footer="false" data-response-handler="responseHandler">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; vertical-align: middle; " rowspan="2" data-field="id" tabindex="0">
+                                            <div class="th-inner sortable both">TICEKT ID</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center; " data-field="name" tabindex="0">
+                                            <div class="th-inner sortable both">STATUS</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="text-align: center; " data-field="price" tabindex="0">
+                                            <div class="th-inner sortable both">TITLE</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="text-align: center; " data-field="operate" tabindex="0">
+                                            <div class="th-inner ">OPERATE</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-index="0">
+                                        <td style="text-align: center; vertical-align: middle; ">0</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status  "><button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Draft</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    <tr data-index="1">
+
+                                        <td style="text-align: center; vertical-align: middle; ">1</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status  "><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-index="2">
+
+                                        <td style="text-align: center; vertical-align: middle; ">2</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status  "><button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Moderation</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                            <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-index="3">
+
+                                        <td style="text-align: center; vertical-align: middle; ">3</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status  "><button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Published</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-index="4">
+
+                                        <td style="text-align: center; vertical-align: middle; ">4</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status  "><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-index="5">
+
+                                        <td style="text-align: center; vertical-align: middle; ">4</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status dropup "><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-index="6">
+
+                                        <td style="text-align: center; vertical-align: middle; ">4</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status dropup "><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-index="7">
+
+                                        <td style="text-align: center; vertical-align: middle; ">4</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status dropup "><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-index="8">
+
+                                        <td style="text-align: center; vertical-align: middle; ">4</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status dropup "><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr data-index="9">
+
+                                        <td style="text-align: center; vertical-align: middle; ">4</td>
+                                        <td style="text-align: center; ">
+                                            <div class="dropdown dropdown-status dropup "><button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pending</button>
+                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
+                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                            </td>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <a class="like" href="javascript:void(0)" title=view">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a class="like" href="javascript:void(0)" title="coment">
+                                                <i class="fa fa-comment"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="fixed-table-footer" style="display: none;">
+                            <table>
+                                <tbody>
+                                    <tr></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="fixed-table-pagination">
+                            <div class="pull-left pagination-detail"><span class="pagination-info">Showing 1 to 10 of 22 rows</span><span class="page-list"><span class="btn-group dropup"><button type="button" class="btn btn-default  dropdown-toggle" data-toggle="dropdown"><span class="page-size">10</span> <span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li class="active"><a href="javascript:void(0)">10</a></li>
+                                            <li><a href="javascript:void(0)">25</a></li>
+                                        </ul>
+                                    </span> records per page</span></div>
+                            <div class="pull-right pagination">
+                                <ul class="pagination">
+                                    <li class="page-pre"><a href="javascript:void(0)"><i class="font-icon font-icon-arrow-left"></i></a></li>
+                                    <li class="page-number active"><a href="javascript:void(0)">1</a></li>
+                                    <li class="page-number"><a href="javascript:void(0)">2</a></li>
+                                    <li class="page-number"><a href="javascript:void(0)">3</a></li>
+                                    <li class="page-next"><a href="javascript:void(0)"><i class="font-icon font-icon-arrow-right"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="jspCap jspCapBottom"></div>
+                <div class="clearfix"></div>
             </div>
-            <div class="jspHorizontalBar">
-                <div class="jspCap jspCapLeft"></div>
-                <div class="jspTrack" style="width: 385px;">
-                    <div class="jspDrag" style="width: 342px; left: 0px;">
-                        <div class="jspDragLeft"></div>
-                        <div class="jspDragRight"></div>
-                    </div>
-                </div>
-                <div class="jspCap jspCapRight"></div>
-                <div class="jspCorner" style="width: 8px;"></div>
-            </div>
-        </div>
-    </div><!--.box-typical-body-->
-</section>
+        </section><!--.box-typical-->
 
 
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
+        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
 </body>
 
 </html>
