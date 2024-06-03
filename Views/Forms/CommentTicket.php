@@ -29,13 +29,20 @@ $Connection = new Connection();
     <section class="card">
         <div class="card-block">
             <div class="row m-t-lg">
-                <div class="col-md-6">
-                    <form id="form-signup_v1" name="form-signup_v1" method="POST">
+                <form id="form-signup_v1" name="form-signup_v1" method="POST">
+                    <div class="col-md-6">
+
                         <div class="form-group">
                             <div class="form-group">
                                 <label class="form-label" for="signup_v2-name">Nª Comment</label>
                                 <div class="form-control-wrapper">
                                     <input type="number" class="form-control" id="" placeholder="Nª Ticekt" disabled required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="signup_v1-user">User</label>
+                                <div class="form-control-wrapper">
+                                    <input type="text" class="form-control" id="" placeholder="Example: Elena Gomez">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -45,32 +52,56 @@ $Connection = new Connection();
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                    </div>
 
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-priority">Last Comment</label>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Comment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Mark</td>
+                                        <td> Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Jacob</td>
+                                        <td> Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>Otto</td>
+                                        <td> Lorem ipsum dolor sit amet, consectetur adipiscing elit</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <center>
                             <div class="form-group">
-                                <label class="form-label" for="signup_v1-priority">Status</label>
-                                <select id="priority" class="form-control" required>
-                                    <option hidden>Select Status</option>
-                                    <option value=""></option>
-                                </select>
+                                <button type="submit" class="btn">Add Commebt for Ticket</button>
+                                <button type="button" class="btn">
+                                    <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
+                                            View All Tickets
+                                        </span>
+                                    </a>
+                                </button>
                             </div>
-                        </div>
-                        <div class="col-md-12">
-                            <center>
-                                <div class="form-group">
-                                    <button type="submit" class="btn">Edit Ticket</button>
-                                    <button type="button" class="btn">
-                                        <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
-                                                View All Tickets
-                                            </span>
-                                        </a>
-                                    </button>
-                                </div>
-                            </center>
-                        </div>
-                    </form>
-                </div>
-            </div><!--.row-->
+                        </center>
+                    </div>
+                </form>
+            </div>
+        </div><!--.row-->
     </section>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
 </body>
