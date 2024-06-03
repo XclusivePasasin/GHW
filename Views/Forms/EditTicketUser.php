@@ -90,12 +90,7 @@ $Connection = new Connection();
                     <center>
                         <div class="form-group">
                             <button type="submit" class="btn">Edit Ticket</button>
-                            <button type="button" class="btn" >
-                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
-                                        View All Tickets
-                                    </span>
-                                </a>
-                            </button>
+                            <button type="submit" class="btn">Delete Ticket</button>
                         </div>
                     </center>
                 </div>

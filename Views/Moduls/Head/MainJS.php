@@ -7,3 +7,5 @@
 <script src="../../Public/js/lib/bootstrap-table-export.min.js"></script>
 <script src="../../Public/js/lib/bootstrap-table/tableExport.min.js"></script>
 <script src="../../Public/js/lib/bootstrap-table-filter-control.min.js"></script>
+<script src="../../Public/js/lib/bootstrap-table/bootstrap-table-fixed-columns.js"></script>
+
