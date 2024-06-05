@@ -6,6 +6,7 @@ class Connection {
 
     // Credentials
     protected $dbh;
+    protected $mysql;
     
     protected function ConnectionPDO() {
 
@@ -22,6 +23,20 @@ class Connection {
         return $this->dbh->query("SET NAMES 'utf8'");
     }
     
+    public function Route() {
+        return "http://localhost:/GHW-PROJECT/";
+    }
+
+    
+}
+
+class MySQL{
+    
+    public function ConnectionMySQL(){
+        $ConnectionMySQL = mysqli_connect("localhost","root","","TicketSystem"); 
+        return $ConnectionMySQL;
+    }
+
     public function Route() {
         return "http://localhost:/GHW-PROJECT/";
     }

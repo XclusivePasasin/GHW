@@ -52,9 +52,9 @@ CREATE TABLE Employee
     ID_Employee int,
     Name varchar(100),
     Lastname varchar(100),
-    Phone int,
+    Phone varchar(9),
     DUI varchar(10),
-    Adress varchar(200),
+    Address varchar(200),
     ID_Rol int,
     ID_Department int
 );
@@ -162,7 +162,7 @@ ADD CONSTRAINT fk_Comment_ID_Ticket FOREIGN KEY (ID_Ticket) REFERENCES Ticket(ID
 
 -- Insert Data on Table Rol
 INSERT INTO Rol (Rol)
-VALUES ('Employee'), ('Administrador'), ('Técnico Lvl.1'), ('Técnico Lvl.2'), ('Técnico Lvl.3');
+VALUES ('Employee'), ('Administrator'), ('Technical Lvl.1'), ('Technical Lvl.2'), ('Technical Lvl.3');
 
 -- Insert Data on Table Department
 INSERT INTO Department (Department)
@@ -192,9 +192,34 @@ VALUES ('Keyboard',1,1),('Mouse',1,1),('Monitor',2,1),('PC',3,1),('Phone',3,1),(
 ('Outdated software',3,2),('Lack of space',1,2),('The program does not respond',2,2),('Server not found',3,2),('Software licenses',1,2),('Problems accessing the account',1,2),
 ('Response time issues',2,2),('Virus',4,2),('Operating system problems',4,2),('Backup and recovery',4,2);
 
-INSERT INTO Employee (Name,Lastname,Phone,DUI,Adress,ID_Rol,ID_Department) 
-VALUES ('Luis','Majano',70588297,'06250035-9','Santa Tecla',1,1),('Gerardo','Franco',85476438,'09653730-4','Soyapango',1,2),
-('Eliezar','Passasin',87594000,'65362547-1','San Salvador',1,3);
+INSERT INTO Employee (ID_Employee,Name,Lastname,Phone,DUI,Address,ID_Rol,ID_Department) 
+VALUES (1,'Luis','Majano',70588297,'06250035-9','Santa Tecla',1,1),(2,'Gerardo','Franco',85476438,'09653730-4','Soyapango',1,2),
+(3,'Eliazar','Pasasin',87594000,'65362547-1','San Salvador',1,3);
 
-INSERT INTO User (Email,UserPassword,ID_Employee)
-VALUES ('luismajano@codelab.sv','demo',1),('gerardofranco@codelab.sv','demo',2),('eliazarpasasin@codelab.sv','demo',3);
+INSERT INTO User (ID_User,Email,UserPassword,ID_Employee)
+VALUES (1,'Majano@codelab.sv','demo',1),(2,'Franco@codelab.sv','demo',2),(3,'Pasasin@codelab.sv','demo',3); 
+
+-- Views
+CREATE VIEW User_Info AS
+SELECT 
+    e.ID_Employee AS ID_Employee,
+    e.Name AS Name,
+    e.Lastname AS Lastname,
+    e.Phone AS Phone,
+    e.DUI AS DUI,
+    e.Address AS Address,
+    e.ID_Rol AS ID_Rol,
+    r.Rol AS Rol,
+    e.ID_Department AS ID_Department,
+    d.Department AS Department,
+    u.ID_User AS ID_User,
+    u.Email AS Email,
+    u.UserPassword AS Password
+FROM 
+    Employee e
+INNER JOIN 
+    User u ON e.ID_Employee = u.ID_Employee
+INNER JOIN 
+    Rol r ON e.ID_Rol = r.ID_Rol
+INNER JOIN 
+    Department d ON e.ID_Department = d.ID_Department;

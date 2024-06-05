@@ -17,11 +17,13 @@ if (isset($_SESSION['Email'])) {
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				background-image: url('../../Public/img/1 (2).svg');
+				background-position:top;
+				background-repeat: no-repeat;
 			}
 			.mainDashboard iframe {
 				width: 100%;
 				height: 100%; 
-				background-color: white;
 			}
     	</style>
 	</head>
@@ -40,7 +42,7 @@ if (isset($_SESSION['Email'])) {
 		<div class="page-content">
 			<div class="container-fluid">
 				<div class="mainDashboard">
-					<iframe src="<?php include 'Moduls/menu/nav.php'; ?>" name="pages" frameborder="0"></iframe>	
+					<iframe src="" name="pages" frameborder="0"></iframe>	
 				</div>
 			</div>
 		</div>
