@@ -30,7 +30,7 @@ $Connection = new Connection();
         <div class="card-block">
             <div class="row m-t-lg">
                 <div class="col-md-6">
-                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/Users-Controller.php?action=Update">
+                    <form id="form-signup_v1" name="form-signup_v1" method="POST">
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Title</label>
                             <div class="form-control-wrapper">
@@ -90,12 +90,7 @@ $Connection = new Connection();
                     <center>
                         <div class="form-group">
                             <button type="submit" class="btn">Edit Ticket</button>
-                            <button type="button" class="btn" >
-                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
-                                        View All Tickets
-                                    </span>
-                                </a>
-                            </button>
+                            <button type="submit" class="btn">Delete Ticket</button>
                         </div>
                     </center>
                 </div>

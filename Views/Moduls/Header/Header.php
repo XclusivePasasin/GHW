@@ -1,7 +1,24 @@
 <?php 
 require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
 $Connection = new Connection();
-session_start();
+// Instance Components
+$database = new MySQL();
+$ConnectionMYSQL = $database->ConnectionMySQL();
+if ($ConnectionMYSQL) {
+    // Extract database information
+    $Sql_User_Info = "SELECT * FROM User_Info"; // User Information
+    $User_Info = mysqli_query($ConnectionMYSQL, $Sql_User_Info);
+	$User = $_SESSION['Id_User'];
+    $Sql_Rol = "SELECT r.Rol FROM User_Info ui JOIN Rol r ON ui.ID_Rol = r.ID_Rol WHERE ui.ID_User= $User"; // Extract Information table Rol
+    $GetRol =  mysqli_query($ConnectionMYSQL, $Sql_Rol);
+	if ($GetRol && $GetRol->num_rows > 0) {
+        $row = $GetRol->fetch_object();
+        $Rol = $row->Rol; 
+    }
+}
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 ?>
 <header class="site-header">
@@ -24,7 +41,7 @@ session_start();
 	                <div class="site-header-shown">
 	                    <div class="dropdown dropdown-notification messages">
 	                        <a href="#">
-								<h5 style="line-height: normal; margin-top: 5px; color:black;">Antonio Pasasin</h5>
+								<h5 style="line-height: normal; margin-top: 5px; color:black;"><?php echo $_SESSION['Name'].' '.$_SESSION['LastName'];?></h5>
 	                        </a>
 	                        
 	                    </div>
@@ -34,7 +51,7 @@ session_start();
 	                            <img src="../../Public/img/avatar-2-64.png" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dd-user-menu" >
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span>Profile</a>
+	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span><?php echo $Rol ?></a>
 	                            <a class="dropdown-item" href="<?php echo $Connection->Route().'Views/Moduls/Users/Logout.php'; ?>"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>
 	                    </div>
