@@ -52,12 +52,6 @@ if ($ConnectionMYSQL) {
         display: none;
     }
   
-    .card {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 75%;
-    }
 </style>
 </head>
 <body class="no-border">
