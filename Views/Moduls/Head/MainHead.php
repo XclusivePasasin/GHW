@@ -10,3 +10,4 @@
 <link rel="stylesheet" href="../../Public/css/lib/font-awesome/font-awesome.min.css">
 <link rel="stylesheet" href="../../Public/css/lib/bootstrap/bootstrap.min.css">
 <link rel="stylesheet" href="../../Public/css/main.css">
+<script src="https://kit.fontawesome.com/c49bc9b9fe.js" crossorigin="anonymous"></script>
