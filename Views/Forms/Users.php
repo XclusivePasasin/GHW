@@ -1,4 +1,5 @@
 <?php
+
 $Include = require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
 include_once 'C:\xampp\htdocs\GHW-PROJECT\Controllers\Users-Controller.php';
 require_once 'C:\xampp\htdocs\GHW-PROJECT\Models\Users.php';
@@ -18,7 +19,6 @@ if ($ConnectionMYSQL) {
     $Sql_Department = "SELECT * FROM Department";
     $GetDepartment = mysqli_query($ConnectionMYSQL, $Sql_Department);
 }
-
 
 ?>
 
@@ -51,8 +51,15 @@ if ($ConnectionMYSQL) {
     .error {
         display: none;
     }
+  
+    .card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 75%;
+    }
 </style>
-
+</head>
 <body class="no-border">
 
     <header class="section-header">
@@ -243,7 +250,6 @@ if ($ConnectionMYSQL) {
             }
         }
     </script>
-
 
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
 </body>

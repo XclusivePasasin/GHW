@@ -17,11 +17,13 @@ if (isset($_SESSION['Email'])) {
 				display: flex;
 				justify-content: center;
 				align-items: center;
+				background-image: url('../../Public/img/1 (2).svg');
+				background-position:top;
+				background-repeat: no-repeat;
 			}
 			.mainDashboard iframe {
 				width: 100%;
 				height: 100%; 
-				background-color: white;
 			}
     	</style>
 	</head>
