@@ -71,6 +71,7 @@ function RegisterUserAndEmployee($ModelUser, $Connection)
 
 function EditUserAndEMployee($ID, $data)
 {
+    
 }
 
 function DeleteUserAndEmployee($ID)

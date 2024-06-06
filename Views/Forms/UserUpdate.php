@@ -100,7 +100,7 @@ if ($ConnectionMYSQL) {
 
             </div>
             <div class="row">
-                <form action="../../Controllers/Users-Controller.php?action=Register" method="POST">
+                <form action="../../Controllers/Users-Controller.php?action=Update" method="POST">
                     <div class="col-md-6">
                         <legend>
                             <h4 style="font-weight:600;">Access Credentials</h4>
@@ -131,12 +131,35 @@ if ($ConnectionMYSQL) {
                                     <?php } ?>
                                 </select>
                             </fieldset>
-                            <div class="col-md-12 centered-button">
+                                <div class="col-md-6 centered-button">
                                 <fieldset class="form-group">
-                                    <button type="submit" class="btn btn-success centered-button" style="width: 220px; font-size:17px; ;">Register <i class="fa-solid fa-floppy-disk"></i></button>
+                                    <button type="button" class="btn btn-danger centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmCancel()"><i class="fa-solid fa-arrow-left"></i> Cancel</button>
+                                    <script>
+                                        function confirmSave() {
+                                            if (confirm("Are you sure you want to save changes?")) {
+                                                document.querySelector('form').submit();
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                    
+                                        function confirmCancel() {
+                                            if (confirm("Are you sure you want to cancel? Any unsaved changes will be lost.")) {
+                                                window.history.back();
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                </script>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6 centered-button">
+                                <fieldset class="form-group">
+                                    <button type="submit" class="btn btn-success centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmSave()">Save Changes <i class="fa-solid fa-floppy-disk"></i></button>
                                 </fieldset>
                             </div>
                         </legend>
+
                     </div>
                     <div class="col-md-6">
                         <legend>
@@ -180,77 +203,3 @@ if ($ConnectionMYSQL) {
         <br>
         <br>
     </section>
-
-    <hr class="centered-hr">
-
-    <section class="card no-border">
-        <div class="card-block">
-            <br>
-            <h4 style="font-weight:600;" class="text-center">Registered Users</h4>
-        </div>
-        <!--Table-->
-        <table id="table-edit" class="table table-striped table-hover text-center">
-            <thead>
-                <tr>
-                    <th width="1">ID</th>
-                    <th class="text-center">Name Employee</th>
-                    <th class="text-center">Phone</th>
-                    <th class="text-center">Email</th>
-                    <th width="120" class="text-center">Rol</th>
-                    <th width="120" class="text-center">Departament</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($Info = $User_Info->fetch_object()) { ?>
-                    <tr id="">
-                        <td><span class="tabledit-span tabledit-identifier"></span><input class="tabledit-input tabledit-identifier" type="hidden" name="id" value="" disabled=""><?php echo htmlspecialchars($Info->ID_User); ?></td>
-                        <td class="color-blue-grey-lighter tabledit-view-mode"><span class="tabledit-span"><?php echo htmlspecialchars($Info->Name . ' ' . $Info->Lastname); ?></span><input class="tabledit-input form-control input-sm" type="text" name="description" value="Revene for last quarter in state America for year 2013, whith..." style="display: none;" disabled=""></td>
-                        <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Phone); ?></td>
-                        <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Email); ?></td>
-                        <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Rol); ?></td>
-                        <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Department); ?></td>
-
-                        <td style="white-space: nowrap; width: 1%;">
-                            <div class="btn-group btn-group-sm" style="float: none;">
-                                <a href="UserUpdate.php?id=<?php echo $Info->ID_User ?>" target="pages">
-                                    <button type="button" class="tabledit-edit-button btn btn-sm btn-default btn-default" style="float: none;"><span class="glyphicon glyphicon-pencil"></span></button>
-                                </a>
-                                <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger" style="float: none;"><span class="glyphicon glyphicon-trash"></span></button>
-                            </div>
-                            <button type="button" class="tabledit-save-button btn btn-sm btn-success" style="display: none; float: none;">Save</button>
-                            <button type="button" class="tabledit-confirm-button btn btn-sm btn-danger" style="display: none; float: none;">Confirm</button>
-                            <button type="button" class="tabledit-restore-button btn btn-sm btn-warning" style="display: none; float: none;">Restore</button>
-                            </div>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-                
-    </section>
-
-    <script>
-        function EliminarLetras(event) {
-            event.target.value = event.target.value.replace(/[^0-9\-]/g, '');
-        }
-
-        function ValidarCorreo(event) {
-            const emailInput = event.target;
-            const emailValue = emailInput.value;
-            const errorElement = document.getElementById('error-message');
-            const regex = /^[^\s@]+@[^\s@]+\.Codelab\.sv$/;
-
-            if (!regex.test(emailValue)) {
-                errorElement.style.display = 'block';
-            } else {
-                errorElement.style.display = 'none';
-            }
-        }
-    </script>
-
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
-</body>
-
-</html>
-
