@@ -107,15 +107,19 @@
 //Funcion para eliminar
         public function Delete($id)
         {
+            if (is_null($id) || !is_numeric($id)) {
+                die("Error: ID de usuario no puede ser NULL o no numérico");
+            }
+        
             $Connection = $this->Connection;
-            $idUser = mysqli_real_escape_string($Connection, $id);
-
+            $idUser = intval($id);
+        
             $DeleteEmployee = "DELETE FROM employee WHERE ID_Employee = $idUser";
             $DeleteEmployeeResult = mysqli_query($Connection, $DeleteEmployee);
             if (!$DeleteEmployeeResult) {
                 die("Error al eliminar empleado: " . mysqli_error($Connection));
             }
-
+        
             $DeleteUser = "DELETE FROM user WHERE ID_User = $idUser";
             $DeleteUserResult = mysqli_query($Connection, $DeleteUser);
             if (!$DeleteUserResult) {

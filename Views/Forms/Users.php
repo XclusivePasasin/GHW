@@ -217,20 +217,12 @@ if ($ConnectionMYSQL) {
                                 <a href="UserUpdate.php?id=<?php echo $Info->ID_User ?>" target="pages">
                                     <button type="button" class="tabledit-edit-button btn btn-sm btn-default btn-default" style="float: none;"><span class="glyphicon glyphicon-pencil"></span></button>
                                 </a>
-                                <a href="../../Controllers/Users-Controller.php?action=Delete" target="pages">
+                                <a href="../../Controllers/Users-Controller.php?action=Delete&id=<?php echo $Info->ID_User ?>" target="pages">
                                     <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger" style="float: none;" onclick="confirmDelete()"><span class="glyphicon glyphicon-trash"></span></button>
                                     <script>
                                         function confirmDelete() 
                                         {
-                                            if (confirm("Are you sure you want to delete this user?")) 
-                                            {
-                                                window.location.href="../../Controllers/Users-Controller.php?id=<?php echo $Info->ID_User ?>";
-
-                                            } 
-                                            else 
-                                            {
-                                                return false;
-                                            }
+                                          return confirm("Are you sure you want to delete this user?");
                                         }
                                     </script> 
                                 </a>

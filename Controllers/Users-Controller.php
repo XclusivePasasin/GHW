@@ -19,7 +19,15 @@ if (isset($_GET['action'])) {
             EditUserAndEmployee($ModelUpdate, $Connection);
             break;
         case 'Delete':
-            DeleteUserAndEmployee($ModelDelete, $Connection);
+            if (isset($_GET['id']) && is_numeric($_GET['id'])) 
+            {
+                $idUser = intval($_GET['id']);                 
+                DeleteUserAndEmployee($ModelDelete, $Connection, $idUser);             
+            } 
+            else 
+            {                 
+                die("Error: ID de usuario no proporcionado o no es válido"); 
+            }
             break;
         default:
             break;
@@ -131,18 +139,11 @@ function EditUserAndEmployee($ModelUpdate, $Connection)
     }
 }
 
-function DeleteUserAndEmployee($ModelDelete, $Connection)
+function DeleteUserAndEmployee($ModelDelete, $Connection, $idUser)
 
 {
-    if (isset($_GET['id'])) 
-    {
-        $idUser = intval($_GET['id']); 
-        $ModelDelete->Delete($id);
-    } 
-    else 
-    {
-        die("Error: ID de usuario no proporcionado");
-    }
-}
+        $ModelDelete->Delete($idUser);
+} 
+
 
 
