@@ -8,23 +8,42 @@ $database = new MySQL();
 $ConnectionMYSQL = $database->ConnectionMySQL();
 $ModelUser = new UserCRUD();
 $Message = RegisterUserAndEmployee($ModelUser, $ConnectionMYSQL);
+$idInfo = $_GET["id"];
 
+if ($ConnectionMYSQL) 
+{
+    $selectUser = "SELECT * FROM user WHERE ID_User = $idInfo";
+    $consultUser = mysqli_query($ConnectionMYSQL, $selectUser);
 
-if ($ConnectionMYSQL) {
-    // Extract database information
+    if (!$consultUser) {
+        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
+    }
+    if (mysqli_num_rows($consultUser) > 0) {
+        $user = mysqli_fetch_object($consultUser);
+    }
+
     $Sql_User_Info = "SELECT * FROM User_Info"; // User Information
     $User_Info = mysqli_query($ConnectionMYSQL, $Sql_User_Info);
     $Sql_Rol = "SELECT * FROM Rol"; // Extract Information table Rol
     $GetRol =  mysqli_query($ConnectionMYSQL, $Sql_Rol);
     $Sql_Department = "SELECT * FROM Department";
     $GetDepartment = mysqli_query($ConnectionMYSQL, $Sql_Department);
+
+    $selectEmployee = "SELECT * FROM employee WHERE ID_Employee = $idInfo";
+    $consultEmployee = mysqli_query($ConnectionMYSQL, $selectEmployee);
+
+    if (!$consultEmployee) {
+        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
+    }
+    if (mysqli_num_rows($consultEmployee) > 0) {
+        $employee = mysqli_fetch_object($consultEmployee);
+    }
 }
 
 ?>
 
 <!DOCTYPE html>
 <html>
-
 <head lang="es">
     <!--Import MainHead-->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainHead.php'; ?>
@@ -106,11 +125,11 @@ if ($ConnectionMYSQL) {
                             <h4 style="font-weight:600;">Access Credentials</h4>
                             <fieldset class="form-group">
                                 <label class="form-label">ID</label>
-                                <input type="number" class="form-control" name="ID" readonly value="" id="IdUser">
+                                <input type="number" class="form-control" name="userID" readonly value="<?php echo $user->ID_User; ?>" id="IdUser">
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="Example: @Codelab.sv" name="Email" require oninput="ValidarCorreo(event)">
+                                <input type="email" class="form-control" placeholder="Example: @Codelab.sv" name="Email" require oninput="ValidarCorreo(event)" value="<?php echo $user->Email; ?>">
                                 <div class="alert alert-warning alert-icon alert-close alert-dismissible fade in error" role="alert" id="error-message">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">×</span>
@@ -121,7 +140,7 @@ if ($ConnectionMYSQL) {
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Password</label>
-                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" require>
+                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" value="<?php echo $user->UserPassword; ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Rol</label>
@@ -167,24 +186,24 @@ if ($ConnectionMYSQL) {
                             <div class="row">
                                 <fieldset class="form-group col-md-6">
                                     <label class="form-label">First Name</label>
-                                    <input name="FirstName" type="text" class="form-control" placeholder="Luna" require>
+                                    <input name="FirstName" type="text" class="form-control" placeholder="Luna" value="<?php echo $employee->Name; ?>" require>
                                 </fieldset>
                                 <fieldset class="form-group col-md-6">
                                     <label class="form-label">Last Name</label>
-                                    <input name="LastName" type="text" class="form-control" placeholder="Gonzalez" require>
+                                    <input name="LastName" type="text" class="form-control" placeholder="Gonzalez" value="<?php echo $employee->Lastname; ?>" require>
                                 </fieldset>
                             </div>
                             <fieldset class="form-group">
                                 <label class="form-label">Address</label>
-                                <input name="Address" type="text" class="form-control" placeholder="San Salvador, Santa Tecla" require>
+                                <input name="Address" type="text" class="form-control" placeholder="San Salvador, Santa Tecla" value="<?php echo $employee->Address; ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Phone Number</label>
-                                <input name="Phone" type="text" class="form-control" oninput="EliminarLetras(event)" placeholder="Example: 7122-3144" maxlength="9" require>
+                                <input name="Phone" type="text" class="form-control" oninput="EliminarLetras(event)" placeholder="Example: 7122-3144" maxlength="9" value="<?php echo $employee->Phone; ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">DUI</label>
-                                <input name="Dui" type="text" class="form-control" placeholder="Example: 00000000-1" maxlength="9"  oninput="EliminarLetras(event)" require>
+                                <input name="Dui" type="text" class="form-control" placeholder="Example: 00000000-1" maxlength="9"  oninput="EliminarLetras(event)" value="<?php echo $employee->DUI; ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Departament</label>

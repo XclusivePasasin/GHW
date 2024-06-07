@@ -8,6 +8,7 @@ $database = new MySQL();
 $ConnectionMYSQL = $database->ConnectionMySQL();
 $ModelUser = new UserCRUD();
 $Message = RegisterUserAndEmployee($ModelUser, $ConnectionMYSQL);
+$ModelDelete = new UserCRUD();
 
 
 if ($ConnectionMYSQL) {
@@ -216,7 +217,24 @@ if ($ConnectionMYSQL) {
                                 <a href="UserUpdate.php?id=<?php echo $Info->ID_User ?>" target="pages">
                                     <button type="button" class="tabledit-edit-button btn btn-sm btn-default btn-default" style="float: none;"><span class="glyphicon glyphicon-pencil"></span></button>
                                 </a>
-                                <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger" style="float: none;"><span class="glyphicon glyphicon-trash"></span></button>
+                                <a href="../../Controllers/Users-Controller.php?action=Delete" target="pages">
+                                    <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger" style="float: none;" onclick="confirmDelete()"><span class="glyphicon glyphicon-trash"></span></button>
+                                    <script>
+                                        function confirmDelete() 
+                                        {
+                                            if (confirm("Are you sure you want to delete this user?")) 
+                                            {
+                                                window.location.href="../../Controllers/Users-Controller.php?id=<?php echo $Info->ID_User ?>";
+
+                                            } 
+                                            else 
+                                            {
+                                                return false;
+                                            }
+                                        }
+                                    </script> 
+                                </a>
+                                
                             </div>
                             <button type="button" class="tabledit-save-button btn btn-sm btn-success" style="display: none; float: none;">Save</button>
                             <button type="button" class="tabledit-confirm-button btn btn-sm btn-danger" style="display: none; float: none;">Confirm</button>
