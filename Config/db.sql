@@ -223,3 +223,40 @@ INNER JOIN
     Rol r ON e.ID_Rol = r.ID_Rol
 INNER JOIN 
     Department d ON e.ID_Department = d.ID_Department;
+
+-- Proceso almacenado para actualizar usuario
+
+DELIMITER //
+ 
+CREATE PROCEDURE sp_UpdateUser(
+    IN idEmployee INT, 
+    IN name VARCHAR(100), 
+    IN lastname VARCHAR(100), 
+    IN phone VARCHAR(9), 
+    IN dui VARCHAR(10), 
+    IN address VARCHAR(200), 
+    IN idRol INT, 
+    IN idDepartment INT,
+    IN idUser INT,
+    IN email VARCHAR(150),
+    IN userPassword VARCHAR(255)
+)
+BEGIN
+    UPDATE Employee 
+    SET 
+        Name = name, 
+        Lastname = lastname, 
+        Phone = phone, 
+        DUI = dui, 
+        Address = address, 
+        ID_Rol = idRol, 
+        ID_Department = idDepartment
+    WHERE ID_Employee = idEmployee;
+    UPDATE User 
+    SET 
+        Email = email, 
+        UserPassword = userPassword
+    WHERE ID_User = idUser;
+END //
+ 
+DELIMITER ;

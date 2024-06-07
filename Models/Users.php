@@ -83,7 +83,52 @@
                 return null;
             }
         }
+//Funcion para editar
+        public function Update($idEmployee, $FirstName, $LastName, $Phone, $Dui, $Address, $Rol, $Department, $idUser, $email, $Passwd)
+        {
+            $Connection = $this->Connection;
+            $UpdateEmployeeSQL = "CALL sp_UpdateUser(" .
+                                mysqli_real_escape_string($Connection, $idEmployee) . ", '" .
+                                mysqli_real_escape_string($Connection, $FirstName) . "', '" .
+                                mysqli_real_escape_string($Connection, $LastName) . "', '" .
+                                mysqli_real_escape_string($Connection, $Phone) . "', '" .
+                                mysqli_real_escape_string($Connection, $Dui) . "', '" .
+                                mysqli_real_escape_string($Connection, $Address) . "', " .
+                                mysqli_real_escape_string($Connection, $Rol) . ", " .
+                                mysqli_real_escape_string($Connection, $Department) . ", " .
+                                mysqli_real_escape_string($Connection, $idUser) . ", '" .
+                                mysqli_real_escape_string($Connection, $email) . "', '" .
+                                mysqli_real_escape_string($Connection, $Passwd) . "')";
+            $UpdateResult = mysqli_query($Connection, $UpdateEmployeeSQL);
+            if (!$UpdateResult) {
+                die("Error al editar usuario: " . mysqli_error($Connection));
+            }
+        }
+//Funcion para eliminar
+        public function Delete($id)
+        {
+            if (is_null($id) || !is_numeric($id)) {
+                die("Error: ID de usuario no puede ser NULL o no numérico");
+            }
+        
+            $Connection = $this->Connection;
+            $idUser = intval($id);
+        
+            $DeleteEmployee = "DELETE FROM employee WHERE ID_Employee = $idUser";
+            $DeleteEmployeeResult = mysqli_query($Connection, $DeleteEmployee);
+            if (!$DeleteEmployeeResult) {
+                die("Error al eliminar empleado: " . mysqli_error($Connection));
+            }
+        
+            $DeleteUser = "DELETE FROM user WHERE ID_User = $idUser";
+            $DeleteUserResult = mysqli_query($Connection, $DeleteUser);
+            if (!$DeleteUserResult) {
+                die("Error al eliminar usuario: " . mysqli_error($Connection));
+            }
+        }
     }
+
+    
 
 
 

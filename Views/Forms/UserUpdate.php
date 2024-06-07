@@ -8,24 +8,42 @@ $database = new MySQL();
 $ConnectionMYSQL = $database->ConnectionMySQL();
 $ModelUser = new UserCRUD();
 $Message = RegisterUserAndEmployee($ModelUser, $ConnectionMYSQL);
-$ModelDelete = new UserCRUD();
+$idInfo = $_GET["id"];
 
+if ($ConnectionMYSQL) 
+{
+    $selectUser = "SELECT * FROM user WHERE ID_User = $idInfo";
+    $consultUser = mysqli_query($ConnectionMYSQL, $selectUser);
 
-if ($ConnectionMYSQL) {
-    // Extract database information
+    if (!$consultUser) {
+        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
+    }
+    if (mysqli_num_rows($consultUser) > 0) {
+        $user = mysqli_fetch_object($consultUser);
+    }
+
     $Sql_User_Info = "SELECT * FROM User_Info"; // User Information
     $User_Info = mysqli_query($ConnectionMYSQL, $Sql_User_Info);
     $Sql_Rol = "SELECT * FROM Rol"; // Extract Information table Rol
     $GetRol =  mysqli_query($ConnectionMYSQL, $Sql_Rol);
     $Sql_Department = "SELECT * FROM Department";
     $GetDepartment = mysqli_query($ConnectionMYSQL, $Sql_Department);
+
+    $selectEmployee = "SELECT * FROM employee WHERE ID_Employee = $idInfo";
+    $consultEmployee = mysqli_query($ConnectionMYSQL, $selectEmployee);
+
+    if (!$consultEmployee) {
+        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
+    }
+    if (mysqli_num_rows($consultEmployee) > 0) {
+        $employee = mysqli_fetch_object($consultEmployee);
+    }
 }
 
 ?>
 
 <!DOCTYPE html>
 <html>
-
 <head lang="es">
     <!--Import MainHead-->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainHead.php'; ?>
@@ -101,17 +119,17 @@ if ($ConnectionMYSQL) {
 
             </div>
             <div class="row">
-                <form action="../../Controllers/Users-Controller.php?action=Register" method="POST">
+                <form action="../../Controllers/Users-Controller.php?action=Update" method="POST">
                     <div class="col-md-6">
                         <legend>
                             <h4 style="font-weight:600;">Access Credentials</h4>
                             <fieldset class="form-group">
                                 <label class="form-label">ID</label>
-                                <input type="number" class="form-control" name="ID" readonly value="" id="IdUser">
+                                <input type="number" class="form-control" name="userID" readonly value="<?php echo $user->ID_User; ?>" id="IdUser">
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="Example: @Codelab.sv" name="Email" require oninput="ValidarCorreo(event)">
+                                <input type="email" class="form-control" placeholder="Example: @Codelab.sv" name="Email" require oninput="ValidarCorreo(event)" value="<?php echo $user->Email; ?>">
                                 <div class="alert alert-warning alert-icon alert-close alert-dismissible fade in error" role="alert" id="error-message">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">×</span>
@@ -122,7 +140,7 @@ if ($ConnectionMYSQL) {
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Password</label>
-                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" require>
+                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" value="<?php echo $user->UserPassword; ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Rol</label>
@@ -132,12 +150,35 @@ if ($ConnectionMYSQL) {
                                     <?php } ?>
                                 </select>
                             </fieldset>
-                            <div class="col-md-12 centered-button">
+                                <div class="col-md-6 centered-button">
                                 <fieldset class="form-group">
-                                    <button type="submit" class="btn btn-success centered-button" style="width: 220px; font-size:17px; ;">Register <i class="fa-solid fa-floppy-disk"></i></button>
+                                    <button type="button" class="btn btn-danger centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmCancel()"><i class="fa-solid fa-arrow-left"></i> Cancel</button>
+                                    <script>
+                                        function confirmSave() {
+                                            if (confirm("Are you sure you want to save changes?")) {
+                                                document.querySelector('form').submit();
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                    
+                                        function confirmCancel() {
+                                            if (confirm("Are you sure you want to cancel? Any unsaved changes will be lost.")) {
+                                                window.history.back();
+                                            } else {
+                                                return false;
+                                            }
+                                        }
+                                </script>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-6 centered-button">
+                                <fieldset class="form-group">
+                                    <button type="submit" class="btn btn-success centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmSave()">Save Changes <i class="fa-solid fa-floppy-disk"></i></button>
                                 </fieldset>
                             </div>
                         </legend>
+
                     </div>
                     <div class="col-md-6">
                         <legend>
@@ -145,24 +186,24 @@ if ($ConnectionMYSQL) {
                             <div class="row">
                                 <fieldset class="form-group col-md-6">
                                     <label class="form-label">First Name</label>
-                                    <input name="FirstName" type="text" class="form-control" placeholder="Luna" require>
+                                    <input name="FirstName" type="text" class="form-control" placeholder="Luna" value="<?php echo $employee->Name; ?>" require>
                                 </fieldset>
                                 <fieldset class="form-group col-md-6">
                                     <label class="form-label">Last Name</label>
-                                    <input name="LastName" type="text" class="form-control" placeholder="Gonzalez" require>
+                                    <input name="LastName" type="text" class="form-control" placeholder="Gonzalez" value="<?php echo $employee->Lastname; ?>" require>
                                 </fieldset>
                             </div>
                             <fieldset class="form-group">
                                 <label class="form-label">Address</label>
-                                <input name="Address" type="text" class="form-control" placeholder="San Salvador, Santa Tecla" require>
+                                <input name="Address" type="text" class="form-control" placeholder="San Salvador, Santa Tecla" value="<?php echo $employee->Address; ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Phone Number</label>
-                                <input name="Phone" type="text" class="form-control" oninput="EliminarLetras(event)" placeholder="Example: 7122-3144" maxlength="9" require>
+                                <input name="Phone" type="text" class="form-control" oninput="EliminarLetras(event)" placeholder="Example: 7122-3144" maxlength="9" value="<?php echo $employee->Phone; ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">DUI</label>
-                                <input name="Dui" type="text" class="form-control" placeholder="Example: 00000000-1" maxlength="9"  oninput="EliminarLetras(event)" require>
+                                <input name="Dui" type="text" class="form-control" placeholder="Example: 00000000-1" maxlength="9"  oninput="EliminarLetras(event)" value="<?php echo $employee->DUI; ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Departament</label>
@@ -181,86 +222,3 @@ if ($ConnectionMYSQL) {
         <br>
         <br>
     </section>
-
-    <hr class="centered-hr">
-
-    <section class="card no-border">
-        <div class="card-block">
-            <br>
-            <h4 style="font-weight:600;" class="text-center">Registered Users</h4>
-        </div>
-        <!--Table-->
-        <table id="table-edit" class="table table-striped table-hover text-center">
-            <thead>
-                <tr>
-                    <th width="1">ID</th>
-                    <th class="text-center">Name Employee</th>
-                    <th class="text-center">Phone</th>
-                    <th class="text-center">Email</th>
-                    <th width="120" class="text-center">Rol</th>
-                    <th width="120" class="text-center">Departament</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($Info = $User_Info->fetch_object()) { ?>
-                    <tr id="">
-                        <td><span class="tabledit-span tabledit-identifier"></span><input class="tabledit-input tabledit-identifier" type="hidden" name="id" value="" disabled=""><?php echo htmlspecialchars($Info->ID_User); ?></td>
-                        <td class="color-blue-grey-lighter tabledit-view-mode"><span class="tabledit-span"><?php echo htmlspecialchars($Info->Name . ' ' . $Info->Lastname); ?></span><input class="tabledit-input form-control input-sm" type="text" name="description" value="Revene for last quarter in state America for year 2013, whith..." style="display: none;" disabled=""></td>
-                        <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Phone); ?></td>
-                        <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Email); ?></td>
-                        <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Rol); ?></td>
-                        <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Department); ?></td>
-
-                        <td style="white-space: nowrap; width: 1%;">
-                            <div class="btn-group btn-group-sm" style="float: none;">
-                                <a href="UserUpdate.php?id=<?php echo $Info->ID_User ?>" target="pages">
-                                    <button type="button" class="tabledit-edit-button btn btn-sm btn-default btn-default" style="float: none;"><span class="glyphicon glyphicon-pencil"></span></button>
-                                </a>
-                                <a href="../../Controllers/Users-Controller.php?action=Delete&id=<?php echo $Info->ID_User ?>" target="pages">
-                                    <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger" style="float: none;" onclick="confirmDelete()"><span class="glyphicon glyphicon-trash"></span></button>
-                                    <script>
-                                        function confirmDelete() 
-                                        {
-                                          return confirm("Are you sure you want to delete this user?");
-                                        }
-                                    </script> 
-                                </a>
-                                
-                            </div>
-                            <button type="button" class="tabledit-save-button btn btn-sm btn-success" style="display: none; float: none;">Save</button>
-                            <button type="button" class="tabledit-confirm-button btn btn-sm btn-danger" style="display: none; float: none;">Confirm</button>
-                            <button type="button" class="tabledit-restore-button btn btn-sm btn-warning" style="display: none; float: none;">Restore</button>
-                            </div>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-                
-    </section>
-
-    <script>
-        function EliminarLetras(event) {
-            event.target.value = event.target.value.replace(/[^0-9\-]/g, '');
-        }
-
-        function ValidarCorreo(event) {
-            const emailInput = event.target;
-            const emailValue = emailInput.value;
-            const errorElement = document.getElementById('error-message');
-            const regex = /^[^\s@]+@[^\s@]+\.Codelab\.sv$/;
-
-            if (!regex.test(emailValue)) {
-                errorElement.style.display = 'block';
-            } else {
-                errorElement.style.display = 'none';
-            }
-        }
-    </script>
-
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
-</body>
-
-</html>
-
