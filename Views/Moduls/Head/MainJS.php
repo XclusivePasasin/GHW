@@ -10,4 +10,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/c49bc9b9fe.js" crossorigin="anonymous"></script>
 <script src="../../Public/js/lib/bootstrap-table/bootstrap-table-fixed-columns.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
