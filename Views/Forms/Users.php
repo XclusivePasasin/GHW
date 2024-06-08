@@ -217,14 +217,46 @@ if ($ConnectionMYSQL) {
                                 <a href="UserUpdate.php?id=<?php echo $Info->ID_User ?>" target="pages">
                                     <button type="button" class="tabledit-edit-button btn btn-sm btn-default btn-default" style="float: none;"><span class="glyphicon glyphicon-pencil"></span></button>
                                 </a>
-                                <a href="../../Controllers/Users-Controller.php?action=Delete&id=<?php echo $Info->ID_User ?>" target="pages">
-                                    <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger" style="float: none;" onclick="confirmDelete()"><span class="glyphicon glyphicon-trash"></span></button>
-                                    <script>
-                                        function confirmDelete() 
-                                        {
-                                          return confirm("Are you sure you want to delete this user?");
+                                <a href="../../Controllers/Users-Controller.php?action=Delete&id=<?php echo $Info->ID_User?>" target="pages" class="delete-link">
+                                <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger swal-btn-cancel" style="float: none;">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                                </a>
+
+                                <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    document.querySelectorAll('.swal-btn-cancel').forEach(button => {
+                                    button.addEventListener('click', function(event) {
+                                        event.preventDefault(); 
+                                        const href = this.closest('a').getAttribute('href'); // get URL
+                                        Swal.fire({
+                                        title: 'Warning!',
+                                        text: "Are you sure you want to delete this employee?",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#5DCA73',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes',
+                                        cancelButtonText: 'No'
+                                        }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            Swal.fire({
+                                            title: 'Deleted!',
+                                            text: 'The user has been deleted.',
+                                            icon: 'success',
+                                            confirmButtonColor: '#5DCA73', 
+                                            confirmButtonText: 'Ok'
+                                        }).then(() => {
+                                            window.location.href = href;
+                                            }).then(() => {
+                                            window.location.href = href;
+                                            });
                                         }
-                                    </script> 
+                                        });
+                                    });
+                                    });
+                                });
+                                </script>
                                 </a>
                                 
                             </div>

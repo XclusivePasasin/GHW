@@ -13,8 +13,8 @@
             $Connection = $this->dbh;
             if (isset($_POST["Send"])) {
                 $Email = $_POST['Email'];
-                $Passwd = $_POST['Passwd'];
-                // $Passwd = md5($_POST['Passwd']); // Encryption
+                // $Passwd = $_POST['Passwd'];
+                $Passwd = base64_encode($_POST['Passwd']); // Encryption
                 if (empty($Email) or empty($Passwd)) {
                     header("location:". Connection::Route()."index.php?m=2"); // Campos Vacios
                     exit();
@@ -100,8 +100,9 @@
                                 mysqli_real_escape_string($Connection, $email) . "', '" .
                                 mysqli_real_escape_string($Connection, $Passwd) . "')";
             $UpdateResult = mysqli_query($Connection, $UpdateEmployeeSQL);
+            return True;
             if (!$UpdateResult) {
-                die("Error al editar usuario: " . mysqli_error($Connection));
+                return False;
             }
         }
 //Funcion para eliminar
