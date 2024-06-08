@@ -140,7 +140,7 @@ if ($ConnectionMYSQL)
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Password</label>
-                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" value="<?php echo $user->UserPassword; ?>" require>
+                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" value="<?php echo base64_decode($user->UserPassword); ?>" require>
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Rol</label>
@@ -152,29 +152,57 @@ if ($ConnectionMYSQL)
                             </fieldset>
                                 <div class="col-md-6 centered-button">
                                 <fieldset class="form-group">
-                                    <button type="button" class="btn btn-danger centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmCancel()"><i class="fa-solid fa-arrow-left"></i> Cancel</button>
+                                    <button type="button" class="btn btn-danger centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmCancel()"><i class="fa-solid fa-arrow-left"></i>Cancel</button>
                                     <script>
-                                        function confirmSave() {
-                                            if (confirm("Are you sure you want to save changes?")) {
-                                                document.querySelector('form').submit();
-                                            } else {
-                                                return false;
-                                            }
-                                        }
-                                    
-                                        function confirmCancel() {
-                                            if (confirm("Are you sure you want to cancel? Any unsaved changes will be lost.")) {
-                                                window.history.back();
-                                            } else {
-                                                return false;
-                                            }
+                                         function confirmCancel() 
+                                        {
+
+                                            window.location.href = './Users.php';
                                         }
                                 </script>
                                 </fieldset>
                             </div>
                             <div class="col-md-6 centered-button">
                                 <fieldset class="form-group">
-                                    <button type="submit" class="btn btn-success centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmSave()">Save Changes <i class="fa-solid fa-floppy-disk"></i></button>
+                                    <button type="submit" class="btn btn-success centered-button swal-btn-update" style="width: 220px; font-size:17px; ;" onclick="confirmSave()">Save Changes <i class="fa-solid fa-floppy-disk"></i></button>
+                                    <script>
+                                        function confirmSave() {
+                                            document.addEventListener('DOMContentLoaded', (event) => {
+                                            document.querySelectorAll('.swal-btn-update').forEach(button => {
+                                            button.addEventListener('click', function(event) {
+                                                event.preventDefault(); 
+
+                                                const href = this.closest('form').getAttribute('action'); // get URL
+
+                                                Swal.fire({
+                                                title: 'Warning!',
+                                                text: "Are you sure you want to delete this employee?",
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#5DCA73',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Yes',
+                                                cancelButtonText: 'No'
+                                                }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    Swal.fire({
+                                                    title: 'Deleted!',
+                                                    text: 'The user has been deleted.',
+                                                    icon: 'success',
+                                                    confirmButtonColor: '#5DCA73', 
+                                                    confirmButtonText: 'Ok'
+                                                }).then(() => {
+                                                    window.location.href = href;
+                                                    }).then(() => {
+                                                    window.location.href = href;
+                                                    });
+                                                }
+                                                });
+                                            });
+                                            });
+                                        });
+                                    }
+                                    </script>
                                 </fieldset>
                             </div>
                         </legend>

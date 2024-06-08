@@ -224,7 +224,7 @@ INNER JOIN
 INNER JOIN 
     Department d ON e.ID_Department = d.ID_Department;
 
--- Proceso almacenado para actualizar usuario
+-- Stored process to update user
 
 DELIMITER //
  
