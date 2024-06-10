@@ -1,6 +1,31 @@
 <?php
 require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
 $Connection = new Connection();
+
+$database = new MySQL();
+$ConnectionMYSQL = $database->ConnectionMySQL();
+
+if ($ConnectionMYSQL) {
+    // Extract database information
+   $CategorySQL = "SELECT * FROM category";
+   $GetCategory = mysqli_query($ConnectionMYSQL, $CategorySQL);
+}
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if(isset($_SESSION['Id_User'])) 
+{     
+    $Name = $_SESSION['Name'];
+    $Lastname = $_SESSION['LastName'];
+}
+else 
+{
+    header("Location: " . Connection::Route() . "../index.php");     
+    exit(); 
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -38,54 +63,54 @@ $Connection = new Connection();
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="signup_v1-user">User</label>
-                            <div class="form-control-wrapper">
-                                <input type="text" class="form-control" id="" placeholder="Example: Elena Gomez" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="form-label" for="signup_v1-description">Description</label>
                             <div class="col-sm-16">
-                                <textarea rows="8" class="form-control" placeholder="Description of problem" required></textarea>
+                                <textarea rows="10" class="form-control" placeholder="Description of problem" required></textarea>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-category">Category</label>
-                            <select id="category" class="form-control" required>
-                                <option hidden>Select category</option>
-                                <option value=""></option>
-                            </select>
                         </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v2-name">Nª Ticekt</label>
-                        <div class="form-control-wrapper">
-                            <input type="number" class="form-control" id="" placeholder="Nª Ticekt" disabled required>
+                <div class="form-group">
+                            <label class="form-label" for="signup_v1-title">User</label>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" id="" placeholder="<?php echo "$Name "."$Lastname" ?>" readonly required>
+                            </div>
                         </div>
-                    </div>
                     <div class="form-group">
-                        <label class="form-label" for="signup_v2-name">Email</label>
-                        <div class="form-control-wrapper">
-                            <input name="Email" type="Email" class="form-control" placeholder="@codelab.sv" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v1-problems">Problems</label>
-                        <select id="problems" class="form-control" required>
-                            <option hidden>Select Problems</option>
-                            <option value=""></option>
+                        <label class="form-label" for="signup_v1-category">Category</label>
+                        <select id="category" class="form-control" required>
+                        <?php 
+                            while ($Category = $GetCategory->fetch_object()) 
+                            {                                 
+                                $selected = ($Category->ID_Category == @$_POST['category']) ? 'selected' : '';                                 
+                                echo '<option value="' . $Category->ID_Category . '" ' . $selected . '>' . $Category->TicketCategory . '</option>'; 
+                            } 
+                        ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label" for="signup_v1-priority">Priority</label>
-                        <select id="priority" class="form-control" required>
-                            <option hidden>Select Priority</option>
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-md-12">
+                        <label class="form-label" for="signup_v1-problems">Problems</label>                         
+                        <?php if (isset($_POST['category'])) 
+                            {                             
+                                $CategoryID = $_POST['category'];                             
+                                $ProblemSQL = "SELECT * FROM problems WHERE ID_Category = $CategoryID";                             
+                                $GetProblem = mysqli_query($ConnectionMYSQL, $ProblemSQL);                             
+                                echo '<select id="problems" class="form-control" required>';                             
+                                while ($Problem = $GetProblem->fetch_object()) 
+                                    {                                 
+                                    echo '<option value="' . $Problem->ID_Problem . '">' . $Problem->Name . '</option>';                             
+                                    }                            
+                                echo '</select>';                         
+                            } 
+                            else 
+                            {                             
+                                echo '<select id="problems" class="form-control" required>';
+                                echo '<option value="" disabled selected>Select Category First</option>'; 
+                                echo '</select>'; 
+                            } 
+                            ?> 
+                        </div>
+                    <br>
                     <center>
                         <div class="form-group">
                             <button type="submit" class="btn">Submit ticket</button>
