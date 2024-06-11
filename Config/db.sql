@@ -260,3 +260,23 @@ BEGIN
 END //
  
 DELIMITER ;
+
+DELIMITER //
+ 
+CREATE PROCEDURE sp_InsertTicket(
+    IN idTicket INT, 
+    IN Title VARCHAR(100), 
+    IN Description VARCHAR(255), 
+    IN CreateDate DATETIME, 
+    IN UpdateDate DATETIME, 
+    IN idStatus INT, 
+    IN idUser INT, 
+    IN idPriority INT,
+    IN idDifficulty INT
+)
+BEGIN
+    INSERT INTO Ticket (ID_Ticket, Title, Description, CreateDate, UpdateDate, ID_Status, ID_User, ID_Priority, ID_Difficulty)
+    VALUES (idTicket, Title, Description, CreateDate, UpdateDate, idStatus, idUser, idPriority, idDifficulty);
+END //
+ 
+DELIMITER ;

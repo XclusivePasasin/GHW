@@ -53,7 +53,8 @@
             $this->Connection = $this->ConnectionMySQL();
         }
 
-        public function Register ($Email,$Passwd,$Rol,$FirstName,$LastName,$Address,$Phone,$Dui,$Department){
+        public function Register ($Email,$Passwd,$Rol,$FirstName,$LastName,$Address,$Phone,$Dui,$Department)
+        {
             $Connection = $this->Connection;
             $Model = new UserCRUD;
             $SqlRegisterEmployee = "INSERT INTO Employee (Name, Lastname, Phone, DUI, Address, ID_Rol, ID_Department) VALUES ('$FirstName', '$LastName', '$Phone', '$Dui', '$Address', $Rol, $Department);";
