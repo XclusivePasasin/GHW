@@ -2,13 +2,10 @@
 
 require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
 require_once 'C:\xampp\htdocs\GHW-PROJECT\Models\Tickets.php';
- 
-session_start();
 
 $TicketModel = new TicketCRUD();
 
-
-function RegisterTicket($TicketModel, $Connection)
+function Register($TicketModel, $Connection)
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') 
     {
@@ -19,7 +16,6 @@ function RegisterTicket($TicketModel, $Connection)
             isset($_POST['Problems']) && !empty($_POST['Problems']) 
         ) 
         {
-            $idTicket = "";
             $Title = $_POST['Title'];
             $Description = $_POST['Description'];
             $CreateDate = date('Y-m-d H:i:s');
@@ -32,20 +28,20 @@ function RegisterTicket($TicketModel, $Connection)
             $PriorityResultID = mysqli_query($Connection, $PrioritySQL);
 
             $idDifficulty = 1;
-            $SendTicket = $TicketModel->RegisterTicket($idTicket, $Title, $Description, $CreateDate, $UpdateDate, $idStatus, $idUser, $PriorityResultID, $idDifficulty);
+            $SendTicket = $TicketModel->RegisterTicket($Title, $Description, $CreateDate, $UpdateDate, $idStatus, $idUser, $PriorityResultID, $idDifficulty);
 
             if ($SendTicket == True) 
             {
                 $_SESSION['Message'] = "Data entered correctly.";
                 $_SESSION['MessageType'] = 'success';
-                header("Location: " . $Connection->Route() . "./Views/Forms/NewTicket.php");
+                header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
                 exit();
             } 
             else 
             {
                 $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";
                 $_SESSION['MessageType'] = "error";
-                header("Location: " . $Connection->Route() . "./Views/Forms/NewTicket.php");
+                header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
                 exit();
             }
         }
@@ -53,8 +49,28 @@ function RegisterTicket($TicketModel, $Connection)
         {
             $_SESSION['Message'] = "Empty Fields";
             $_SESSION['MessageType'] = 'error';
-            header("Location: " . $Connection->Route() . "./Views/Forms/NewTicket.php");
+            header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
             exit();
         }
     }
 }
+
+if($_SERVER["REQUEST_METHOD"]=="POST")
+    {
+        require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
+        $TicketModel = new TicketCRUD();
+        $Connection = $TicketModel->ConnectionMySQL();
+        if(isset($_POST["key"]))
+        {
+            $key = $_POST["key"];
+            $Problems = null;
+            switch ($key) 
+            {
+                case 'Problems':
+                    $Problems = $TicketModel->ProblemsHTML($_POST['ID_Category'], $Connection);
+                    break;
+            }
+                echo $Problems;
+            }
+ 
+    }

@@ -33,6 +33,7 @@ else
 <head lang="es">
     <!--Import MainHead-->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainHead.php'; ?>
+
 </head>
 
 <body>
@@ -79,7 +80,7 @@ else
         <div class="card-block">
             <div class="row m-t-lg">
                 <div class="col-md-6">
-                    <form action="" id="form-signup_v1" name="form-signup_v1" method="POST">
+                    <form action="../../Controllers/TicketController.php" id="form-signup_v1" name="form-signup_v1" method="POST">
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Title</label>
                             <div class="form-control-wrapper">
@@ -102,48 +103,45 @@ else
                         </div>
                     <div class="form-group">
                         <label class="form-label" for="signup_v1-category">Category</label>
-                        <select id="category" class="form-control" name="Category" onchange="this.form.submit()" required>
+                        <select id="ID_Category" class="form-control" name="Category" onchange="loadProblems()" required>
+                        <option value="" disabled selected>Select Category</option>
                         <?php 
                             while ($Category = $GetCategory->fetch_object()) 
-                            {                                 
-                                $selected = ($Category->ID_Category == @$_POST['Category']) ? 'selected' : '';                                 
-                                echo '<option value="' . $Category->ID_Category . '" ' . $selected . '>' . $Category->TicketCategory . '</option>'; 
+                            {                                                               
+                                echo '<option value="' . $Category->ID_Category . '">' . $Category->TicketCategory . '</option>'; 
                             } 
                         ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="signup_v1-problems">Problems</label>                         
-                        <select id="problems" class="form-control" name="Problems" required>
+                        <select id="Problems" class="form-control" name="Problems" required>
                             <option value="" disabled selected>Select a Problem</option>
-                            <?php
-                            if (isset($_POST['Category'])) {
-                                $CategoryID = $_POST['Category'];
-                                $ProblemSQL = "SELECT * FROM problems WHERE ID_Category = $CategoryID";
-                                $GetProblem = mysqli_query($ConnectionMYSQL, $ProblemSQL);
-                                while ($Problem = $GetProblem->fetch_object()) {
-                                    echo '<option value="' . $Problem->ID_Problem . '">' . $Problem->Name . '</option>';
-                                }
-                            }
-                            ?>
+                            <script>
+                                function loadProblems()
+                                {
+                                var ID_Category = document.getElementById("ID_Category").value;
+                                $.ajax({
+                                    type: "post",
+                                    url: "../../Controllers/TicketController.php",
+                                    data: {'key':'Problems', 'ID_Category': ID_Category },
+                                    success: function (Problems) 
+                                    {
+                                        console.log(Problems);
+                                        $("#Problems").empty();
+                                        $("#Problems").append(Problems);
+                                    }
+                                })
+                                };
+                            </script>
+                            
                         </select>
                     </div>
                     <br>
                     <center>
                         <div class="form-group">
-                            <button type="submit" class="btn" onclick="confirmInsert(event)">Submit ticket</button>
+                            <input type="submit" class="btn" value = "Register Ticket">
                         </div>
-                        <script>
-                            function confirmInsert(event) {
-                                event.preventDefault(),
-                                var form = document.getElementById("form-signup_v1");
-                                var formData = new FormData(form);
-                    
-                                var xhr = new XMLHttpRequest();
-                                xhr.open("POST", "../../Controllers/TicketController.php", true);
-                                xhr.send(formData);
-                            }
-                        </script>
                     </center>
                 </div>
             </form>
@@ -152,5 +150,5 @@ else
     </section>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>                       		
 </body>
-
+<script src="https://code.jquery.com/jquery-3.7.1.js"integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="crossorigin="anonymous"></script>
 </html>
