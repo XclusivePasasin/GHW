@@ -2,39 +2,36 @@
 
 class TicketCRUD extends MySQL
 {
+    private $Connection;
+    
+    public function __construct() 
+    {
+        $this->Connection = $this->ConnectionMySQL();
+    }
 
-private $Connection;
-public function __construct() {
-    $this->Connection = $this->ConnectionMySQL();
-}
-
-    public function RegisterTicket($Title,$Description,$CreateDate,$UpdateDate,$idStatus,$idUser,$idPriority,$idDifficulty)
+    public function RegisterTicket($idTicket, $Title, $Description, $idStatus, $idUser, $idPriority, $idDifficulty)
     {
         $Connection = $this->Connection;
-        $TicketModel = new TicketCRUD;
-
+        
         $RegisterTicketSQL = "CALL sp_InsertTicket(" .
-                                mysqli_real_escape_string($Connection, $Title) . ", '" .
-                                mysqli_real_escape_string($Connection, $Description) . "', '" .
-                                mysqli_real_escape_string($Connection, $CreateDate) . "', '" .
-                                mysqli_real_escape_string($Connection, $UpdateDate) . "', '" .
-                                mysqli_real_escape_string($Connection, $idStatus) . ", " .
-                                mysqli_real_escape_string($Connection, $idUser) . ", '" .
-                                mysqli_real_escape_string($Connection, $idPriority) . "', '" .
-                                mysqli_real_escape_string($Connection, $idDifficulty) . "')";
-
+                             "NULL, " .
+                             "'" . mysqli_real_escape_string($Connection, $Title) . "', " .
+                             "'" . mysqli_real_escape_string($Connection, $Description) . "', " .
+                             intval($idStatus) . ", " .
+                             intval($idUser) . ", " .
+                             intval($idPriority) . ", " .
+                             intval($idDifficulty) . ")";
+                             
         $TicketResult = mysqli_query($Connection, $RegisterTicketSQL);
 
-        if($TicketResult==true)
-        {
-            return true;
-        }
-        else
+        return true;
+
+        if(!$TicketResult)
         {
             return false;
         }
     }
-    
+
     function ProblemsHTML($ID_Category, $Connection) 
     {
         $ProblemsSQL = "SELECT * FROM problems WHERE ID_Category = $ID_Category";
@@ -48,3 +45,5 @@ public function __construct() {
         return $htmlProblems;
     }
 }
+
+?>

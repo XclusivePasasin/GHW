@@ -32,12 +32,14 @@ class Connection {
 
 class MySQL{
     
-    public function ConnectionMySQL(){
+    public function ConnectionMySQL()
+    {
         $ConnectionMySQL = mysqli_connect("localhost","root","","TicketSystem"); 
         return $ConnectionMySQL;
     }
 
-    public function Route() {
+    public function Route() 
+    {
         return "http://localhost:/GHW-PROJECT/";
     }
 }

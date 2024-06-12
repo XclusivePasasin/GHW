@@ -1,5 +1,8 @@
 <?php
-require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
+$Include = require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
+include_once 'C:\xampp\htdocs\GHW-PROJECT\Controllers\TicketController.php';
+require_once 'C:\xampp\htdocs\GHW-PROJECT\Models\Tickets.php';
+
 $Connection = new Connection();
 
 $database = new MySQL();
@@ -80,17 +83,17 @@ else
         <div class="card-block">
             <div class="row m-t-lg">
                 <div class="col-md-6">
-                    <form action="../../Controllers/TicketController.php" id="form-signup_v1" name="form-signup_v1" method="POST">
+                    <form action="../../Controllers/TicketController.php?action=Register" id="form-signup_v1" name="form-signup_v1" method="POST" >
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Title</label>
                             <div class="form-control-wrapper">
-                                <input type="text" class="form-control" name="Title" placeholder="Subject..." required>
+                                <input type="text" class="form-control" name="Title" placeholder="Subject..." >
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-description">Description</label>
                             <div class="col-sm-16">
-                                <textarea rows="10" class="form-control" placeholder="Description of problem" name="Description" required></textarea>
+                                <textarea rows="10" class="form-control" placeholder="Description of problem" name="Description" ></textarea>
                             </div>
                         </div>
                 </div>
@@ -98,12 +101,12 @@ else
                 <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Email</label>
                             <div class="form-control-wrapper">
-                                <input type="text" class="form-control" name="email" placeholder="<?php echo "$Email" ?>" readonly required>
+                                <input type="text" class="form-control" name="email" placeholder="<?php echo "$Email" ?>" readonly >
                             </div>
                         </div>
                     <div class="form-group">
                         <label class="form-label" for="signup_v1-category">Category</label>
-                        <select id="ID_Category" class="form-control" name="Category" onchange="loadProblems()" required>
+                        <select id="ID_Category" class="form-control" name="Category" onchange="loadProblems()" >
                         <option value="" disabled selected>Select Category</option>
                         <?php 
                             while ($Category = $GetCategory->fetch_object()) 
@@ -115,7 +118,7 @@ else
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="signup_v1-problems">Problems</label>                         
-                        <select id="Problems" class="form-control" name="Problems" required>
+                        <select id="Problems" class="form-control" name="Problems" >
                             <option value="" disabled selected>Select a Problem</option>
                             <script>
                                 function loadProblems()
