@@ -224,7 +224,7 @@ INNER JOIN
 INNER JOIN 
     Department d ON e.ID_Department = d.ID_Department;
 
--- Proceso almacenado para actualizar usuario
+-- Stored process to update user
 
 DELIMITER //
  
@@ -260,3 +260,28 @@ BEGIN
 END //
  
 DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_InsertTicket(
+    IN idTicket INT, 
+    IN Title VARCHAR(100), 
+    IN Description VARCHAR(255), 
+    IN idStatus INT, 
+    IN idUser INT, 
+    IN idPriority INT,
+    IN idDifficulty INT
+)
+BEGIN
+    DECLARE CreateDate DATETIME;
+    DECLARE UpdateDate DATETIME;
+
+    SET CreateDate = NOW();
+    SET UpdateDate = NOW();
+
+    INSERT INTO Ticket (ID_Ticket, Title, Description, CreateDate, UpdateDate, ID_Status, ID_User, ID_Priority, ID_Difficulty)
+    VALUES (idTicket, Title, Description, CreateDate, UpdateDate, idStatus, idUser, idPriority, idDifficulty);
+END //
+
+DELIMITER ;
+

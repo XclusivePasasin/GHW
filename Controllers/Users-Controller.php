@@ -21,8 +21,8 @@ if (isset($_GET['action'])) {
         case 'Delete':
             if (isset($_GET['id']) && is_numeric($_GET['id'])) 
             {
-                $idUser = intval($_GET['id']);                 
-                DeleteUserAndEmployee($ModelDelete, $Connection, $idUser);             
+                $idUser = $_GET['id'];                 
+                DeleteUserAndEmployee($ModelDelete,$Connection,$idUser);             
             } 
             else 
             {                 
@@ -51,7 +51,7 @@ function RegisterUserAndEmployee($ModelUser, $Connection)
             isset($_POST['Department']) && !empty($_POST['Department'])
         ) {
             $Email = $_POST['Email'];
-            $Passwd = md5($_POST['Passwd']);
+            $Passwd = base64_encode($_POST['Passwd']);
             $Rol = $_POST['Rol'];
             $FirstName = $_POST['FirstName'];
             $LastName = $_POST['LastName'];
@@ -92,7 +92,6 @@ function EditUserAndEmployee($ModelUpdate, $Connection)
 
         if (
             isset($_POST['userID']) && !empty($_POST['userID']) &&
-            isset($_POST['userID']) && !empty($_POST['userID']) &&
             isset($_POST['Email']) && !empty($_POST['Email']) &&
             isset($_POST['Passwd']) && !empty($_POST['Passwd']) &&
             isset($_POST['Rol']) && !empty($_POST['Rol']) &&
@@ -106,7 +105,7 @@ function EditUserAndEmployee($ModelUpdate, $Connection)
                 $idEmployee = $_POST['userID'];
                 $idUser = $_POST['userID'];
                 $email = $_POST['Email'];
-                $Passwd = md5($_POST['Passwd']);
+                $Passwd = base64_encode($_POST['Passwd']);
                 $Rol = $_POST['Rol'];
                 $FirstName = $_POST['FirstName'];
                 $LastName = $_POST['LastName'];
@@ -118,11 +117,11 @@ function EditUserAndEmployee($ModelUpdate, $Connection)
                 $UpdateData = $ModelUpdate->Update($idEmployee, $FirstName, $LastName, $Phone, $Dui, $Address, $Rol, $Department, $idUser, $email, $Passwd);
 
                 if ($UpdateData == True) {
-                    $_SESSION['Message'] = "Data entered correctly.";
+                    $_SESSION['Message'] = "Data Update correctly.";
                     $_SESSION['MessageType'] = 'success';
                     header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
                     exit();
-                } else {
+                }else {
                     $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";
                     $_SESSION['MessageType'] = "error";
                     header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
@@ -143,6 +142,9 @@ function DeleteUserAndEmployee($ModelDelete, $Connection, $idUser)
 
 {
         $ModelDelete->Delete($idUser);
+        $_SESSION['Message'] = "User successfully deleted.";
+        $_SESSION['MessageType'] = 'success';
+        header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
 } 
 
 

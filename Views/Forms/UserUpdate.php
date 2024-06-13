@@ -129,7 +129,7 @@ if ($ConnectionMYSQL)
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="Example: @Codelab.sv" name="Email" require oninput="ValidarCorreo(event)" value="<?php echo $user->Email; ?>">
+                                <input type="email" class="form-control" placeholder="Example: @Codelab.sv" name="Email" oninput="ValidarCorreo(event)" value="<?php echo $user->Email; ?>">
                                 <div class="alert alert-warning alert-icon alert-close alert-dismissible fade in error" role="alert" id="error-message">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">×</span>
@@ -140,7 +140,7 @@ if ($ConnectionMYSQL)
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Password</label>
-                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" value="<?php echo $user->UserPassword; ?>" require>
+                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" value="<?php echo base64_decode($user->UserPassword); ?>">
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Rol</label>
@@ -152,29 +152,57 @@ if ($ConnectionMYSQL)
                             </fieldset>
                                 <div class="col-md-6 centered-button">
                                 <fieldset class="form-group">
-                                    <button type="button" class="btn btn-danger centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmCancel()"><i class="fa-solid fa-arrow-left"></i> Cancel</button>
+                                    <button type="button" class="btn btn-danger centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmCancel()"><i class="fa-solid fa-arrow-left"></i>Cancel</button>
                                     <script>
-                                        function confirmSave() {
-                                            if (confirm("Are you sure you want to save changes?")) {
-                                                document.querySelector('form').submit();
-                                            } else {
-                                                return false;
-                                            }
-                                        }
-                                    
-                                        function confirmCancel() {
-                                            if (confirm("Are you sure you want to cancel? Any unsaved changes will be lost.")) {
-                                                window.history.back();
-                                            } else {
-                                                return false;
-                                            }
+                                         function confirmCancel() 
+                                        {
+
+                                            window.location.href = './Users.php';
                                         }
                                 </script>
                                 </fieldset>
                             </div>
                             <div class="col-md-6 centered-button">
                                 <fieldset class="form-group">
-                                    <button type="submit" class="btn btn-success centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmSave()">Save Changes <i class="fa-solid fa-floppy-disk"></i></button>
+                                    <button type="submit" class="btn btn-success centered-button swal-btn-update" style="width: 220px; font-size:17px; ;" onclick="confirmSave()">Save Changes <i class="fa-solid fa-floppy-disk"></i></button>
+                                    <script>
+                                        function confirmSave() {
+                                            document.addEventListener('DOMContentLoaded', (event) => {
+                                            document.querySelectorAll('.swal-btn-update').forEach(button => {
+                                            button.addEventListener('click', function(event) {
+                                                event.preventDefault(); 
+
+                                                const href = this.closest('form').getAttribute('action'); // get URL
+
+                                                Swal.fire({
+                                                title: 'Warning!',
+                                                text: "Are you sure you want to delete this employee?",
+                                                icon: 'warning',
+                                                showCancelButton: true,
+                                                confirmButtonColor: '#5DCA73',
+                                                cancelButtonColor: '#d33',
+                                                confirmButtonText: 'Yes',
+                                                cancelButtonText: 'No'
+                                                }).then((result) => {
+                                                if (result.isConfirmed) {
+                                                    Swal.fire({
+                                                    title: 'Deleted!',
+                                                    text: 'The user has been deleted.',
+                                                    icon: 'success',
+                                                    confirmButtonColor: '#5DCA73', 
+                                                    confirmButtonText: 'Ok'
+                                                }).then(() => {
+                                                    window.location.href = href;
+                                                    }).then(() => {
+                                                    window.location.href = href;
+                                                    });
+                                                }
+                                                });
+                                            });
+                                            });
+                                        });
+                                    }
+                                    </script>
                                 </fieldset>
                             </div>
                         </legend>
@@ -186,24 +214,24 @@ if ($ConnectionMYSQL)
                             <div class="row">
                                 <fieldset class="form-group col-md-6">
                                     <label class="form-label">First Name</label>
-                                    <input name="FirstName" type="text" class="form-control" placeholder="Luna" value="<?php echo $employee->Name; ?>" require>
+                                    <input name="FirstName" type="text" class="form-control" placeholder="Luna" value="<?php echo $employee->Name; ?>">
                                 </fieldset>
                                 <fieldset class="form-group col-md-6">
                                     <label class="form-label">Last Name</label>
-                                    <input name="LastName" type="text" class="form-control" placeholder="Gonzalez" value="<?php echo $employee->Lastname; ?>" require>
+                                    <input name="LastName" type="text" class="form-control" placeholder="Gonzalez" value="<?php echo $employee->Lastname; ?>">
                                 </fieldset>
                             </div>
                             <fieldset class="form-group">
                                 <label class="form-label">Address</label>
-                                <input name="Address" type="text" class="form-control" placeholder="San Salvador, Santa Tecla" value="<?php echo $employee->Address; ?>" require>
+                                <input name="Address" type="text" class="form-control" placeholder="San Salvador, Santa Tecla" value="<?php echo $employee->Address; ?>">
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Phone Number</label>
-                                <input name="Phone" type="text" class="form-control" oninput="EliminarLetras(event)" placeholder="Example: 7122-3144" maxlength="9" value="<?php echo $employee->Phone; ?>" require>
+                                <input name="Phone" type="text" class="form-control" oninput="EliminarLetras(event)" placeholder="Example: 7122-3144" maxlength="9" value="<?php echo $employee->Phone; ?>">
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">DUI</label>
-                                <input name="Dui" type="text" class="form-control" placeholder="Example: 00000000-1" maxlength="9"  oninput="EliminarLetras(event)" value="<?php echo $employee->DUI; ?>" require>
+                                <input name="Dui" type="text" class="form-control" placeholder="Example: 00000000-1" maxlength="9"  oninput="EliminarLetras(event)" value="<?php echo $employee->DUI; ?>">
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Departament</label>

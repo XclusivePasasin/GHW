@@ -111,7 +111,7 @@ if ($ConnectionMYSQL) {
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-control" placeholder="Example: @Codelab.sv" name="Email" require oninput="ValidarCorreo(event)">
+                                <input type="email" class="form-control" placeholder="Example: @Codelab.sv" name="Email"  oninput="ValidarCorreo(event)">
                                 <div class="alert alert-warning alert-icon alert-close alert-dismissible fade in error" role="alert" id="error-message">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">×</span>
@@ -122,7 +122,7 @@ if ($ConnectionMYSQL) {
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Password</label>
-                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" require>
+                                <input name="Passwd" type="password" class="form-control" placeholder="Example: CodeLabs#" maxlength="10" >
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Rol</label>
@@ -145,24 +145,24 @@ if ($ConnectionMYSQL) {
                             <div class="row">
                                 <fieldset class="form-group col-md-6">
                                     <label class="form-label">First Name</label>
-                                    <input name="FirstName" type="text" class="form-control" placeholder="Luna" require>
+                                    <input name="FirstName" type="text" class="form-control" placeholder="Luna" >
                                 </fieldset>
                                 <fieldset class="form-group col-md-6">
                                     <label class="form-label">Last Name</label>
-                                    <input name="LastName" type="text" class="form-control" placeholder="Gonzalez" require>
+                                    <input name="LastName" type="text" class="form-control" placeholder="Gonzalez" >
                                 </fieldset>
                             </div>
                             <fieldset class="form-group">
                                 <label class="form-label">Address</label>
-                                <input name="Address" type="text" class="form-control" placeholder="San Salvador, Santa Tecla" require>
+                                <input name="Address" type="text" class="form-control" placeholder="San Salvador, Santa Tecla" >
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Phone Number</label>
-                                <input name="Phone" type="text" class="form-control" oninput="EliminarLetras(event)" placeholder="Example: 7122-3144" maxlength="9" require>
+                                <input name="Phone" type="text" class="form-control" oninput="EliminarLetras(event)" placeholder="Example: 7122-3144" maxlength="9" >
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">DUI</label>
-                                <input name="Dui" type="text" class="form-control" placeholder="Example: 00000000-1" maxlength="9"  oninput="EliminarLetras(event)" require>
+                                <input name="Dui" type="text" class="form-control" placeholder="Example: 00000000-1" maxlength="9"  oninput="EliminarLetras(event)" >
                             </fieldset>
                             <fieldset class="form-group">
                                 <label class="form-label">Departament</label>
@@ -217,14 +217,46 @@ if ($ConnectionMYSQL) {
                                 <a href="UserUpdate.php?id=<?php echo $Info->ID_User ?>" target="pages">
                                     <button type="button" class="tabledit-edit-button btn btn-sm btn-default btn-default" style="float: none;"><span class="glyphicon glyphicon-pencil"></span></button>
                                 </a>
-                                <a href="../../Controllers/Users-Controller.php?action=Delete&id=<?php echo $Info->ID_User ?>" target="pages">
-                                    <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger" style="float: none;" onclick="confirmDelete()"><span class="glyphicon glyphicon-trash"></span></button>
-                                    <script>
-                                        function confirmDelete() 
-                                        {
-                                          return confirm("Are you sure you want to delete this user?");
+                                <a href="../../Controllers/Users-Controller.php?action=Delete&id=<?php echo $Info->ID_User?>" target="pages" class="delete-link">
+                                <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger swal-btn-cancel" style="float: none;">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                                </a>
+
+                                <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    document.querySelectorAll('.swal-btn-cancel').forEach(button => {
+                                    button.addEventListener('click', function(event) {
+                                        event.preventDefault(); 
+                                        const href = this.closest('a').getAttribute('href'); // get URL
+                                        Swal.fire({
+                                        title: 'Warning!',
+                                        text: "Are you sure you want to delete this employee?",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#5DCA73',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Yes',
+                                        cancelButtonText: 'No'
+                                        }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            Swal.fire({
+                                            title: 'Deleted!',
+                                            text: 'The user has been deleted.',
+                                            icon: 'success',
+                                            confirmButtonColor: '#5DCA73', 
+                                            confirmButtonText: 'Ok'
+                                        }).then(() => {
+                                            window.location.href = href;
+                                            }).then(() => {
+                                            window.location.href = href;
+                                            });
                                         }
-                                    </script> 
+                                        });
+                                    });
+                                    });
+                                });
+                                </script>
                                 </a>
                                 
                             </div>
