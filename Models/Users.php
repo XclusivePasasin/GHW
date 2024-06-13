@@ -14,7 +14,7 @@
             if (isset($_POST["Send"])) {
                 $Email = $_POST['Email'];
                 // $Passwd = $_POST['Passwd'];
-                $Passwd = base64_encode($_POST['Passwd']); // Encryption
+                $Passwd = ($_POST['Passwd']); // Encryption
                 if (empty($Email) or empty($Passwd)) {
                     header("location:". Connection::Route()."index.php?m=2"); // Campos Vacios
                     exit();
@@ -53,7 +53,8 @@
             $this->Connection = $this->ConnectionMySQL();
         }
 
-        public function Register ($Email,$Passwd,$Rol,$FirstName,$LastName,$Address,$Phone,$Dui,$Department){
+        public function Register ($Email,$Passwd,$Rol,$FirstName,$LastName,$Address,$Phone,$Dui,$Department)
+        {
             $Connection = $this->Connection;
             $Model = new UserCRUD;
             $SqlRegisterEmployee = "INSERT INTO Employee (Name, Lastname, Phone, DUI, Address, ID_Rol, ID_Department) VALUES ('$FirstName', '$LastName', '$Phone', '$Dui', '$Address', $Rol, $Department);";
