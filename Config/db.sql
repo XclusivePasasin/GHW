@@ -285,3 +285,33 @@ END //
 
 DELIMITER ;
 
+DELIMITER //
+ 
+CREATE PROCEDURE sp_UpdateTicket(
+    IN idTicket INT,
+    IN Title VARCHAR(100),
+    IN Description VARCHAR(255),
+    IN CreateDate DATETIME,  
+    IN idStatus INT,
+    IN idUser INT,
+    IN idPriority INT,
+    IN idDifficulty INT,
+)
+BEGIN
+    DECLARE UpdateDate DATETIME;  
+    SET UpdateDate = NOW();
+ 
+    UPDATE Ticket
+    SET
+        Title = Title,
+        Description = Description,
+        CreateDate = CreateDate,  
+        ID_Status = idStatus,
+        ID_User = idUser,
+        ID_Priority = idPriority
+        ID_Difficulty = idDifficulty,
+    WHERE ID_Ticket = idTicket;
+END //
+ 
+DELIMITER ;
+

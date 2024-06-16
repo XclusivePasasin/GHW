@@ -32,6 +32,39 @@ class TicketCRUD extends MySQL
         }
     }
 
+    public function UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty)
+    {
+        $Connection = $this->Connection;
+        $UpdateTicketSQL = "CALL sp_UpdateTicket(" .
+                            mysqli_real_escape_string($Connection, $idTicket) . ", '" .
+                            mysqli_real_escape_string($Connection, $Title) . "', '" .
+                            mysqli_real_escape_string($Connection, $Description) . "', '" .
+                            mysqli_real_escape_string($Connection, $CreateDate) . "', '" .
+                            mysqli_real_escape_string($Connection, $idStatus) . "', '" .
+                            mysqli_real_escape_string($Connection, $idUser) . "', " .
+                            mysqli_real_escape_string($Connection, $idPriority) . ", " .
+                            mysqli_real_escape_string($Connection, $idDifficulty) . ", " ;
+        $UpdateResult = mysqli_query($Connection, $UpdateEmployeeSQL);
+        return True;
+        if (!$UpdateResult) {
+            return False;
+        }
+    }
+
+    public function Select_10_Tickets($Connection)
+{
+    $SelectTicketsSQL = "SELECT * FROM Ticket ORDER BY CreateDate DESC LIMIT 10";
+    $Select_10_Ticket = mysqli_query($Connection, $SelectTicketsSQL);
+
+    if (!$Select_10_Ticket) 
+    {
+        return false;
+    }
+
+    return $Select_10_Ticket;
+}
+
+
     function ProblemsHTML($ID_Category, $Connection) 
     {
         $ProblemsSQL = "SELECT * FROM problems WHERE ID_Category = $ID_Category";

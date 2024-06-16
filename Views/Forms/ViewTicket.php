@@ -1,6 +1,12 @@
 <?php
 require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
-$Connection = new Connection();
+require_once 'C:\xampp\htdocs\GHW-PROJECT\Models\Tickets.php';
+
+$ConnectionOBJ = new MySQL();
+$TicketModel = new TicketCRUD();
+
+$Connection = $ConnectionOBJ->ConnectionMySQL();
+$Select10 = $TicketModel->Select_10_Tickets($Connection);
 ?>
 
 <!DOCTYPE html>
@@ -102,29 +108,49 @@ $Connection = new Connection();
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr data-index="0">
-                                        <td style="text-align: center; vertical-align: middle; ">0</td>
-                                        <td style="text-align: center; ">
-                                            <div class="dropdown dropdown-status  "><button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Draft</button>
-                                                <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
-                                                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td style="text-align: center; ">
-                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                            </td>
-                                        <td style="text-align: center;">
-                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/EditTicket.php'; ?>"  title="view">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/CommentTicket.php'; ?>" title="coment">
-                                                <i class="fa fa-comment"></i>
-                                            </a>
-                                        </td>
-
-                                    </tr>
+                                <?php
+                                    if ($Select10->num_rows > 0) {
+                                        while ($Tickets10 = $Select10->fetch_object()) {
+                                            echo '<tr data-index="0">
+                                                <td style="text-align: center; vertical-align: middle;">' . $Tickets10->ID_Ticket . '</td>
+                                                <td style="text-align: center;">
+                                                    <div class="dropdown dropdown-status">
+                                                        <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                                                            if ($Tickets10->ID_Status == 1) {
+                                                                echo "Open";
+                                                            } elseif ($Tickets10->ID_Status == 2) {
+                                                                echo "In Progress";
+                                                            } elseif ($Tickets10->ID_Status == 3) {
+                                                                echo "Closed";
+                                                            }
+                                            echo        '</button>
+                                                        <div class="dropdown-menu">
+                                                            <a class="dropdown-item" href="#">Draft</a>
+                                                            <a class="dropdown-item" href="#">Pending</a>
+                                                            <a class="dropdown-item" href="#">Moderation</a>
+                                                            <a class="dropdown-item" href="#">Published</a>
+                                                            <div class="dropdown-divider"></div>
+                                                            <a class="dropdown-item" href="#">Move to Trash</a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <a class="like" href="' . $Connection->Route() . 'Views/Forms/EditTicket.php" title="view">
+                                                        <i class="fa fa-eye"></i>
+                                                    </a>
+                                                    <a class="like" href="' . $Connection->Route() . 'Views/Forms/CommentTicket.php" title="comment">
+                                                        <i class="fa fa-comment"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>';
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='4' style='text-align: center;'>No tickets available.</td></tr>";
+                                    }
+                                    ?>
                                     <tr data-index="1">
 
                                         <td style="text-align: center; vertical-align: middle; ">1</td>

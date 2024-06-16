@@ -1,6 +1,10 @@
 <?php
 require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
+require_once 'C:\xampp\htdocs\GHW-PROJECT\Models\Tickets.php';
 $Connection = new Connection();
+$TicketModel = new TicketCRUD();
+
+$Select10 = Select_10_Tickets($TicketModel, $Connection);
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +86,7 @@ $Connection = new Connection();
                                 <thead>
                                     <tr>
                                         <th style="text-align: center; vertical-align: middle; " rowspan="2" data-field="id" tabindex="0">
-                                            <div class="th-inner sortable both">TICEKT ID</div>
+                                            <div class="th-inner sortable both">ID</div>
                                             <div class="fht-cell"></div>
                                         </th>
                                     </tr>
@@ -102,10 +106,11 @@ $Connection = new Connection();
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <?php while ($Tickets10 = $Select10->fetch_object()) {?>
                                     <tr data-index="0">
-                                        <td style="text-align: center; vertical-align: middle; ">0</td>
+                                        <td style="text-align: center; vertical-align: middle; "><?php echo $Tickets10->ID_Ticket ?></td>
                                         <td style="text-align: center; ">
-                                            <div class="dropdown dropdown-status  "><button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Draft</button>
+                                            <div class="dropdown dropdown-status  "><button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $Tickets10->ID_Status ?></button>
                                                 <div class="dropdown-menu"><a class="dropdown-item" href="#">Draft</a><a class="dropdown-item" href="#">Pending</a><a class="dropdown-item" href="#">Moderation</a><a class="dropdown-item" href="#">Published</a>
                                                     <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Move to Trash</a>
                                                 </div>
@@ -123,8 +128,8 @@ $Connection = new Connection();
                                                 <i class="fa fa-comment"></i>
                                             </a>
                                         </td>
-
                                     </tr>
+                                    <?php }?>
                                     <tr data-index="1">
 
                                         <td style="text-align: center; vertical-align: middle; ">1</td>
