@@ -331,3 +331,20 @@ END //
  
 DELIMITER ;
 
+DELIMITER //
+
+CREATE PROCEDURE sp_InsertComment(
+    IN idComment INT,  
+    IN Content VARCHAR(255), 
+    IN idTicket INT
+)
+BEGIN
+    DECLARE Date DATETIME;
+
+    SET Date = NOW();
+
+    INSERT INTO Comment (ID_Comment, Date, Content, ID_Ticket)
+    VALUES (idComment, Date, Content, idTicket);
+END //
+ 
+DELIMITER ;

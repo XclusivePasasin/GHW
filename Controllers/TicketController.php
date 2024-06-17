@@ -18,6 +18,10 @@ if (isset($_GET['action']))
                 case 'Update':
                 Update($TicketModel, $Connection);
                 break;
+
+                case 'Comment':
+                InsertComment($TicketModel, $Connection);
+                break;
             }
         }
 
@@ -99,26 +103,24 @@ function Update($TicketModel, $Connection)
             $UpdateTicket = $TicketModel->UpdateTicket($idTicket, $Title, $Description, $CreateDate, $UpdateDate, $idStatus, $idUser, $idPriority, $idDifficulty);
  
             if ($UpdateTicket == True)
-            {
-                $_SESSION['Message'] = "Data updated correctly.";
-                $_SESSION['MessageType'] = 'success';
-                header("Location: " . $Connection->Route() . "./Views/Forms/EditTicket.php");
-                exit();
-            }
-            else
-            {
-                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";
-                $_SESSION['MessageType'] = "error";
-                header("Location: " . $Connection->Route() . "./Views/Forms/EditTicket.php");
-                exit();
-            }
- 
-        }
-        else
-        {
-            $_SESSION['Message'] = "Empty Fields";
-            $_SESSION['MessageType'] = 'error';
-            header("Location: " . $Connection->Route() . "./Views/Forms/EditTicket.php");
+            {                
+                $_SESSION['Message'] = "Data updated correctly.";                 
+                $_SESSION['MessageType'] = 'success';                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewTicket.php");                 
+                exit();             
+            }            
+            else            
+            {                
+                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";                 
+                $_SESSION['MessageType'] = "error";                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewTicket.php");                 
+                exit();             
+            }        
+        }        
+        else        
+        {            
+            $_SESSION['Message'] = "Empty Fields"; $_SESSION['MessageType'] = 'error'; 
+            header("Location: " . $Connection->Route() . "./Views/Forms/ViewTicket.php"); 
             exit();
         }
     }
@@ -138,6 +140,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         }
         echo $Problems;
     } 
+
+    function InsertComment($TicketModel, $Connection)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') 
+        {
+            if (
+                isset($_POST['ID_Comment']) && !empty($_POST['ID_Comment']) &&
+                isset($_POST['Content']) && !empty($_POST['Content'])
+            ) 
+            {
+                $idComment = null;
+                $Date = $_POST['Date'];
+                $Content = $_POST['Content'];
+                $idTicket = $_POST['ID_Ticket'];
+
+                $SendComment = $TicketModel->InsertComment($idComment, $Date, $Content, $idTicket);
+
+                if ($SendComment == True) 
+                {
+                    $_SESSION['Message'] = "Data entered correctly.";
+                    $_SESSION['MessageType'] = 'success';
+                    header("Location: " . $Connection->Route() . "./Views/Forms/CommentTicket.php");
+                    exit();
+                } 
+                else 
+                {
+                    $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";
+                    $_SESSION['MessageType'] = "error";
+                    header("Location: " . $Connection->Route() . "./Views/Forms/CommentTicket.php");
+                    exit();
+                }
+
+            }
+            else
+            {
+                $_SESSION['Message'] = "Empty Fields";
+                $_SESSION['MessageType'] = 'error';
+                header("Location: " . $Connection->Route() . "./Views/Forms/CommentTicket.php");
+                exit();
+            }
+        }
+    }
 }
 
 ?>

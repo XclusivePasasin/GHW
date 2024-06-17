@@ -13,9 +13,6 @@ if ($ConnectionMYSQL)
     $SelectTicket = "SELECT * FROM Ticket WHERE ID_Ticket = $ID_Ticket";
     $ConsultTicket = mysqli_query($ConnectionMYSQL, $SelectTicket);
 
-    if (!$ConsultTicket) {
-        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
-    }
     if (mysqli_num_rows($ConsultTicket) > 0) {
         $Ticket = mysqli_fetch_object($ConsultTicket);
     }
@@ -23,9 +20,6 @@ if ($ConnectionMYSQL)
     $SelectUser = "SELECT * FROM User WHERE ID_User = $Ticket->ID_User";
     $ConsultUser = mysqli_query($ConnectionMYSQL, $SelectUser);
 
-    if (!$ConsultUser) {
-        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
-    }
     if (mysqli_num_rows($ConsultUser) == 1) {
         $User = mysqli_fetch_object($ConsultUser);
     }
@@ -33,9 +27,6 @@ if ($ConnectionMYSQL)
     $SelectEmployee = "SELECT * FROM Employee WHERE ID_Employee = $Ticket->ID_User";
     $ConsultEmployee = mysqli_query($ConnectionMYSQL, $SelectEmployee);
 
-    if (!$ConsultEmployee) {
-        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
-    }
     if (mysqli_num_rows($ConsultEmployee) == 1) {
         $Employee = mysqli_fetch_object($ConsultEmployee);
     }

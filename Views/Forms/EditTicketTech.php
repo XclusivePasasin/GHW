@@ -292,9 +292,16 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                     <div class="form-group">
                         <label class="form-label" for="signup_v1-priority">Difficulty</label>
                         <select name="Difficulty" class="form-control" value=" <?php echo $Ticket->ID_Difficulty; ?>"><?php echo $Ticket->ID_Difficulty; ?>
-                            <option value="<?php echo $Ticket->ID_Difficulty; ?>"><?php echo $Ticket->ID_Difficulty; ?></option>
-                            <option value="2">2</option>
-                            <option value="3">3</option> 
+                        <?php if ($Ticket->ID_Difficulty == 1) {?>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option> 
+                            <?php } else if($Ticket->ID_Difficulty == 2) {?>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            <?php } else if($Ticket->ID_Difficulty == 3) {?>
+                            <option value="3">3</option>
+                            <?php }?>
                         </select>                      
                     </div>
                     <div class="form-group">

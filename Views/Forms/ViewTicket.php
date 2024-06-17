@@ -11,6 +11,27 @@ if ($ConnectionMYSQL)
     $Tickets10 = mysqli_query($ConnectionMYSQL, $SelectTicketsSQL10);
 }
 
+if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSION['MessageType']) && !empty($_SESSION['MessageType'])) {
+    if ($_SESSION['MessageType'] == 'success') {
+        echo '<div class="alert alert-aquamarine alert-border-left alert-close alert-dismissible fade in" role="alert">';
+        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        echo '<span aria-hidden="true">×</span>';
+        echo '</button>';
+        echo '<strong>Heads Up!</strong> ' . $_SESSION['Message'];
+        echo '</div>';
+        
+    } elseif ($_SESSION['MessageType'] == 'error') {
+        echo '<div class="alert alert-warning alert-border-left alert-close alert-dismissible fade in" role="alert">';
+        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        echo '<span aria-hidden="true">×</span>';
+        echo '</button>';
+        echo '<strong>Error!</strong> ' . $_SESSION['Message'];
+        echo '</div>';
+    }
+    unset($_SESSION['Message']);
+    unset($_SESSION['MessageType']);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -164,7 +185,7 @@ if ($ConnectionMYSQL)
                                             <a class="like" href="EditTicket.php?id=<?php echo $InfoTickets10->ID_Ticket; ?>">
                                                 <i class="fa fa-eye"></i>
                                             </a>                                               
-                                            <a class="like" href="<?php echo $Connection->Route().'Views/Forms/CommentTicket.php'; ?>" title="coment">
+                                            <a class="like" href="CommentTicket.php?id=<?php echo $InfoTickets10->ID_Ticket; ?>" title="coment">
                                                 <i class="fa fa-comment"></i>
                                             </a>
                                         </td>

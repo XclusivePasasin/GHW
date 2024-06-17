@@ -52,6 +52,22 @@ class TicketCRUD extends MySQL
         return True;
     }
 
+    function InsertComment($idComment, $Date, $Content, $idTicket) 
+    {
+        $Connection = $this->Connection;
+        $InsertCommentSQL = "CALL sp_InsertComment(" .
+                            intval($idComment) . ", " .
+                            "'" . mysqli_real_escape_string($Connection, $Date) . "', " .
+                            "'" . mysqli_real_escape_string($Connection, $Content) . "', " .
+                            intval($idTicket) . ")";
+    
+        $CommentResult = mysqli_query($Connection, $InsertCommentSQL);
+        if (!$CommentResult) {
+            return False;
+        }
+        return True;
+    }
+
     function ProblemsHTML($ID_Category, $Connection) 
     {
         $ProblemsSQL = "SELECT * FROM problems WHERE ID_Category = $ID_Category";

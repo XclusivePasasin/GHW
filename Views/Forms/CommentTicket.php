@@ -1,6 +1,54 @@
 <?php
-require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
-$Connection = new Connection();
+$Include = require_once 'C:\xampp\htdocs\GHW-PROJECT\Config\Connection.php';
+include_once 'C:\xampp\htdocs\GHW-PROJECT\Controllers\Users-Controller.php';
+require_once 'C:\xampp\htdocs\GHW-PROJECT\Models\Tickets.php';
+
+$Connection = new MySQL();
+$ConnectionMYSQL = $Connection->ConnectionMySQL();
+
+$ID_Ticket = $_GET["id"];
+
+if ($ConnectionMYSQL)
+{
+    $SelectComments = "SELECT * FROM Comment WHERE ID_Ticket = $ID_Ticket";
+    $Comments = mysqli_query($ConnectionMYSQL, $SelectComments);
+}
+
+if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSION['MessageType']) && !empty($_SESSION['MessageType'])) {
+    if ($_SESSION['MessageType'] == 'success') {
+        echo '<div class="alert alert-aquamarine alert-border-left alert-close alert-dismissible fade in" role="alert">';
+        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        echo '<span aria-hidden="true">×</span>';
+        echo '</button>';
+        echo '<strong>Heads Up!</strong> ' . $_SESSION['Message'];
+        echo '</div>';
+        
+    } elseif ($_SESSION['MessageType'] == 'error') {
+        echo '<div class="alert alert-warning alert-border-left alert-close alert-dismissible fade in" role="alert">';
+        echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+        echo '<span aria-hidden="true">×</span>';
+        echo '</button>';
+        echo '<strong>Error!</strong> ' . $_SESSION['Message'];
+        echo '</div>';
+    }
+    unset($_SESSION['Message']);
+    unset($_SESSION['MessageType']);
+}
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if(isset($_SESSION['Email'])) 
+{     
+    $Email = $_SESSION['Email'];
+}
+else 
+{
+    header("Location: " . Connection::Route() . "../index.php");     
+    exit(); 
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -9,280 +57,10 @@ $Connection = new Connection();
 <head lang="es">
     <!--Import MainHead-->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainHead.php'; ?>
-
-    <style>
-        /**
- * Oscuro: #283035
- * Azul: #03658c
- * Detalle: #c7cacb
- * Fondo: #dee1e3
- ----------------------------------*/
- * {
- 	margin: 0;
- 	padding: 0;
- 	-webkit-box-sizing: border-box;
- 	-moz-box-sizing: border-box;
- 	box-sizing: border-box;
- }
-
- a {
- 	color: #03658c;
- 	text-decoration: none;
- }
-
-ul {
-	list-style-type: none;
-}
-
-body {
-	font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
-	background: #dee1e3;
-}
-
-/** ====================
- * Lista de Comentarios
- =======================*/
-.comments-container {
-	margin: 60px auto 15px;
-	width: 768px;
-}
-
-.comments-container h1 {
-	font-size: 36px;
-	color: #283035;
-	font-weight: 400;
-}
-
-.comments-container h1 a {
-	font-size: 18px;
-	font-weight: 700;
-}
-
-.comments-list {
-	margin-top: 30px;
-	position: relative;
-}
-
-/**
- * Lineas / Detalles
- -----------------------*/
-.comments-list:before {
-	content: '';
-	width: 2px;
-	height: 100%;
-	background: #c7cacb;
-	position: absolute;
-	left: 32px;
-	top: 0;
-}
-
-.comments-list:after {
-	content: '';
-	position: absolute;
-	background: #c7cacb;
-	bottom: 0;
-	left: 27px;
-	width: 7px;
-	height: 7px;
-	border: 3px solid #dee1e3;
-	-webkit-border-radius: 50%;
-	-moz-border-radius: 50%;
-	border-radius: 50%;
-}
-
-.reply-list:before, .reply-list:after {display: none;}
-.reply-list li:before {
-	content: '';
-	width: 60px;
-	height: 2px;
-	background: #c7cacb;
-	position: absolute;
-	top: 25px;
-	left: -55px;
-}
-
-
-.comments-list li {
-	margin-bottom: 15px;
-	display: block;
-	position: relative;
-}
-
-.comments-list li:after {
-	content: '';
-	display: block;
-	clear: both;
-	height: 0;
-	width: 0;
-}
-
-.reply-list {
-	padding-left: 88px;
-	clear: both;
-	margin-top: 15px;
-}
-/**
- * Avatar
- ---------------------------*/
-.comments-list .comment-avatar {
-	width: 65px;
-	height: 65px;
-	position: relative;
-	z-index: 99;
-	float: left;
-	border: 3px solid #FFF;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-	overflow: hidden;
-}
-
-.comments-list .comment-avatar img {
-	width: 100%;
-	height: 100%;
-}
-
-.reply-list .comment-avatar {
-	width: 50px;
-	height: 50px;
-}
-
-.comment-main-level:after {
-	content: '';
-	width: 0;
-	height: 0;
-	display: block;
-	clear: both;
-}
-/**
- * Caja del Comentario
- ---------------------------*/
-.comments-list .comment-box {
-	width: 680px;
-	float: right;
-	position: relative;
-	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-	-moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-	box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-}
-
-.comments-list .comment-box:before, .comments-list .comment-box:after {
-	content: '';
-	height: 0;
-	width: 0;
-	position: absolute;
-	display: block;
-	border-width: 10px 12px 10px 0;
-	border-style: solid;
-	border-color: transparent #FCFCFC;
-	top: 8px;
-	left: -11px;
-}
-
-.comments-list .comment-box:before {
-	border-width: 11px 13px 11px 0;
-	border-color: transparent rgba(0,0,0,0.05);
-	left: -12px;
-}
-
-.reply-list .comment-box {
-	width: 610px;
-}
-.comment-box .comment-head {
-	background: #FCFCFC;
-	padding: 10px 12px;
-	border-bottom: 1px solid #E5E5E5;
-	overflow: hidden;
-	-webkit-border-radius: 4px 4px 0 0;
-	-moz-border-radius: 4px 4px 0 0;
-	border-radius: 4px 4px 0 0;
-}
-
-.comment-box .comment-head i {
-	float: right;
-	margin-left: 14px;
-	position: relative;
-	top: 2px;
-	color: #A6A6A6;
-	cursor: pointer;
-	-webkit-transition: color 0.3s ease;
-	-o-transition: color 0.3s ease;
-	transition: color 0.3s ease;
-}
-
-.comment-box .comment-head i:hover {
-	color: #03658c;
-}
-
-.comment-box .comment-name {
-	color: #283035;
-	font-size: 14px;
-	font-weight: 700;
-	float: left;
-	margin-right: 10px;
-}
-
-.comment-box .comment-name a {
-	color: #283035;
-}
-
-.comment-box .comment-head span {
-	float: left;
-	color: #999;
-	font-size: 13px;
-	position: relative;
-	top: 1px;
-}
-
-.comment-box .comment-content {
-	background: #FFF;
-	padding: 12px;
-	font-size: 15px;
-	color: #595959;
-	-webkit-border-radius: 0 0 4px 4px;
-	-moz-border-radius: 0 0 4px 4px;
-	border-radius: 0 0 4px 4px;
-}
-
-.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #03658c;}
-.comment-box .comment-name.by-author:after {
-	content: 'autor';
-	background: #03658c;
-	color: #FFF;
-	font-size: 12px;
-	padding: 3px 5px;
-	font-weight: 700;
-	margin-left: 10px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-
-/** =====================
- * Responsive
- ========================*/
-@media only screen and (max-width: 766px) {
-	.comments-container {
-		width: 480px;
-	}
-
-	.comments-list .comment-box {
-		width: 390px;
-	}
-
-	.reply-list .comment-box {
-		width: 320px;
-	}
-}
-    </style>
 </head>
-
 <body>
-    <header class="section-header">
-        <div class="tbl">
+<header class="section-header">
+    <div class="tbl">
             <div class="tbl-row">
                 <div class="tbl-cell">
                     <h3>COMMENT TICKET</h3>
@@ -295,91 +73,93 @@ body {
             </div>
         </div>
     </header>
-    <section class="card">
-        <div class="card-block">
-                <!-- Contenedor Principal -->
-	<div class="comments-container">
-
-		<ul id="comments-list" class="comments-list">
-			<li>
-				<div class="comment-main-level">
-					<!-- Avatar -->
-					<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-					<!-- Contenedor del Comentario -->
-					<div class="comment-box">
-						<div class="comment-head">
-							<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
-							<span>hace 20 minutos</span>
-							<i class="fa fa-reply"></i>
-							<i class="fa fa-heart"></i>
-						</div>
-						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						</div>
-					</div>
-				</div>
-				<!-- Respuestas de los comentarios -->
-				<ul class="comments-list reply-list">
-					<li>
-						<!-- Avatar -->
-						<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-						<!-- Contenedor del Comentario -->
-						<div class="comment-box">
-							<div class="comment-head">
-								<h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-								<span>hace 10 minutos</span>
-								<i class="fa fa-reply"></i>
-								<i class="fa fa-heart"></i>
-							</div>
-							<div class="comment-content">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							</div>
-						</div>
-					</li>
-
-					<li>
-						<!-- Avatar -->
-						<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
-						<!-- Contenedor del Comentario -->
-						<div class="comment-box">
-							<div class="comment-head">
-								<h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Agustin Ortiz</a></h6>
-								<span>hace 10 minutos</span>
-								<i class="fa fa-reply"></i>
-								<i class="fa fa-heart"></i>
-							</div>
-							<div class="comment-content">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-							</div>
-						</div>
-					</li>
-				</ul>
-			</li>
-
-			<li>
-				<div class="comment-main-level">
-					<!-- Avatar -->
-					<div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
-					<!-- Contenedor del Comentario -->
-					<div class="comment-box">
-						<div class="comment-head">
-							<h6 class="comment-name"><a href="http://creaticode.com/blog">Lorena Rojero</a></h6>
-							<span>hace 10 minutos</span>
-							<i class="fa fa-reply"></i>
-							<i class="fa fa-heart"></i>
-						</div>
-						<div class="comment-content">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
-						</div>
-					</div>
-				</div>
-			</li>
-		</ul>
-	</div>
-        
-        </div><!--.row-->
-    </section>
+    <div class="container-fluid">
+        <section class="box-typical">
+            <div class="table-responsive">
+                <div class="bootstrap-table">
+                    <div class="fixed-table-toolbar">
+                        <div class="bars pull-left">
+                            <div id="toolbar">
+                                <div class="bootstrap-table-header">COMMENTS</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fixed-table-container" style="padding-bottom: 0px;">
+                        <div class="fixed-table-header" style="display: none;">
+                            <table></table>
+                        </div>
+                        <div class="fixed-table-body">
+                            <div class="fixed-table-loading" style="top: 88px;"></div>
+                            <table id="table" class="table table-striped table-hover" data-toolbar="#toolbar" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-show-export="true" data-detail-view="true" data-detail-formatter="detailFormatter" data-minimum-count-columns="2" data-show-pagination-switch="true" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, ALL]" data-show-footer="false" data-response-handler="responseHandler">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center; vertical-align: middle; " rowspan="2" data-field="id" tabindex="0">
+                                            <div class="th-inner sortable both">EMAIL</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align: center; " data-field="price" tabindex="0">
+                                            <div class="th-inner sortable both">CONTENT</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="text-align: center; " data-field="name" tabindex="0">
+                                            <div class="th-inner sortable both">DATE</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="text-align: center; " data-field="price" tabindex="0">
+                                            <div class="th-inner sortable both">ACTIONS</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                            <?php while ($AllComments = $Comments->fetch_object()) { ?>
+                                    <tr>
+                                        <td style="text-align: center; vertical-align: middle; ">
+                                            <?php echo $Email ?>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                <?php echo $AllComments->Content ?>
+                                        </td>
+                                        <td style="text-align: center; ">
+                                                <?php echo $AllComments->Date ?>
+                                        </td>
+                                        <td style="white-space: nowrap; width: 1%;">
+                                            <div class="btn-group btn-group-sm" style="float: none;">
+                                                <a href="../../Controllers/TicketController.php?action=DeleteComment&idComment=<?php echo $AllComments->ID_Comment?>" target="pages" class="delete-link">
+                                                    <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger swal-btn-cancel" style="float: none;">
+                                                        <span class="glyphicon glyphicon-trash"></span>
+                                                    </button>
+                                                </a>   
+                                            </div> 
+                                        </td>
+                                    </tr>
+                                    <?php }?>
+                            </tbody>
+                        </table>
+                        </div>
+                        <div class="fixed-table-footer" style="display: none;">
+                            <table>
+                                <tbody>
+                                    <tr></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            <div class="col-sm-12 centered-button">
+                <center>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" style="width: 220px; font-size:17px; ;">Add Comment</button>
+                    </div>
+                </center>                    
+            </div>
+                <div class="clearfix"></div>
+            </div>
+        </section><!--.box-typical-->
+    </div>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
 </body>
-
 </html>
