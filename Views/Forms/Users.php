@@ -211,7 +211,6 @@ if ($ConnectionMYSQL) {
                         <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Email); ?></td>
                         <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Rol); ?></td>
                         <td class="table-icon-cell"><?php echo htmlspecialchars($Info->Department); ?></td>
-
                         <td style="white-space: nowrap; width: 1%;">
                             <div class="btn-group btn-group-sm" style="float: none;">
                                 <a href="UserUpdate.php?id=<?php echo $Info->ID_User ?>" target="pages">

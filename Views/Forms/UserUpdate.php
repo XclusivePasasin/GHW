@@ -152,7 +152,7 @@ if ($ConnectionMYSQL)
                             </fieldset>
                                 <div class="col-md-6 centered-button">
                                 <fieldset class="form-group">
-                                    <button type="button" class="btn btn-danger centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmCancel()"><i class="fa-solid fa-arrow-left"></i>Cancel</button>
+                                    <button type="button" class="btn btn-danger centered-button" style="width: 220px; font-size:17px; ;" onclick="confirmCancel()"><i class="fa-solid fa-arrow-left"></i> Cancel</button>
                                     <script>
                                          function confirmCancel() 
                                         {

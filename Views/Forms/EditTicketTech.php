@@ -6,10 +6,21 @@ require_once 'C:\xampp\htdocs\GHW-PROJECT\Models\Tickets.php';
 $Connection = new MySQL();
 $ConnectionMYSQL = $Connection->ConnectionMySQL();
 $TicketModel = new TicketCRUD();
-$ID_Ticket = isset($_GET["id"]) ? intval($_GET["id"]) : null;
+$ID_Ticket = $_GET["id"];
+$ID_Status = $_GET["status"];
 
 if ($ConnectionMYSQL) 
 {
+    $TicketViewSQL = "SELECT * FROM TicketStatusView WHERE ID_Ticket = $ID_Ticket";
+    $TicketView = mysqli_query($ConnectionMYSQL, $TicketViewSQL);
+
+    if (!$TicketView) {
+        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
+    }
+    if (mysqli_num_rows($TicketView) > 0) {
+        $TicketStatus = mysqli_fetch_object($TicketView);
+    }
+
     $SelectTicket = "SELECT * FROM Ticket WHERE ID_Ticket = $ID_Ticket";
     $ConsultTicket = mysqli_query($ConnectionMYSQL, $SelectTicket);
 
@@ -71,112 +82,8 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainHead.php'; ?>
 </head>
 
-<?php if($Ticket->ID_Status == 1 or $Ticket->ID_Status == 2) { ?>
-<!-------Status Open or In Progress------->
-<body>
-    <header class="section-header">
-        <div class="tbl">
-            <div class="tbl-row">
-                <div class="tbl-cell">
-                    <h3>INFORMATION TICKET</h3>
-                    <ol class="breadcrumb breadcrumb-simple">
-                        <li><a href="#">CodeLab</a></li>
-                        <li><a href="#">Tickets</a></li>
-                        <li class="active">Information Ticket</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </header>
-    <section class="card">
-        <div class="card-block">
-            <div class="row m-t-lg">
-                <div class="col-md-6">
-                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="EditTicketTech.php?id=<?php echo $Ticket->ID_Ticket; ?>&status=<?php echo $Ticket->ID_Status; ?>">
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-title">Nª Ticket</label>
-                            <div class="form-control-wrapper">
-                                <input type="text" class="form-control" id="" value="<?php echo $Ticket->ID_Ticket; ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-user">Title</label>
-                            <div class="form-control-wrapper">
-                                <input type="text" class="form-control" id="" value="<?php echo $Ticket->Title; ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-description">Description</label>
-                            <div class="col-sm-16">
-                                <textarea rows="10" class="form-control" value="" readonly><?php echo $Ticket->Description; ?></textarea>
-                            </div>
-                        </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v2-name">User</label>
-                        <div class="form-control-wrapper">
-                            <input type="text" class="form-control" id="" value="<?php echo ($Employee->Name . ' ' . $Employee->Lastname); ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v2-name">Email</label>
-                        <div class="form-control-wrapper">
-                            <input name="Email" type="Email" class="form-control" value="<?php echo $User->Email; ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v1-priority">Difficulty</label>
-                        <input type="text" class="form-control" id="Problems" value="<?php echo $Ticket->ID_Difficulty; ?>" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v1-priority">Status</label>
-                        <input type="text" class="form-control" id="Problems" value="<?php if($Ticket->ID_Status == 1) 
-                        {
-                            echo "Open";
-                        }
-                        else if($Ticket->ID_Status == 2)
-                        {
-                            echo "In Progress";
-                        }
-                        else if($Ticket->ID_Status == 3)
-                        {
-                            echo "Closed";
-                        }
-                        ?>" readonly>
-                    </div>
-                    <br>
-                    <div class="col-sm-6 centered-button">
-                        <center>
-                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
-                                    <button type="button" class="btn" style="width: 220px; font-size:17px; ;">
-                                        Back
-                                    </button>
-                                    </span>
-                                </a>
-                        </center>         
-                    </div>
-                    <div class="col-sm-6 centered-button">
-                        <center>
-                            <div class="form-group">
-                                <button type="submit" class="btn" style="width: 220px; font-size:17px; ;">Edit Ticket</button>
-                            </div>
-                        </center>                    
-                    </div>            
-                </div>
-                </form>
-            </div>
-        </div><!--.row-->
-    </section>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
-</body>
-
-</html>
-<!-------Status Open or In Progress------->
-
-<?php } else if($Ticket->ID_Status == 3) {?>
-<!-------Status Closed------->
-
+<?php if ($ID_Status == 1) {?>
+<!-------Status Open------->
     <body>
     <header class="section-header">
         <div class="tbl">
@@ -196,23 +103,176 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
         <div class="card-block">
             <div class="row m-t-lg">
                 <div class="col-md-6">
-                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="EditTicketTech.php?id=<?php echo $Ticket->ID_Ticket; ?>&status=<?php echo $Ticket->ID_Status; ?>">
+                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/TicketController.php?action=Update">
+                        <!-------HiddenData------->
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="CreateDate" value="<?php echo $Ticket->CreateDate; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="ID_User" value="<?php echo $Ticket->ID_User; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="ID_Priority" value="<?php echo $Ticket->ID_Priority; ?>" readonly>
+                            </div>
+                        </div>
+                        <!-------HiddenData------->
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Nª Ticket</label>
                             <div class="form-control-wrapper">
-                                <input type="text" class="form-control" id="" value="<?php echo $Ticket->ID_Ticket; ?>" readonly>
+                                <input type="text" class="form-control" name="ID_Ticket" value="<?php echo $Ticket->ID_Ticket; ?>" readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-user">Title</label>
                             <div class="form-control-wrapper">
-                                <input type="text" class="form-control" id="" value="<?php echo $Ticket->Title; ?>" readonly>
+                                <input type="text" class="form-control" name="Title" value="<?php echo $Ticket->Title; ?>" readonly>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-description">Description</label>
                             <div class="col-sm-16">
-                                <textarea rows="10" class="form-control" value="" readonly><?php echo $Ticket->Description; ?></textarea>
+                                <textarea rows="10" class="form-control" name="Description" readonly><?php echo $Ticket->Description; ?></textarea>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v2-name">User</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control"  value="<?php echo ($Employee->Name . ' ' . $Employee->Lastname); ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v2-name">Email</label>
+                        <div class="form-control-wrapper">
+                            <input name="Email" type="Email" class="form-control" value="<?php echo $User->Email; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v1-priority">Difficulty</label>
+                        <select name="Difficulty" class="form-control" value=" <?php echo $Ticket->ID_Difficulty; ?>"><?php echo $Ticket->ID_Difficulty; ?>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option> 
+                        </select>                      
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v1-priority">Status</label>
+                        <select name="Status" class="form-control" value="<?php echo $Ticket->ID_Status; ?>"><?php echo $Ticket->ID_Status; ?>
+                            <option value="<?php echo $Ticket->ID_Status; ?>"><?php if($Ticket->ID_Status == 1) 
+                        {
+                            echo "Open";
+                        }
+                        else if($Ticket->ID_Status == 2)
+                        {
+                            echo "In Progress";
+                        }
+                        else if($Ticket->ID_Status == 3)
+                        {
+                            echo "Closed";
+                        }
+                        ?>
+                        </option>
+                            <option value="2">In Progress</option>
+                            <option value="3">Closed</option> 
+                        </select>
+                    </div>
+                    <br>
+                    <div class="col-sm-6 centered-button">
+                        <center>
+                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
+                                    <button type="button" class="btn btn-danger" style="width: 220px; font-size:17px; ;">
+                                        Cancel
+                                    </button>
+                                    </span>
+                                </a>
+                        </center>         
+                    </div>
+                    <div class="col-sm-6 centered-button">
+                        <center>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success" style="width: 220px; font-size:17px; ;">Save Changes</button>
+                            </div>
+                        </center>
+                    </div>                   
+                </div>
+                </form>
+            </div>
+        </div><!--.row-->
+    </section>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>
+</body>
+
+</html>
+<!-------Status Open------->
+
+<?php } else if ($ID_Status == 2) {?>
+<!-------Status In Progress------->
+
+<body>
+    <header class="section-header">
+        <div class="tbl">
+            <div class="tbl-row">
+                <div class="tbl-cell">
+                    <h3>INFORMATION TICKET</h3>
+                    <ol class="breadcrumb breadcrumb-simple">
+                        <li><a href="#">CodeLab</a></li>
+                        <li><a href="#">Tickets</a></li>
+                        <li class="active">Information Ticket</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="card">
+        <div class="card-block">
+            <div class="row m-t-lg">
+                <div class="col-md-6">
+                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/TicketController.php?action=Update">
+                        <!-------HiddenData------->
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="CreateDate" value="<?php echo $Ticket->CreateDate; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="ID_User" value="<?php echo $Ticket->ID_User; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="ID_Priority" value="<?php echo $Ticket->ID_Priority; ?>" readonly>
+                            </div>
+                        </div>
+                        <!-------HiddenData------->
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title">Nª Ticket</label>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" name="ID_Ticket" value="<?php echo $Ticket->ID_Ticket; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-user">Title</label>
+                            <div class="form-control-wrapper">
+                                <input type="text" class="form-control" name="Title" value="<?php echo $Ticket->Title; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-description">Description</label>
+                            <div class="col-sm-16">
+                                <textarea rows="10" class="form-control" name="Description" readonly><?php echo $Ticket->Description; ?></textarea>
                             </div>
                         </div>
                 </div>
@@ -231,35 +291,37 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="signup_v1-priority">Difficulty</label>
-                        <input type="text" class="form-control" id="Problems" value="<?php echo $Ticket->ID_Difficulty; ?>" readonly>
+                        <select name="Difficulty" class="form-control" value=" <?php echo $Ticket->ID_Difficulty; ?>"><?php echo $Ticket->ID_Difficulty; ?>
+                            <option value="<?php echo $Ticket->ID_Difficulty; ?>"><?php echo $Ticket->ID_Difficulty; ?></option>
+                            <option value="2">2</option>
+                            <option value="3">3</option> 
+                        </select>                      
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="signup_v1-priority">Status</label>
-                        <input type="text" class="form-control" id="Problems" value="<?php if($Ticket->ID_Status == 1) 
-                        {
-                            echo "Open";
-                        }
-                        else if($Ticket->ID_Status == 2)
-                        {
-                            echo "In Progress";
-                        }
-                        else if($Ticket->ID_Status == 3)
-                        {
-                            echo "Closed";
-                        }
-                        ?>" readonly>
+                        <select name="Status" class="form-control" value="<?php echo $Ticket->ID_Status; ?>"><?php echo $Ticket->ID_Status; ?>
+                            <option value="2">In Progress</option> 
+                            <option value="3">Closed</option> 
+                        </select>
                     </div>
                     <br>
-                    <div class="col-sm-12 centered-button">
+                    <div class="col-sm-6 centered-button">
                         <center>
                                 <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
-                                    <button type="button" class="btn" style="width: 220px; font-size:17px; ;">
-                                        Back
+                                    <button type="button" class="btn btn-danger" style="width: 220px; font-size:17px; ;">
+                                        Cancel
                                     </button>
                                     </span>
                                 </a>
                         </center>         
-                    </div>         
+                    </div>
+                    <div class="col-sm-6 centered-button">
+                        <center>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success" style="width: 220px; font-size:17px; ;">Save Changes</button>
+                            </div>
+                        </center>
+                    </div>                   
                 </div>
                 </form>
             </div>
@@ -269,5 +331,8 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
 </body>
 
 </html>
-<!-------Status Closed------->
-<?php } ?> 
+
+<!-------Status In Progress------->
+<?php }?>
+
+

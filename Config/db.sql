@@ -200,6 +200,7 @@ INSERT INTO User (ID_User,Email,UserPassword,ID_Employee)
 VALUES (1,'Majano@codelab.sv','demo',1),(2,'Franco@codelab.sv','demo',2),(3,'Pasasin@codelab.sv','demo',3); 
 
 -- Views
+
 CREATE VIEW User_Info AS
 SELECT 
     e.ID_Employee AS ID_Employee,
@@ -223,6 +224,21 @@ INNER JOIN
     Rol r ON e.ID_Rol = r.ID_Rol
 INNER JOIN 
     Department d ON e.ID_Department = d.ID_Department;
+--------------------------------------------------------
+CREATE VIEW TicketStatusView AS
+SELECT 
+    t.ID_Ticket,
+    s.TicketStatus,
+    t.Title,
+    t.CreateDate
+    t.ID_Priority
+FROM 
+    Ticket t
+JOIN 
+    Status s ON t.ID_Status = s.ID_Status
+ORDER BY 
+    t.CreateDate DESC
+LIMIT 10;
 
 -- Stored process to update user
 
@@ -295,7 +311,7 @@ CREATE PROCEDURE sp_UpdateTicket(
     IN idStatus INT,
     IN idUser INT,
     IN idPriority INT,
-    IN idDifficulty INT,
+    IN idDifficulty INT
 )
 BEGIN
     DECLARE UpdateDate DATETIME;  
@@ -308,8 +324,8 @@ BEGIN
         CreateDate = CreateDate,  
         ID_Status = idStatus,
         ID_User = idUser,
-        ID_Priority = idPriority
-        ID_Difficulty = idDifficulty,
+        ID_Priority = idPriority,
+        ID_Difficulty = idDifficulty
     WHERE ID_Ticket = idTicket;
 END //
  
