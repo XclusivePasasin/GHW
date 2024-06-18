@@ -197,7 +197,7 @@ VALUES (1,'Luis','Majano',70588297,'06250035-9','Santa Tecla',1,1),(2,'Gerardo',
 (3,'Eliazar','Pasasin',87594000,'65362547-1','San Salvador',1,3);
 
 INSERT INTO User (ID_User,Email,UserPassword,ID_Employee)
-VALUES (1,'Majano@codelab.sv','demo',1),(2,'Franco@codelab.sv','demo',2),(3,'Pasasin@codelab.sv','demo',3); 
+VALUES (1,'Majano@codelab.sv','ZGVtbw==',1),(2,'Franco@codelab.sv','ZGVtbw==',2),(3,'Pasasin@codelab.sv','ZGVtbw==',3); 
 
 -- Views
 
@@ -224,7 +224,7 @@ INNER JOIN
     Rol r ON e.ID_Rol = r.ID_Rol
 INNER JOIN 
     Department d ON e.ID_Department = d.ID_Department;
---------------------------------------------------------
+
 CREATE VIEW TicketStatusView AS
 SELECT 
     t.ID_Ticket,
@@ -234,7 +234,9 @@ SELECT
     t.UpdateDate,
     t.ID_Priority,
     u.Email,
-    d.Department
+    d.Department,
+    t.ID_Difficulty,
+    t.ID_User
 FROM 
     Ticket t
 JOIN 
@@ -247,7 +249,7 @@ JOIN
     Department d ON e.ID_Department = d.ID_Department
 ORDER BY 
     t.CreateDate DESC;
---------------------------------------------------------
+
 CREATE VIEW CommentView AS
 SELECT 
     c.Content,

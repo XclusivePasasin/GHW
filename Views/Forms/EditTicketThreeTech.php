@@ -113,7 +113,7 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
         <div class="card-block">
             <div class="row m-t-lg">
                 <div class="col-md-6">
-                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/TicketController.php?action=Update">
+                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/TicketController.php?action=UpdateThre">
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Nª Ticket</label>
                             <div class="form-control-wrapper">
@@ -190,7 +190,7 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                     <br>
                     <div class="col-sm-6 centered-button">
                         <center>
-                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
+                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewLevelThree.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
                                     <button type="button" class="btn btn-inline btn-danger-outline" style="width: 220px; font-size:17px; ;">
                                         Cancel
                                     </button>
@@ -258,7 +258,7 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
         <div class="card-block">
             <div class="row m-t-lg">
                 <div class="col-md-6">
-                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/TicketController.php?action=Update">
+                    <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/TicketController.php?action=UpdateThree">
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Nª Ticket</label>
                             <div class="form-control-wrapper">
@@ -328,7 +328,7 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                     <br>
                     <div class="col-sm-6 centered-button">
                         <center>
-                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewTicket.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
+                                <a href="<?php echo $Connection->Route() . 'Views/Forms/ViewLevelThree.php'; ?>" target="pages"><span class="lbl text-white" style="color:white;">
                                     <button type="button" class="btn btn-inline btn-danger-outline" style="width: 220px; font-size:17px; ;">
                                         Cancel
                                     </button>

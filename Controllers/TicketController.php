@@ -18,6 +18,15 @@ if (isset($_GET['action']))
                 case 'Update':
                 Update($TicketModel, $Connection);
                 break;
+                case 'UpdateOne':
+                UpdateOne($TicketModel, $Connection);
+                break;
+                case 'UpdateTwo':
+                UpdateTwo($TicketModel, $Connection);
+                break;
+                case 'UpdateThree':
+                UpdateThree($TicketModel, $Connection);
+                break;
 
                 case 'Comment':
                 InsertComment($TicketModel, $Connection);
@@ -146,6 +155,229 @@ function Update($TicketModel, $Connection)
                 $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";                 
                 $_SESSION['MessageType'] = "error";                 
                 header("Location: " . $Connection->Route() . "./Views/Forms/ViewTicket.php");                 
+                exit();             
+            }        
+        }      
+    }
+}
+
+function UpdateOne($TicketModel, $Connection)
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        if (
+            isset($_POST['ID_Ticket']) && !empty($_POST['ID_Ticket']) &&
+            isset($_POST['Title']) && !empty($_POST['Title']) &&
+            isset($_POST['Description']) && !empty($_POST['Description']) &&
+            isset($_POST['Status']) && !empty($_POST['Status']) &&
+            isset($_POST['Content']) && !empty($_POST['Content']) &&
+            isset($_POST['Difficulty']) && !empty($_POST['Difficulty'])
+        )
+        {
+            $idTicket = $_POST['ID_Ticket'];
+            $Title = $_POST['Title'];
+            $Description = $_POST['Description'];
+            $idStatus = $_POST['Status'];
+            $idDifficulty = $_POST['Difficulty'];
+            $idUser = $_POST["ID_User"];
+            $CreateDate = $_POST['CreateDate'];
+            $idPriority = $_POST['ID_Priority'];
+            $idComment = null;
+            $Content = $_POST['Content'];
+ 
+ 
+            $UpdateTicket = $TicketModel->UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty);
+            $InsertComment = $TicketModel->InsertComment($idComment, $Content, $idTicket);
+ 
+            if ($UpdateTicket == True)
+            {                
+                $_SESSION['Message'] = "Data updated correctly.";                 
+                $_SESSION['MessageType'] = 'success';                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelOne.php");                 
+                exit();             
+            }            
+            else            
+            {                
+                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";                 
+                $_SESSION['MessageType'] = "error";                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelOne.php");                 
+                exit();             
+            }        
+        }        
+        else
+        {
+            $idTicket = $_POST['ID_Ticket'];
+            $Title = $_POST['Title'];
+            $Description = $_POST['Description'];
+            $idStatus = $_POST['Status'];
+            $idDifficulty = $_POST['Difficulty'];
+            $idUser = $_POST["ID_User"];
+            $CreateDate = $_POST['CreateDate'];
+            $idPriority = $_POST['ID_Priority'];
+ 
+ 
+            $UpdateTicket = $TicketModel->UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty);
+ 
+            if ($UpdateTicket == True)
+            {                
+                $_SESSION['Message'] = "Data updated correctly.";                 
+                $_SESSION['MessageType'] = 'success';                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelOne.php");                 
+                exit();             
+            }            
+            else            
+            {                
+                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";                 
+                $_SESSION['MessageType'] = "error";                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelOne.php");                 
+                exit();             
+            }        
+        }      
+    }
+}
+function UpdateTwo($TicketModel, $Connection)
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        if (
+            isset($_POST['ID_Ticket']) && !empty($_POST['ID_Ticket']) &&
+            isset($_POST['Title']) && !empty($_POST['Title']) &&
+            isset($_POST['Description']) && !empty($_POST['Description']) &&
+            isset($_POST['Status']) && !empty($_POST['Status']) &&
+            isset($_POST['Content']) && !empty($_POST['Content']) &&
+            isset($_POST['Difficulty']) && !empty($_POST['Difficulty'])
+        )
+        {
+            $idTicket = $_POST['ID_Ticket'];
+            $Title = $_POST['Title'];
+            $Description = $_POST['Description'];
+            $idStatus = $_POST['Status'];
+            $idDifficulty = $_POST['Difficulty'];
+            $idUser = $_POST["ID_User"];
+            $CreateDate = $_POST['CreateDate'];
+            $idPriority = $_POST['ID_Priority'];
+            $idComment = null;
+            $Content = $_POST['Content'];
+ 
+ 
+            $UpdateTicket = $TicketModel->UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty);
+            $InsertComment = $TicketModel->InsertComment($idComment, $Content, $idTicket);
+ 
+            if ($UpdateTicket == True)
+            {                
+                $_SESSION['Message'] = "Data updated correctly.";                 
+                $_SESSION['MessageType'] = 'success';                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelTwo.php");                 
+                exit();             
+            }            
+            else            
+            {                
+                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";                 
+                $_SESSION['MessageType'] = "error";                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelTwo.php");                 
+                exit();             
+            }        
+        }        
+        else
+        {
+            $idTicket = $_POST['ID_Ticket'];
+            $Title = $_POST['Title'];
+            $Description = $_POST['Description'];
+            $idStatus = $_POST['Status'];
+            $idDifficulty = $_POST['Difficulty'];
+            $idUser = $_POST["ID_User"];
+            $CreateDate = $_POST['CreateDate'];
+            $idPriority = $_POST['ID_Priority'];
+ 
+ 
+            $UpdateTicket = $TicketModel->UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty);
+ 
+            if ($UpdateTicket == True)
+            {                
+                $_SESSION['Message'] = "Data updated correctly.";                 
+                $_SESSION['MessageType'] = 'success';                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelTwo.php");                 
+                exit();             
+            }            
+            else            
+            {                
+                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";                 
+                $_SESSION['MessageType'] = "error";                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelTwo.php");                 
+                exit();             
+            }        
+        }      
+    }
+}
+function UpdateThree($TicketModel, $Connection)
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        if (
+            isset($_POST['ID_Ticket']) && !empty($_POST['ID_Ticket']) &&
+            isset($_POST['Title']) && !empty($_POST['Title']) &&
+            isset($_POST['Description']) && !empty($_POST['Description']) &&
+            isset($_POST['Status']) && !empty($_POST['Status']) &&
+            isset($_POST['Content']) && !empty($_POST['Content']) &&
+            isset($_POST['Difficulty']) && !empty($_POST['Difficulty'])
+        )
+        {
+            $idTicket = $_POST['ID_Ticket'];
+            $Title = $_POST['Title'];
+            $Description = $_POST['Description'];
+            $idStatus = $_POST['Status'];
+            $idDifficulty = $_POST['Difficulty'];
+            $idUser = $_POST["ID_User"];
+            $CreateDate = $_POST['CreateDate'];
+            $idPriority = $_POST['ID_Priority'];
+            $idComment = null;
+            $Content = $_POST['Content'];
+ 
+ 
+            $UpdateTicket = $TicketModel->UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty);
+            $InsertComment = $TicketModel->InsertComment($idComment, $Content, $idTicket);
+ 
+            if ($UpdateTicket == True)
+            {                
+                $_SESSION['Message'] = "Data updated correctly.";                 
+                $_SESSION['MessageType'] = 'success';                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelThree.php");                 
+                exit();             
+            }            
+            else            
+            {                
+                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";                 
+                $_SESSION['MessageType'] = "error";                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelThree.php");                 
+                exit();             
+            }        
+        }        
+        else
+        {
+            $idTicket = $_POST['ID_Ticket'];
+            $Title = $_POST['Title'];
+            $Description = $_POST['Description'];
+            $idStatus = $_POST['Status'];
+            $idDifficulty = $_POST['Difficulty'];
+            $idUser = $_POST["ID_User"];
+            $CreateDate = $_POST['CreateDate'];
+            $idPriority = $_POST['ID_Priority'];
+ 
+ 
+            $UpdateTicket = $TicketModel->UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty);
+ 
+            if ($UpdateTicket == True)
+            {                
+                $_SESSION['Message'] = "Data updated correctly.";                 
+                $_SESSION['MessageType'] = 'success';                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelThree.php");                 
+                exit();             
+            }            
+            else            
+            {                
+                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";                 
+                $_SESSION['MessageType'] = "error";                 
+                header("Location: " . $Connection->Route() . "./Views/Forms/ViewLevelThree.php");                 
                 exit();             
             }        
         }      

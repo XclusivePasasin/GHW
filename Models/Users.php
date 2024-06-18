@@ -13,8 +13,7 @@
             $Connection = $this->dbh;
             if (isset($_POST["Send"])) {
                 $Email = $_POST['Email'];
-                // $Passwd = $_POST['Passwd'];
-                $Passwd = ($_POST['Passwd']); // Encryption
+                $Passwd = base64_encode($_POST['Passwd']); // Encryption
                 if (empty($Email) or empty($Passwd)) {
                     header("location:". Connection::Route()."index.php?m=2"); // Campos Vacios
                     exit();
