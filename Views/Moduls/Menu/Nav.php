@@ -22,9 +22,9 @@ $Connection = new Connection();
 						<span class="lbl">My Tickets</span>
 					</span>
 					<ul>
-						<li><a href="<?php echo $Connection->Route().'Views/Forms/'; ?>" target="pages"><span class="lbl">Tickets In Proccess</span></a></li>
-						<li><a href="<?php echo $Connection->Route().'Views/Forms/'; ?>" target="pages"><span class="lbl">Tickets Closed</span></a></li>
-						<li><a href="<?php echo $Connection->Route().'Views/Forms/'; ?>" target="pages"><span class="lbl">Tickets Open</span></a></li>
+						<li><a href="<?php echo $Connection->Route().'Views/Forms/MyTicketsProgress.php'; ?>" target="pages"><span class="lbl">Tickets In Proccess</span></a></li>
+						<li><a href="<?php echo $Connection->Route().'Views/Forms/MyTicketsClosed.php'; ?>" target="pages"><span class="lbl">Tickets Closed</span></a></li>
+						<li><a href="<?php echo $Connection->Route().'Views/Forms/MyTicketsOpen.php'; ?>" target="pages"><span class="lbl">Tickets Open</span></a></li>
 					</ul>
 			</li>
 	    </ul>
