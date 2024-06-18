@@ -164,7 +164,7 @@ else
                 </div>
                 <br>
                 <br>
-                <a href="../../Views/Forms/ViewTicket.php">
+                <a href="../../Views/Forms/MyTicketsOpen.php">
                     <button class="btn btn-secondary">go back</button>
                 </a>
             </div>
