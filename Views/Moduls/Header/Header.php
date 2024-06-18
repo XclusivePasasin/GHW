@@ -41,9 +41,8 @@ if (session_status() === PHP_SESSION_NONE) {
 	                <div class="site-header-shown">
 	                    <div class="dropdown dropdown-notification messages">
 	                        <a href="#">
-								<h5 style="line-height: normal; margin-top: 5px; color:black;"><?php echo $_SESSION['Name'].' '.$_SESSION['LastName'];?></h5>
+								<h5 style="line-height: normal; margin-top: 5px; color:black;"><?php echo $_SESSION['Name'].' '.$_SESSION['LastName'];?><br><small><?php echo $_SESSION["Access"] ?></small></h5>
 	                        </a>
-	                        
 	                    </div>
 	
 	                    <div class="dropdown user-menu">
@@ -51,7 +50,6 @@ if (session_status() === PHP_SESSION_NONE) {
 	                            <img src="../../Public/img/avatar-2-64.png" alt="">
 	                        </button>
 	                        <div class="dropdown-menu dropdown-menu-right " aria-labelledby="dd-user-menu" >
-	                            <a class="dropdown-item" href="#"><span class="font-icon glyphicon glyphicon-user"></span><?php echo $Rol ?></a>
 	                            <a class="dropdown-item" href="<?php echo $Connection->Route().'Views/Moduls/Users/Logout.php'; ?>"><span class="font-icon glyphicon glyphicon-log-out"></span>Logout</a>
 	                        </div>
 	                    </div>

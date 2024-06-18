@@ -33,6 +33,7 @@
                         $_SESSION['LastName'] = $Result['Lastname'];
                         $_SESSION['Address'] = $Result['Address'];
                         $_SESSION['Id_Employee'] = $Result['ID_Employee'];
+                        $_SESSION['Access'] = $Result['Rol'];
                         header("Location: " . Connection::Route() . "./Views/Moduls/Dashboard.php");
                         exit();
                     } else {
