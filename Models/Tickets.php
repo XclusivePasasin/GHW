@@ -32,7 +32,7 @@ class TicketCRUD extends MySQL
         }
     }
 
-    public function UpdateTicket($idTicket, $Title, $Description, $CreateDate, $UpdateDate, $idStatus, $idUser, $idPriority, $idDifficulty)
+    public function UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty)
     {
         $Connection = $this->Connection;
         $UpdateTicketSQL = "CALL sp_UpdateTicket(" .
@@ -52,12 +52,11 @@ class TicketCRUD extends MySQL
         return True;
     }
 
-    function InsertComment($idComment, $Date, $Content, $idTicket) 
+    function InsertComment($idComment, $Content, $idTicket) 
     {
         $Connection = $this->Connection;
         $InsertCommentSQL = "CALL sp_InsertComment(" .
-                            intval($idComment) . ", " .
-                            "'" . mysqli_real_escape_string($Connection, $Date) . "', " .
+                            "NULL, " .
                             "'" . mysqli_real_escape_string($Connection, $Content) . "', " .
                             intval($idTicket) . ")";
     

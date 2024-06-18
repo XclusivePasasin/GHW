@@ -50,6 +50,16 @@ if ($ConnectionMYSQL)
     if (mysqli_num_rows($ConsultEmployee) == 1) {
         $Employee = mysqli_fetch_object($ConsultEmployee);
     }
+
+    $SelectDepartment = "SELECT * FROM Department WHERE ID_Department = $Employee->ID_Department";
+    $ConsultDepartment = mysqli_query($ConnectionMYSQL, $SelectDepartment);
+
+    if (!$ConsultDepartment) {
+        die("Error en la consulta: " . mysqli_error($ConnectionMYSQL));
+    }
+    if (mysqli_num_rows($ConsultDepartment) == 1) {
+        $Department = mysqli_fetch_object($ConsultDepartment);
+    }
 }
 
 if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSION['MessageType']) && !empty($_SESSION['MessageType'])) {
@@ -104,26 +114,6 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
             <div class="row m-t-lg">
                 <div class="col-md-6">
                     <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/TicketController.php?action=Update">
-                        <!-------HiddenData------->
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-title"></label>
-                            <div class="form-control-wrapper">
-                                <input type="hidden" class="form-control" name="CreateDate" value="<?php echo $Ticket->CreateDate; ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-title"></label>
-                            <div class="form-control-wrapper">
-                                <input type="hidden" class="form-control" name="ID_User" value="<?php echo $Ticket->ID_User; ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-title"></label>
-                            <div class="form-control-wrapper">
-                                <input type="hidden" class="form-control" name="ID_Priority" value="<?php echo $Ticket->ID_Priority; ?>" readonly>
-                            </div>
-                        </div>
-                        <!-------HiddenData------->
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Nª Ticket</label>
                             <div class="form-control-wrapper">
@@ -142,21 +132,7 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                                 <textarea rows="10" class="form-control" name="Description" readonly><?php echo $Ticket->Description; ?></textarea>
                             </div>
                         </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v2-name">User</label>
-                        <div class="form-control-wrapper">
-                            <input type="text" class="form-control"  value="<?php echo ($Employee->Name . ' ' . $Employee->Lastname); ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v2-name">Email</label>
-                        <div class="form-control-wrapper">
-                            <input name="Email" type="Email" class="form-control" value="<?php echo $User->Email; ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
+                        <div class="form-group">
                         <label class="form-label" for="signup_v1-priority">Difficulty</label>
                         <select name="Difficulty" class="form-control" value=" <?php echo $Ticket->ID_Difficulty; ?>"><?php echo $Ticket->ID_Difficulty; ?>
                             <option value="1">1</option>
@@ -185,6 +161,32 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                             <option value="3">Closed</option> 
                         </select>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v2-name">User</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control"  value="<?php echo ($Employee->Name . ' ' . $Employee->Lastname); ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v2-name">Email</label>
+                        <div class="form-control-wrapper">
+                            <input name="Email" type="Email" class="form-control" value="<?php echo $User->Email; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v2-name">Department</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control"  value="<?php echo $Department->Department; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v1-description">Comment</label>
+                        <div class="col-sm-16">
+                            <textarea rows="10" class="form-control" name="Content"></textarea>
+                        </div>
+                    </div>
                     <br>
                     <div class="col-sm-6 centered-button">
                         <center>
@@ -204,6 +206,26 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                         </center>
                     </div>                   
                 </div>
+                <!-------HiddenData------->
+                <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="CreateDate" value="<?php echo $Ticket->CreateDate; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="ID_User" value="<?php echo $Ticket->ID_User; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="ID_Priority" value="<?php echo $Ticket->ID_Priority; ?>" readonly>
+                            </div>
+                        </div>
+                        <!-------HiddenData------->
                 </form>
             </div>
         </div><!--.row-->
@@ -237,26 +259,6 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
             <div class="row m-t-lg">
                 <div class="col-md-6">
                     <form id="form-signup_v1" name="form-signup_v1" method="POST" action="../../Controllers/TicketController.php?action=Update">
-                        <!-------HiddenData------->
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-title"></label>
-                            <div class="form-control-wrapper">
-                                <input type="hidden" class="form-control" name="CreateDate" value="<?php echo $Ticket->CreateDate; ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-title"></label>
-                            <div class="form-control-wrapper">
-                                <input type="hidden" class="form-control" name="ID_User" value="<?php echo $Ticket->ID_User; ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="signup_v1-title"></label>
-                            <div class="form-control-wrapper">
-                                <input type="hidden" class="form-control" name="ID_Priority" value="<?php echo $Ticket->ID_Priority; ?>" readonly>
-                            </div>
-                        </div>
-                        <!-------HiddenData------->
                         <div class="form-group">
                             <label class="form-label" for="signup_v1-title">Nª Ticket</label>
                             <div class="form-control-wrapper">
@@ -275,21 +277,7 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                                 <textarea rows="10" class="form-control" name="Description" readonly><?php echo $Ticket->Description; ?></textarea>
                             </div>
                         </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v2-name">User</label>
-                        <div class="form-control-wrapper">
-                            <input type="text" class="form-control" id="" value="<?php echo ($Employee->Name . ' ' . $Employee->Lastname); ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="signup_v2-name">Email</label>
-                        <div class="form-control-wrapper">
-                            <input name="Email" type="Email" class="form-control" value="<?php echo $User->Email; ?>" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
+                        <div class="form-group">
                         <label class="form-label" for="signup_v1-priority">Difficulty</label>
                         <select name="Difficulty" class="form-control" value=" <?php echo $Ticket->ID_Difficulty; ?>"><?php echo $Ticket->ID_Difficulty; ?>
                         <?php if ($Ticket->ID_Difficulty == 1) {?>
@@ -311,6 +299,32 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                             <option value="3">Closed</option> 
                         </select>
                     </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v2-name">User</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control" id="" value="<?php echo ($Employee->Name . ' ' . $Employee->Lastname); ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v2-name">Email</label>
+                        <div class="form-control-wrapper">
+                            <input name="Email" type="Email" class="form-control" value="<?php echo $User->Email; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v2-name">Department</label>
+                        <div class="form-control-wrapper">
+                            <input type="text" class="form-control"  value="<?php echo $Department->Department; ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="signup_v1-description">Comment</label>
+                        <div class="col-sm-16">
+                            <textarea rows="10" class="form-control" name="Content"></textarea>
+                        </div>
+                    </div>
                     <br>
                     <div class="col-sm-6 centered-button">
                         <center>
@@ -330,6 +344,26 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                         </center>
                     </div>                   
                 </div>
+                <!-------HiddenData------->
+                <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="CreateDate" value="<?php echo $Ticket->CreateDate; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="ID_User" value="<?php echo $Ticket->ID_User; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="signup_v1-title"></label>
+                            <div class="form-control-wrapper">
+                                <input type="hidden" class="form-control" name="ID_Priority" value="<?php echo $Ticket->ID_Priority; ?>" readonly>
+                            </div>
+                        </div>
+                        <!-------HiddenData------->
                 </form>
             </div>
         </div><!--.row-->

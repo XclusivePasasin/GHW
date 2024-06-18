@@ -10,7 +10,7 @@ $ID_Ticket = $_GET["id"];
 
 if ($ConnectionMYSQL)
 {
-    $SelectComments = "SELECT * FROM Comment WHERE ID_Ticket = $ID_Ticket";
+    $SelectComments = "SELECT * FROM CommentView WHERE ID_Ticket = $ID_Ticket";
     $Comments = mysqli_query($ConnectionMYSQL, $SelectComments);
 }
 
@@ -58,6 +58,28 @@ else
     <!--Import MainHead-->
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainHead.php'; ?>
 </head>
+<style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        .container-fluid {
+            padding: 20px;
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        .box-typical {
+            padding: 20px;
+            background-color: #fff;
+        }
+    </style>
 <body>
 <header class="section-header">
     <div class="tbl">
@@ -80,7 +102,7 @@ else
                     <div class="fixed-table-toolbar">
                         <div class="bars pull-left">
                             <div id="toolbar">
-                                <div class="bootstrap-table-header">COMMENTS</div>
+                                <div class="bootstrap-table-header" style = "vertical-align: middle;">COMMENTS</div>
                             </div>
                         </div>
                     </div>
@@ -93,22 +115,24 @@ else
                             <table id="table" class="table table-striped table-hover" data-toolbar="#toolbar" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-show-export="true" data-detail-view="true" data-detail-formatter="detailFormatter" data-minimum-count-columns="2" data-show-pagination-switch="true" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, ALL]" data-show-footer="false" data-response-handler="responseHandler">
                                 <thead>
                                     <tr>
-                                        <th style="text-align: center; vertical-align: middle; " rowspan="2" data-field="id" tabindex="0">
+                                        <th style="text-align: center; " data-field="" tabindex="0">
+                                            <div class="th-inner sortable both">EMPLOYEE</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="text-align: center; " data-field="" tabindex="0">
                                             <div class="th-inner sortable both">EMAIL</div>
                                             <div class="fht-cell"></div>
                                         </th>
-                                    </tr>
-                                    <tr>
-                                        <th style="text-align: center; " data-field="price" tabindex="0">
+                                        <th style="text-align: center; " data-field="" tabindex="0">
+                                            <div class="th-inner sortable both">DEPARTMENT</div>
+                                            <div class="fht-cell"></div>
+                                        </th>
+                                        <th style="text-align: center;" rowspan="2" data-field="id" tabindex="0">
                                             <div class="th-inner sortable both">CONTENT</div>
                                             <div class="fht-cell"></div>
                                         </th>
-                                        <th style="text-align: center; " data-field="name" tabindex="0">
+                                        <th style="text-align: center; " data-field="" tabindex="0">
                                             <div class="th-inner sortable both">DATE</div>
-                                            <div class="fht-cell"></div>
-                                        </th>
-                                        <th style="text-align: center; " data-field="price" tabindex="0">
-                                            <div class="th-inner sortable both">ACTIONS</div>
                                             <div class="fht-cell"></div>
                                         </th>
                                     </tr>
@@ -116,23 +140,20 @@ else
                             <tbody>
                             <?php while ($AllComments = $Comments->fetch_object()) { ?>
                                     <tr>
+                                        <td style="text-align: center; ">
+                                            <?php echo ($AllComments->Name . " " . $AllComments->Lastname) ?>
+                                        </td>
                                         <td style="text-align: center; vertical-align: middle; ">
                                             <?php echo $Email ?>
                                         </td>
                                         <td style="text-align: center; ">
-                                                <?php echo $AllComments->Content ?>
+                                            <?php echo $AllComments->Department ?>
                                         </td>
                                         <td style="text-align: center; ">
-                                                <?php echo $AllComments->Date ?>
+                                            <?php echo $AllComments->Content ?>
                                         </td>
-                                        <td style="white-space: nowrap; width: 1%;">
-                                            <div class="btn-group btn-group-sm" style="float: none;">
-                                                <a href="../../Controllers/TicketController.php?action=DeleteComment&idComment=<?php echo $AllComments->ID_Comment?>" target="pages" class="delete-link">
-                                                    <button type="button" class="tabledit-delete-button btn btn-sm btn-default btn-danger swal-btn-cancel" style="float: none;">
-                                                        <span class="glyphicon glyphicon-trash"></span>
-                                                    </button>
-                                                </a>   
-                                            </div> 
+                                        <td style="text-align: center; ">
+                                            <?php echo $AllComments->Date ?>
                                         </td>
                                     </tr>
                                     <?php }?>
@@ -148,14 +169,6 @@ else
                         </div>
                     </div>
                 </div>
-                <br>
-            <div class="col-sm-12 centered-button">
-                <center>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-success" style="width: 220px; font-size:17px; ;">Add Comment</button>
-                    </div>
-                </center>                    
-            </div>
                 <div class="clearfix"></div>
             </div>
         </section><!--.box-typical-->
