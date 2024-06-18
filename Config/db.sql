@@ -52,9 +52,9 @@ CREATE TABLE Employee
     ID_Employee int,
     Name varchar(100),
     Lastname varchar(100),
-    Phone int,
+    Phone varchar(9),
     DUI varchar(10),
-    Adress varchar(200),
+    Address varchar(200),
     ID_Rol int,
     ID_Department int
 );
@@ -162,7 +162,7 @@ ADD CONSTRAINT fk_Comment_ID_Ticket FOREIGN KEY (ID_Ticket) REFERENCES Ticket(ID
 
 -- Insert Data on Table Rol
 INSERT INTO Rol (Rol)
-VALUES ('Employee'), ('Administrador'), ('Técnico Lvl.1'), ('Técnico Lvl.2'), ('Técnico Lvl.3');
+VALUES ('Employee'), ('Administrator'), ('Technical Lvl.1'), ('Technical Lvl.2'), ('Technical Lvl.3');
 
 -- Insert Data on Table Department
 INSERT INTO Department (Department)
@@ -192,9 +192,191 @@ VALUES ('Keyboard',1,1),('Mouse',1,1),('Monitor',2,1),('PC',3,1),('Phone',3,1),(
 ('Outdated software',3,2),('Lack of space',1,2),('The program does not respond',2,2),('Server not found',3,2),('Software licenses',1,2),('Problems accessing the account',1,2),
 ('Response time issues',2,2),('Virus',4,2),('Operating system problems',4,2),('Backup and recovery',4,2);
 
-INSERT INTO Employee (Name,Lastname,Phone,DUI,Adress,ID_Rol,ID_Department) 
-VALUES ('Luis','Majano',70588297,'06250035-9','Santa Tecla',1,1),('Gerardo','Franco',85476438,'09653730-4','Soyapango',1,2),
-('Eliezar','Passasin',87594000,'65362547-1','San Salvador',1,3);
+INSERT INTO Employee (ID_Employee,Name,Lastname,Phone,DUI,Address,ID_Rol,ID_Department) 
+VALUES (1,'Luis','Majano',70588297,'06250035-9','Santa Tecla',1,1),(2,'Gerardo','Franco',85476438,'09653730-4','Soyapango',1,2),
+(3,'Eliazar','Pasasin',87594000,'65362547-1','San Salvador',1,3);
 
-INSERT INTO User (Email,UserPassword,ID_Employee)
-VALUES ('luismajano@codelab.sv','demo',1),('gerardofranco@codelab.sv','demo',2),('eliazarpasasin@codelab.sv','demo',3);
+INSERT INTO User (ID_User,Email,UserPassword,ID_Employee)
+VALUES (1,'Majano@codelab.sv','ZGVtbw==',1),(2,'Franco@codelab.sv','ZGVtbw==',2),(3,'Pasasin@codelab.sv','ZGVtbw==',3); 
+
+-- Views
+
+CREATE VIEW User_Info AS
+SELECT 
+    e.ID_Employee AS ID_Employee,
+    e.Name AS Name,
+    e.Lastname AS Lastname,
+    e.Phone AS Phone,
+    e.DUI AS DUI,
+    e.Address AS Address,
+    e.ID_Rol AS ID_Rol,
+    r.Rol AS Rol,
+    e.ID_Department AS ID_Department,
+    d.Department AS Department,
+    u.ID_User AS ID_User,
+    u.Email AS Email,
+    u.UserPassword AS Password
+FROM 
+    Employee e
+INNER JOIN 
+    User u ON e.ID_Employee = u.ID_Employee
+INNER JOIN 
+    Rol r ON e.ID_Rol = r.ID_Rol
+INNER JOIN 
+    Department d ON e.ID_Department = d.ID_Department;
+
+CREATE VIEW TicketStatusView AS
+SELECT 
+    t.ID_Ticket,
+    s.TicketStatus,
+    t.Title,
+    t.CreateDate,
+    t.UpdateDate,
+    t.ID_Priority,
+    u.Email,
+    d.Department,
+    t.ID_Difficulty,
+    t.ID_User
+FROM 
+    Ticket t
+JOIN 
+    Status s ON t.ID_Status = s.ID_Status
+JOIN 
+    User u ON t.ID_User = u.ID_User
+JOIN 
+    Employee e ON u.ID_Employee = e.ID_Employee
+JOIN 
+    Department d ON e.ID_Department = d.ID_Department
+ORDER BY 
+    t.CreateDate DESC;
+
+CREATE VIEW CommentView AS
+SELECT 
+    c.Content,
+    c.Date,
+    c.ID_Ticket,
+    e.Name,
+    e.Lastname,
+    u.Email,
+    d.Department
+FROM 
+    Comment c
+JOIN 
+    Ticket t ON c.ID_Ticket = t.ID_Ticket
+JOIN 
+    User u ON t.ID_User = u.ID_User
+JOIN 
+    Employee e ON u.ID_Employee = e.ID_Employee
+JOIN
+    Department d ON e.ID_Department = d.ID_Department;
+
+
+-- Stored process to update user
+
+DELIMITER //
+ 
+CREATE PROCEDURE sp_UpdateUser(
+    IN idEmployee INT, 
+    IN name VARCHAR(100), 
+    IN lastname VARCHAR(100), 
+    IN phone VARCHAR(9), 
+    IN dui VARCHAR(10), 
+    IN address VARCHAR(200), 
+    IN idRol INT, 
+    IN idDepartment INT,
+    IN idUser INT,
+    IN email VARCHAR(150),
+    IN userPassword VARCHAR(255)
+)
+BEGIN
+    UPDATE Employee 
+    SET 
+        Name = name, 
+        Lastname = lastname, 
+        Phone = phone, 
+        DUI = dui, 
+        Address = address, 
+        ID_Rol = idRol, 
+        ID_Department = idDepartment
+    WHERE ID_Employee = idEmployee;
+    UPDATE User 
+    SET 
+        Email = email, 
+        UserPassword = userPassword
+    WHERE ID_User = idUser;
+END //
+ 
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_InsertTicket(
+    IN idTicket INT, 
+    IN Title VARCHAR(100), 
+    IN Description VARCHAR(255), 
+    IN idStatus INT, 
+    IN idUser INT, 
+    IN idPriority INT,
+    IN idDifficulty INT
+)
+BEGIN
+    DECLARE CreateDate DATETIME;
+    DECLARE UpdateDate DATETIME;
+
+    SET CreateDate = NOW();
+    SET UpdateDate = NOW();
+
+    INSERT INTO Ticket (ID_Ticket, Title, Description, CreateDate, UpdateDate, ID_Status, ID_User, ID_Priority, ID_Difficulty)
+    VALUES (idTicket, Title, Description, CreateDate, UpdateDate, idStatus, idUser, idPriority, idDifficulty);
+END //
+
+DELIMITER ;
+
+DELIMITER //
+ 
+CREATE PROCEDURE sp_UpdateTicket(
+    IN idTicket INT,
+    IN Title VARCHAR(100),
+    IN Description VARCHAR(255),
+    IN CreateDate DATETIME,  
+    IN idStatus INT,
+    IN idUser INT,
+    IN idPriority INT,
+    IN idDifficulty INT
+)
+BEGIN
+    DECLARE UpdateDate DATETIME;  
+    SET UpdateDate = NOW();
+ 
+    UPDATE Ticket
+    SET
+        Title = Title,
+        Description = Description,
+        CreateDate = CreateDate,
+        UpdateDate = UpdateDate,  
+        ID_Status = idStatus,
+        ID_User = idUser,
+        ID_Priority = idPriority,
+        ID_Difficulty = idDifficulty
+    WHERE ID_Ticket = idTicket;
+END //
+ 
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_InsertComment(
+    IN idComment INT,  
+    IN Content VARCHAR(255), 
+    IN idTicket INT
+)
+BEGIN
+    DECLARE Date DATETIME;
+
+    SET Date = NOW();
+
+    INSERT INTO Comment (ID_Comment, Date, Content, ID_Ticket)
+    VALUES (idComment, Date, Content, idTicket);
+END //
+ 
+DELIMITER ;

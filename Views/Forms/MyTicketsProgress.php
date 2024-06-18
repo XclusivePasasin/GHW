@@ -10,7 +10,7 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 $offset = ($page - 1) * $perPage;
 
 if ($ConnectionMYSQL) {
-    $SelectTicketsSQL10 = "SELECT * FROM TicketStatusView";
+    $SelectTicketsSQL10 = "SELECT * FROM TicketStatusView WHERE ID_User = ".$_SESSION['Id_User']." AND TicketStatus IN ('In Progress')";
     $Tickets10 = mysqli_query($ConnectionMYSQL, $SelectTicketsSQL10);
 }
 
@@ -174,10 +174,7 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                                                 <?php echo $InfoTickets10->UpdateDate ?>
                                             </td>
                                             <td style="text-align: center;">
-                                                <a class="like" href="EditTicket.php?id=<?php echo $InfoTickets10->ID_Ticket; ?>">
-                                                    <i class="fa fa-eye"></i>
-                                                </a>
-                                                <a class="like" href="CommentTicket.php?id=<?php echo $InfoTickets10->ID_Ticket; ?>" title="coment">
+                                                <a class="like" href="CommentProgress.php?id=<?php echo $InfoTickets10->ID_Ticket; ?>" title="coment">
                                                     <i class="fa fa-comment"></i>
                                                 </a>
                                             </td>
