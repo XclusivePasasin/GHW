@@ -200,6 +200,7 @@ INSERT INTO User (ID_User,Email,UserPassword,ID_Employee)
 VALUES (1,'Majano@codelab.sv','demo',1),(2,'Franco@codelab.sv','demo',2),(3,'Pasasin@codelab.sv','demo',3); 
 
 -- Views
+
 CREATE VIEW User_Info AS
 SELECT 
     e.ID_Employee AS ID_Employee,
@@ -223,6 +224,50 @@ INNER JOIN
     Rol r ON e.ID_Rol = r.ID_Rol
 INNER JOIN 
     Department d ON e.ID_Department = d.ID_Department;
+--------------------------------------------------------
+CREATE VIEW TicketStatusView AS
+SELECT 
+    t.ID_Ticket,
+    s.TicketStatus,
+    t.Title,
+    t.CreateDate,
+    t.UpdateDate,
+    t.ID_Priority,
+    u.Email,
+    d.Department
+FROM 
+    Ticket t
+JOIN 
+    Status s ON t.ID_Status = s.ID_Status
+JOIN 
+    User u ON t.ID_User = u.ID_User
+JOIN 
+    Employee e ON u.ID_Employee = e.ID_Employee
+JOIN 
+    Department d ON e.ID_Department = d.ID_Department
+ORDER BY 
+    t.CreateDate DESC;
+--------------------------------------------------------
+CREATE VIEW CommentView AS
+SELECT 
+    c.Content,
+    c.Date,
+    c.ID_Ticket,
+    e.Name,
+    e.Lastname,
+    u.Email,
+    d.Department
+FROM 
+    Comment c
+JOIN 
+    Ticket t ON c.ID_Ticket = t.ID_Ticket
+JOIN 
+    User u ON t.ID_User = u.ID_User
+JOIN 
+    Employee e ON u.ID_Employee = e.ID_Employee
+JOIN
+    Department d ON e.ID_Department = d.ID_Department;
+
 
 -- Stored process to update user
 
@@ -285,3 +330,51 @@ END //
 
 DELIMITER ;
 
+DELIMITER //
+ 
+CREATE PROCEDURE sp_UpdateTicket(
+    IN idTicket INT,
+    IN Title VARCHAR(100),
+    IN Description VARCHAR(255),
+    IN CreateDate DATETIME,  
+    IN idStatus INT,
+    IN idUser INT,
+    IN idPriority INT,
+    IN idDifficulty INT
+)
+BEGIN
+    DECLARE UpdateDate DATETIME;  
+    SET UpdateDate = NOW();
+ 
+    UPDATE Ticket
+    SET
+        Title = Title,
+        Description = Description,
+        CreateDate = CreateDate,
+        UpdateDate = UpdateDate,  
+        ID_Status = idStatus,
+        ID_User = idUser,
+        ID_Priority = idPriority,
+        ID_Difficulty = idDifficulty
+    WHERE ID_Ticket = idTicket;
+END //
+ 
+DELIMITER ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_InsertComment(
+    IN idComment INT,  
+    IN Content VARCHAR(255), 
+    IN idTicket INT
+)
+BEGIN
+    DECLARE Date DATETIME;
+
+    SET Date = NOW();
+
+    INSERT INTO Comment (ID_Comment, Date, Content, ID_Ticket)
+    VALUES (idComment, Date, Content, idTicket);
+END //
+ 
+DELIMITER ;

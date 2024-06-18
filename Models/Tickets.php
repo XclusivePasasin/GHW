@@ -32,6 +32,41 @@ class TicketCRUD extends MySQL
         }
     }
 
+    public function UpdateTicket($idTicket, $Title, $Description, $CreateDate, $idStatus, $idUser, $idPriority, $idDifficulty)
+    {
+        $Connection = $this->Connection;
+        $UpdateTicketSQL = "CALL sp_UpdateTicket(" .
+                            intval($idTicket) . ", " .
+                            "'" . mysqli_real_escape_string($Connection, $Title) . "', " .
+                            "'" . mysqli_real_escape_string($Connection, $Description) . "', " .
+                            "'" . mysqli_real_escape_string($Connection, $CreateDate) . "', " .
+                            intval($idStatus) . ", " .
+                            intval($idUser) . ", " .
+                            intval($idPriority) . ", " .
+                            intval($idDifficulty) . ")";
+    
+        $UpdateResult = mysqli_query($Connection, $UpdateTicketSQL);
+        if (!$UpdateResult) {
+            return False;
+        }
+        return True;
+    }
+
+    function InsertComment($idComment, $Content, $idTicket) 
+    {
+        $Connection = $this->Connection;
+        $InsertCommentSQL = "CALL sp_InsertComment(" .
+                            "NULL, " .
+                            "'" . mysqli_real_escape_string($Connection, $Content) . "', " .
+                            intval($idTicket) . ")";
+    
+        $CommentResult = mysqli_query($Connection, $InsertCommentSQL);
+        if (!$CommentResult) {
+            return False;
+        }
+        return True;
+    }
+
     function ProblemsHTML($ID_Category, $Connection) 
     {
         $ProblemsSQL = "SELECT * FROM problems WHERE ID_Category = $ID_Category";
