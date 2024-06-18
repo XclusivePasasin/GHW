@@ -45,7 +45,7 @@ if(isset($_SESSION['Email']))
 }
 else 
 {
-    header("Location: " . Connection::Route() . "../index.php");     
+    header("Location: " .$Connection->Route() . "../index.php");     
     exit(); 
 }
 
@@ -99,13 +99,6 @@ else
         <section class="box-typical">
             <div class="table-responsive">
                 <div class="bootstrap-table">
-                    <div class="fixed-table-toolbar">
-                        <div class="bars pull-left">
-                            <div id="toolbar">
-                                <div class="bootstrap-table-header" style = "vertical-align: middle;">COMMENTS</div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="fixed-table-container" style="padding-bottom: 0px;">
                         <div class="fixed-table-header" style="display: none;">
                             <table></table>
@@ -116,23 +109,23 @@ else
                                 <thead>
                                     <tr>
                                         <th style="text-align: center; " data-field="" tabindex="0">
-                                            <div class="th-inner sortable both">EMPLOYEE</div>
+                                            <div class="th-inner sortable both">User</div>
                                             <div class="fht-cell"></div>
                                         </th>
                                         <th style="text-align: center; " data-field="" tabindex="0">
-                                            <div class="th-inner sortable both">EMAIL</div>
+                                            <div class="th-inner sortable both">Email</div>
                                             <div class="fht-cell"></div>
                                         </th>
                                         <th style="text-align: center; " data-field="" tabindex="0">
-                                            <div class="th-inner sortable both">DEPARTMENT</div>
+                                            <div class="th-inner sortable both">Department</div>
                                             <div class="fht-cell"></div>
                                         </th>
                                         <th style="text-align: center;" rowspan="2" data-field="id" tabindex="0">
-                                            <div class="th-inner sortable both">CONTENT</div>
+                                            <div class="th-inner sortable both">Message</div>
                                             <div class="fht-cell"></div>
                                         </th>
                                         <th style="text-align: center; " data-field="" tabindex="0">
-                                            <div class="th-inner sortable both">DATE</div>
+                                            <div class="th-inner sortable both">Date</div>
                                             <div class="fht-cell"></div>
                                         </th>
                                     </tr>
@@ -169,7 +162,11 @@ else
                         </div>
                     </div>
                 </div>
-                <div class="clearfix"></div>
+                <br>
+                <br>
+                <a href="./ViewTicket.php">
+                    <button class="btn btn-secondary">go back</button>
+                </a>
             </div>
         </section><!--.box-typical-->
     </div>

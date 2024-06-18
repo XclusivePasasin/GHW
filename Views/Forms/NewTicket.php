@@ -143,7 +143,7 @@ else
                     <br>
                     <center>
                         <div class="form-group">
-                            <input type="submit" class="btn" value = "Register Ticket">
+                            <input type="submit" class="btn btn-inline btn-success-outline" value = "Register Ticket">
                         </div>
                     </center>
                 </div>
