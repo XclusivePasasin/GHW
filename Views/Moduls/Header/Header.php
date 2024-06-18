@@ -40,9 +40,7 @@ if (session_status() === PHP_SESSION_NONE) {
 	            <div class="site-header-content-in">
 	                <div class="site-header-shown">
 	                    <div class="dropdown dropdown-notification messages">
-	                        <a href="#">
-								<h5 style="line-height: normal; margin-top: 5px; color:black;"><?php echo $_SESSION['Name'].' '.$_SESSION['LastName'];?><br><small><?php echo $_SESSION["Access"] ?></small></h5>
-	                        </a>
+								<h5 style="line-height: normal; margin-bottom: 5px; color:black; position: relative; top: -10px;"><?php echo $_SESSION['Name'].' '.$_SESSION['LastName'];?><br><small><?php echo $_SESSION["Access"] ?></small></h5>
 	                    </div>
 	
 	                    <div class="dropdown user-menu">
