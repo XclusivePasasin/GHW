@@ -1,12 +1,12 @@
 <?php
-    require_once './Config/Connection.php';
+    $Dui = $_GET['Dui'];
+    require_once '../../Config/Connection.php';
     if (isset($_POST["Send"]) and $_POST["Send"]=="Yes") {
-        require_once ('./Models/Users.php');
+        require_once ('../../Models/Users.php');
         $User = new User();
-        $User->Login();
+        $User->ResetPassword();
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <?php require_once './Views/Moduls/Head/HeadPage.php'; ?>
+    <?php require_once '../Moduls/Head/HeadPage.php'; ?>
     <title>CodeLab</title>
 </head>
 
@@ -98,15 +98,16 @@
                     <img src="http://localhost/GHW-PROJECT/Public/img/Login-Icon.svg" alt="Logo-5" class="img-fluid" style="width: 100px;">
                 </div>
                 <div class="px-lg-5 py-lg-4 p-4 w-100 align-selft-center justify-content-around align-items-center">
-                    <h1>Welcome to CodeLabs</h1>
+                    <br>
+                    <h2>Reset Password</h2>
                     <!-- Container for the alert -->
                     <div id="alertContainer">
                         <?php
                         if (isset($_GET["m"])) {
                             switch ($_GET["m"]) {
-                                case '1':
+                                case '4':
                                     echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <strong>Error:</strong> Invalid access credentials.
+                                            <strong>Error:</strong> The DUI Entered does not exist in our database.
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -121,54 +122,34 @@
                                             </button>
                                           </div>';
                                     break;
-                                case '6':
-                                    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <strong>Success:</strong> You have successfully updated your password.
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>';
-                                    break;
-                                case '5':
-                                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <strong>Error:</strong> Error.
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>';
-                                    break;
-                                case '7':
-                                    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            <strong>Error:</strong> Employee Not Exits.
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>';
-                                    break;
                             }
                         }
                         ?>
                     </div>
 
-                    <form action="" method="POST" id="Login" >
+                    <form action="" method="POST" id="" >
                         <div class="mb-4">
-                            <label for="Email" class="form-label font-weight-bold">Email</label>
-                            <input type="email" class="form-control bg-dark-x font-weight-bold" id="Email" name="Email" placeholder="Enter your email">
+                            <label for="Dui" class="form-label font-weight-bold">DUI</label>
+                            <input type="text" class="form-control bg-dark-x font-weight-bold" id="Dui" name="Dui" value="<?php echo $Dui;?>"  maxlength="9" readonly>
                         </div>
                         <div class="mb-4">
-                            <label for="Passwd" class="form-label font-weight-bold">Password</label>
-                            <input type="password" class="form-control bg-dark-x font-weight-bold mb-2" id="Passwd" name="Passwd" placeholder="Enter your password">
+                            <label for="NewPassword" class="form-label font-weight-bold">Enter new password</label>
+                            <input type="password" class="form-control bg-dark-x font-weight-bold" id="NewPassword" name="NewPassword" placeholder="Enter new password"  maxlength="9">
                         </div>
-                        <a href="./Views/Forms/ValidateDUI.php" class="form-text text-decoration-none mb-3 text-white">Have you forgotten your password?</a>
+                        <div class="mb-4">
+                            <label for="RepeatPassword" class="form-label font-weight-bold">Repeat password</label>
+                            <input type="password" class="form-control bg-dark-x font-weight-bold" id="RepeatPassword" name="RepeatPassword" placeholder="Repeat password"  maxlength="9">
+                        </div>
                         <input type="hidden" name="Send" value="Yes">
                         <button type="submit" class="btn text-white w-100 btn-dark-x font-weight-bold">
-                            <i class="fa-solid fa-right-to-bracket lead mr-3" style="color: #ffffff;"></i>Log in
+                        <i class="fa-solid fa-key fa-lg"></i>ㅤUpdate Password
                         </button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
+
 </body>
 
 </html>
