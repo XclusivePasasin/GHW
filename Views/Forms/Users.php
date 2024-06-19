@@ -275,19 +275,7 @@ if ($ConnectionMYSQL) {
         function EliminarLetras(event) {
             event.target.value = event.target.value.replace(/[^0-9\-]/g, '');
         }
-
-        function ValidarCorreo(event) {
-            const emailInput = event.target;
-            const emailValue = emailInput.value;
-            const errorElement = document.getElementById('error-message');
-            const regex = /^[^\s@]+@[^\s@]+\.Codelab\.sv$/;
-
-            if (!regex.test(emailValue)) {
-                errorElement.style.display = 'block';
-            } else {
-                errorElement.style.display = 'none';
-            }
-        }
+        
     </script>
 
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/GHW-PROJECT/Views/Moduls/Head/MainJS.php'; ?>

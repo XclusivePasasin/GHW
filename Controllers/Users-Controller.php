@@ -59,21 +59,30 @@ function RegisterUserAndEmployee($ModelUser, $Connection)
             $Phone = $_POST['Phone'];
             $Dui = $_POST['Dui'];
             $Department = $_POST['Department'];
-            $SendData = $ModelUser->Register($Email, $Passwd, $Rol, $FirstName, $LastName, $Address, $Phone, $Dui, $Department);
-            if ($SendData == True) 
-            {
-                $_SESSION['Message'] = "Data entered correctly.";
-                $_SESSION['MessageType'] = 'success';
-                header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
-                exit();
-            } 
-            else 
-            {
-                $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";
-                $_SESSION['MessageType'] = "error";
-                header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
-                exit();
+            $ValidateDUI = $ModelUser->Validate($Dui,$Email);
+            if($ValidateDUI == True){
+                $SendData = $ModelUser->Register($Email, $Passwd, $Rol, $FirstName, $LastName, $Address, $Phone, $Dui, $Department);
+                if ($SendData == True) 
+                {
+                    $_SESSION['Message'] = "Data entered correctly.";
+                    $_SESSION['MessageType'] = 'success';
+                    header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
+                    exit();
+                } 
+                else 
+                {
+                    $_SESSION['Message'] = "Data Not Entered, An error occurred at layer 8.";
+                    $_SESSION['MessageType'] = "error";
+                    header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
+                    exit();
+                }
+            }else{
+                $_SESSION['Message'] = "The DUI or EMAIL already exists in the database, Not register user.";
+                    $_SESSION['MessageType'] = "error";
+                    header("Location: " . $Connection->Route() . "./Views/Forms/Users.php");
+                    exit();
             }
+            
         }
         else
         {

@@ -1,6 +1,5 @@
 <?php
 
-
     class User extends Connection{
 
         public function __construct() {
@@ -44,7 +43,80 @@
             }
         }
 
+        function ValidateDUI()
+        {
+            $Connection = $this->dbh;
+            if (isset($_POST["Send"])) {
+                $Dui = $_POST['Dui'];
+                if (empty($Dui)) {
+                    header("location:" . Connection::Route() . "Views/Forms/ValidateDUI.php?m=2");
+                    exit();
+                }else{
+                    $sql = "SELECT * FROM User_Info WHERE DUI = :Dui";
+                    $stmt = $Connection->prepare($sql);
+                    $stmt->bindParam(":Dui", $Dui, PDO::PARAM_STR);
+                    $stmt->execute();
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+                    if (count($result) > 0) {
+                        header("location: " . self::Route() . "Views/Forms/ResetPassword.php?Dui=$Dui");
+                        exit();
+                    } else {
+                        header("location: " . self::Route() . "Views/Forms/ValidateDUI.php?m=4");
+                        exit(); 
+                    }
+        
+                    $stmt->closeCursor(); 
+                }
+            }
+        }
+    
+        function ResetPassword(){
+            $Connection = $this->dbh;
+            if (isset($_POST["Send"])) {
+                $Dui = $_POST['Dui'];
+                $NewPassword = $_POST['NewPassword'];
+                $RepeatPassword = $_POST['RepeatPassword'];
+                if (empty($NewPassword) || empty($RepeatPassword)) {
+                    header("location:" . Connection::Route() . "Views/Forms/ResetPassword.php?m=2&Dui=$Dui");
+                    exit();
+                }else if($NewPassword !== $RepeatPassword){
+                    header("location:" . Connection::Route() . "Views/Forms/ResetPassword.php?m=4&Dui=$Dui");
+                    exit();
+                }else{
+                    $Employee = $this->getEmployeeDUI($Dui);
+                    if ($Employee) {
+                        $ID_Employee = $Employee['ID_Employee'];
+                        $sql = "UPDATE User SET UserPassword = :UserPassword WHERE ID_Employee = :ID_Employee";
+                        $stmt = $Connection->prepare($sql);
+                        $hashedPassword = base64_encode($NewPassword);
+                        $stmt->bindParam(':UserPassword', $hashedPassword);
+                        $stmt->bindParam(':ID_Employee', $ID_Employee);
+                        $stmt->execute();
+                        if($stmt->execute()){
+                            header("location:" . Connection::Route() . "index.php?m=6");
+                            exit();
+                        }else{
+                            header("location:" . Connection::Route() . "index.php?m=5");
+                            exit();
+                        }
+                    }
+                }
+            }
+        }
+    
+        function getEmployeeDUI($Dui){
+            $Connection = $this->dbh;
+            $Sql = "SELECT ID_Employee FROM Employee WHERE DUI = :Dui";
+            $stmt = $Connection->prepare($Sql);
+            $stmt->bindParam(':Dui', $Dui);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $result ? $result : false; 
+        }
+
     }
+    
 
     class UserCRUD extends MySQL{
 
@@ -128,6 +200,20 @@
                 die("Error al eliminar usuario: " . mysqli_error($Connection));
             }
         }
+
+        public function Validate($Dui, $Email){
+            $Connection = $this->Connection;
+            $Sql = "SELECT * FROM Employee WHERE DUI = '$Dui'";
+            $SqlEmail = "SELECT * FROM User WHERE Email = '$Email'"; 
+            $SendEmail = mysqli_query($Connection, $SqlEmail);
+            $Send = mysqli_query($Connection, $Sql);
+            if($Send->num_rows > 0 || $SendEmail->num_rows > 0){
+                return False;
+            }else{
+                return True;
+            }
+        }
+
     }
 
     

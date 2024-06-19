@@ -177,7 +177,7 @@ if (isset($_SESSION['Message']) && !empty($_SESSION['Message']) && isset($_SESSI
                                                 <a class="like" href="EditTicketThree.php?id=<?php echo $InfoTickets10->ID_Ticket; ?>">
                                                     <i class="fa fa-eye"></i>
                                                 </a>
-                                                <a class="like" href="CommentTicket.php?id=<?php echo $InfoTickets10->ID_Ticket; ?>" title="coment">
+                                                <a class="like" href="CommentTicketLevelThree.php?id=<?php echo $InfoTickets10->ID_Ticket; ?>" title="coment">
                                                     <i class="fa fa-comment"></i>
                                                 </a>
                                             </td>
